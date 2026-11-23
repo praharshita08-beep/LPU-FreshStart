@@ -199,8 +199,7 @@ profileForm.addEventListener("submit", function(event) {
   const language = document.getElementById("language").value;
 
   if (department && language) {
-    profileMessage.textContent =
-      "Preferences saved for this session! Department: " +
-      department + " | Language: " + language;
-  }
+  profileMessage.textContent = "Preferences saved successfully!";
+  showScreen("welcome");
+}
 });
