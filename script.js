@@ -372,3 +372,492 @@ updateMenuState();
 updateProgress();
 
 
+// =========================================
+// MY PROFILE FUNCTIONALITY
+// =========================================
+
+const PROFILE_KEY = "freshstart_student_profile";
+const PROFILE_PHOTO_KEY = "freshstart_profile_photo";
+
+// Profile Elements
+
+const profileForm = document.getElementById("profileForm");
+const profileMessage = document.getElementById("profileMessage");
+
+const photoUpload = document.getElementById("photoUpload");
+const profileImage = document.getElementById("profileImage");
+const defaultAvatar = document.getElementById("defaultAvatar");
+const removePhoto = document.getElementById("removePhoto");
+
+const saveProfile = document.getElementById("saveProfile");
+const editProfile = document.getElementById("editProfile");
+const resetProfile = document.getElementById("resetProfile");
+
+const profileFields = [
+    "studentName",
+    "registrationNumber",
+    "studentProgramme",
+    "studentBranch",
+    "studentSection",
+    "studentNationality",
+    "studentAccommodation",
+    "studentLanguage"
+];
+
+// =========================================
+// PROFILE STATUS MESSAGE
+// =========================================
+
+function showProfileMessage(message, type) {
+
+    profileMessage.textContent = message;
+    profileMessage.className = type;
+    profileMessage.hidden = false;
+
+}
+
+// =========================================
+// RETRIEVE SAVED PROFILE
+// =========================================
+
+function getSavedProfile() {
+
+    try {
+
+        const profile = JSON.parse(
+            localStorage.getItem(PROFILE_KEY) || "null"
+        );
+
+        return profile && typeof profile === "object"
+            ? profile
+            : null;
+
+    } catch (error) {
+
+        return null;
+
+    }
+
+}
+
+// =========================================
+// UPDATE PROFILE SUMMARY
+// =========================================
+
+function updateProfileSummary(profile) {
+
+    profile = profile || {};
+
+    document.getElementById("profileDisplayName")
+        .textContent = profile.studentName || "Student Name";
+
+    const course = [
+        profile.studentProgramme,
+        profile.studentBranch
+    ].filter(Boolean).join(" · ");
+
+    document.getElementById("profileDisplayCourse")
+        .textContent = course || "New Student · LPU";
+
+    document.getElementById("displayRegistration")
+        .textContent =
+            profile.registrationNumber || "Not provided";
+
+    document.getElementById("displayProgramme")
+        .textContent =
+            profile.studentProgramme || "Not provided";
+
+    document.getElementById("displayAccommodation")
+        .textContent =
+            profile.studentAccommodation || "Not provided";
+
+    document.getElementById("displayLanguage")
+        .textContent =
+            profile.studentLanguage || "Not provided";
+
+    // Personalized Dashboard
+
+    const firstName = profile.studentName
+        ? profile.studentName.trim().split(/\s+/)[0]
+        : "";
+
+    document.getElementById("welcomeMessage")
+        .textContent = firstName
+            ? "Welcome to LPU, " + firstName + "!"
+            : "Welcome to LPU!";
+
+}
+
+// =========================================
+// ENABLE OR DISABLE PROFILE EDITING
+// =========================================
+
+function setProfileEditing(isEditing) {
+
+    profileFields.forEach(function(fieldId) {
+
+        document.getElementById(fieldId)
+            .disabled = !isEditing;
+
+    });
+
+    saveProfile.hidden = !isEditing;
+    editProfile.hidden = isEditing;
+
+}
+
+// =========================================
+// SAVE PROFILE
+// =========================================
+
+profileForm.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const profile = {};
+
+    profileFields.forEach(function(fieldId) {
+
+        profile[fieldId] =
+            document.getElementById(fieldId).value.trim();
+
+    });
+
+    // Validate Required Fields
+
+    if (
+        !profile.studentName ||
+        !profile.studentProgramme ||
+        !profile.studentAccommodation ||
+        !profile.studentLanguage
+    ) {
+
+        showProfileMessage(
+            "Please complete all required fields.",
+            "error"
+        );
+
+        return;
+
+    }
+
+    try {
+
+        localStorage.setItem(
+            PROFILE_KEY,
+            JSON.stringify(profile)
+        );
+
+        updateProfileSummary(profile);
+
+        setProfileEditing(false);
+
+        showProfileMessage(
+            "Your profile has been saved successfully!",
+            "success"
+        );
+
+    } catch (error) {
+
+        showProfileMessage(
+            "Unable to save your profile. Please check your browser storage settings.",
+            "error"
+        );
+
+    }
+
+});
+
+// =========================================
+// EDIT PROFILE
+// =========================================
+
+editProfile.addEventListener("click", function() {
+
+    setProfileEditing(true);
+
+    showProfileMessage(
+        "You can now edit your profile information.",
+        "info"
+    );
+
+    document.getElementById("studentName").focus();
+
+});
+
+// =========================================
+// DISPLAY PROFILE PHOTO
+// =========================================
+
+function displayProfilePhoto(photo) {
+
+    const topbarProfile =
+        document.querySelector(".profile-button");
+
+    topbarProfile.textContent = "";
+
+    if (photo) {
+
+        profileImage.src = photo;
+        profileImage.hidden = false;
+
+        defaultAvatar.hidden = true;
+        removePhoto.hidden = false;
+
+        const topbarImage = document.createElement("img");
+
+        topbarImage.src = photo;
+        topbarImage.alt = "Profile picture";
+
+        topbarProfile.appendChild(topbarImage);
+
+    } else {
+
+        profileImage.removeAttribute("src");
+        profileImage.hidden = true;
+
+        defaultAvatar.hidden = false;
+        removePhoto.hidden = true;
+
+        const profileIcon = document.createElement("i");
+
+        profileIcon.className =
+            "fa-solid fa-circle-user";
+
+        topbarProfile.appendChild(profileIcon);
+
+    }
+
+}
+
+// =========================================
+// UPLOAD PROFILE PHOTO
+// =========================================
+
+photoUpload.addEventListener("change", function() {
+
+    const file = photoUpload.files[0];
+
+    if (!file) {
+        return;
+    }
+
+    const allowedTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/webp"
+    ];
+
+    // Validate File Type
+
+    if (!allowedTypes.includes(file.type)) {
+
+        showProfileMessage(
+            "Please select a JPG, PNG or WEBP image.",
+            "error"
+        );
+
+        photoUpload.value = "";
+
+        return;
+
+    }
+
+    // Validate File Size (Maximum 1 MB)
+
+    if (file.size > 1024 * 1024) {
+
+        showProfileMessage(
+            "Your image must be smaller than or equal to 1 MB.",
+            "error"
+        );
+
+        photoUpload.value = "";
+
+        return;
+
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function() {
+
+        const photo = reader.result;
+        const testImage = new Image();
+
+        testImage.onload = function() {
+
+            try {
+
+                localStorage.setItem(
+                    PROFILE_PHOTO_KEY,
+                    photo
+                );
+
+                displayProfilePhoto(photo);
+
+                showProfileMessage(
+                    "Profile picture updated successfully!",
+                    "success"
+                );
+
+            } catch (error) {
+
+                showProfileMessage(
+                    "Unable to save the image. Browser storage may be full.",
+                    "error"
+                );
+
+            }
+
+        };
+
+        testImage.onerror = function() {
+
+            showProfileMessage(
+                "The selected file is not a valid image.",
+                "error"
+            );
+
+        };
+
+        testImage.src = photo;
+
+    };
+
+    reader.onerror = function() {
+
+        showProfileMessage(
+            "Unable to read the selected image.",
+            "error"
+        );
+
+    };
+
+    reader.readAsDataURL(file);
+
+    photoUpload.value = "";
+
+});
+
+// =========================================
+// REMOVE PROFILE PHOTO
+// =========================================
+
+removePhoto.addEventListener("click", function() {
+
+    try {
+
+        localStorage.removeItem(PROFILE_PHOTO_KEY);
+
+        displayProfilePhoto(null);
+
+        showProfileMessage(
+            "Profile picture removed successfully.",
+            "success"
+        );
+
+    } catch (error) {
+
+        showProfileMessage(
+            "Unable to remove the profile picture.",
+            "error"
+        );
+
+    }
+
+});
+
+// =========================================
+// RESET PROFILE
+// =========================================
+
+resetProfile.addEventListener("click", function() {
+
+    const confirmed = confirm(
+        "Are you sure you want to reset your profile? " +
+        "All saved profile information and your photo will be removed."
+    );
+
+    if (!confirmed) {
+        return;
+    }
+
+    try {
+
+        localStorage.removeItem(PROFILE_KEY);
+        localStorage.removeItem(PROFILE_PHOTO_KEY);
+
+        profileForm.reset();
+        photoUpload.value = "";
+
+        updateProfileSummary(null);
+        displayProfilePhoto(null);
+
+        setProfileEditing(true);
+
+        showProfileMessage(
+            "Your profile has been reset successfully.",
+            "success"
+        );
+
+    } catch (error) {
+
+        showProfileMessage(
+            "Unable to reset your profile.",
+            "error"
+        );
+
+    }
+
+});
+
+// =========================================
+// LOAD PROFILE ON PAGE REFRESH
+// =========================================
+
+function loadStudentProfile() {
+
+    const profile = getSavedProfile();
+
+    if (profile) {
+
+        profileFields.forEach(function(fieldId) {
+
+            document.getElementById(fieldId).value =
+                profile[fieldId] || "";
+
+        });
+
+        updateProfileSummary(profile);
+        setProfileEditing(false);
+
+    } else {
+
+        updateProfileSummary(null);
+        setProfileEditing(true);
+
+    }
+
+    try {
+
+        const savedPhoto =
+            localStorage.getItem(PROFILE_PHOTO_KEY);
+
+        displayProfilePhoto(savedPhoto);
+
+    } catch (error) {
+
+        displayProfilePhoto(null);
+
+    }
+
+}
+
+// =========================================
+// INITIALIZE MY PROFILE
+// =========================================
+
+loadStudentProfile();
+
+
