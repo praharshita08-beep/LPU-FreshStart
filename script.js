@@ -2958,3 +2958,41 @@ document.getElementById(
     lostAssistancePanel.hidden = true;
 
 });
+
+
+// =========================================
+// CAMPUS IMAGE MAP COMPATIBILITY
+// =========================================
+
+displayCampusMarkers = function() {
+    // Image-based markers will be added next.
+};
+
+selectCampusLocation = function() {
+    showCampusMapMessage(
+        "Campus location markers are being updated.",
+        false
+    );
+};
+
+document.getElementById("resetCampusMap")
+    .addEventListener("click", function() {
+
+        if (lpuCampusMap && lpuCampusImageBounds) {
+
+            lpuCampusMap.fitBounds(
+                lpuCampusImageBounds
+            );
+
+        }
+
+    });
+
+document.getElementById("findMyLocation")
+    .disabled = true;
+
+document.getElementById("lostFindLocation")
+    .disabled = true;
+
+document.getElementById("campusDirectionsButton")
+    .disabled = true;
