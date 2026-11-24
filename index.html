@@ -1667,10 +1667,651 @@
 </section>
 
 
-        <section id="explore" class="page-section" hidden>
-            <h1>Explore Campus</h1>
-            <p>Discover campus facilities and important locations.</p>
-        </section>
+        
+<!-- =====================================
+     EXPLORE CAMPUS SECTION
+====================================== -->
+
+<section id="explore" class="page-section" hidden>
+
+    <div class="explore-heading">
+
+        <h1>Explore Campus</h1>
+
+        <p>
+            Discover everything your university
+            has to offer.
+        </p>
+
+    </div>
+
+    <!-- CAMPUS EXPLORATION BANNER -->
+
+    <div class="explore-hero">
+
+        <div class="explore-hero-content">
+
+            <span class="explore-hero-label">
+                YOUR UNIVERSITY. YOUR JOURNEY.
+            </span>
+
+            <h2>Discover Your New Campus</h2>
+
+            <p>
+                Explore, experience and make the most
+                of your university journey.
+            </p>
+
+            <a href="#campusFacilities"
+               id="startExploring"
+               class="explore-start-button">
+
+                <i class="fa-solid fa-compass"></i>
+
+                Start Exploring
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- CAMPUS SEARCH -->
+
+    <div class="explore-search-card">
+
+        <form id="exploreSearchForm"
+              class="explore-search-form">
+
+            <div class="explore-search-input">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input
+                    type="search"
+                    id="exploreSearchInput"
+                    placeholder="Search campus facilities..."
+                    aria-label="Search campus facilities"
+                    autocomplete="off">
+
+            </div>
+
+            <button type="submit"
+                    class="explore-search-button">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                Search
+
+            </button>
+
+        </form>
+
+    </div>
+
+    <!-- EXPLORATION PROGRESS -->
+
+    <div class="explore-progress-card">
+
+        <div class="explore-progress-header">
+
+            <div class="explore-progress-icon">
+
+                <i class="fa-solid fa-compass"></i>
+
+            </div>
+
+            <div class="explore-progress-content">
+
+                <h2>Your Campus Exploration</h2>
+
+                <p id="exploreProgressText">
+                    0 places explored
+                </p>
+
+            </div>
+
+            <span id="exploreProgressPercentage">
+                0%
+            </span>
+
+        </div>
+
+        <div class="explore-progress-track"
+             id="exploreProgressTrack"
+             role="progressbar"
+             aria-label="Campus exploration progress"
+             aria-valuemin="0"
+             aria-valuemax="100"
+             aria-valuenow="0">
+
+            <div id="exploreProgressFill"
+                 class="explore-progress-fill">
+            </div>
+
+        </div>
+
+        <p class="explore-progress-note">
+
+            Mark facilities as explored as you
+            discover your new campus.
+
+        </p>
+
+    </div>
+
+    <!-- CAMPUS CATEGORY FILTERS -->
+
+    <div class="explore-category-section">
+
+        <h2>Explore by Category</h2>
+
+        <div class="explore-category-filters">
+
+            <button type="button"
+                    class="explore-filter active"
+                    data-category="all"
+                    aria-pressed="true">
+
+                <i class="fa-solid fa-border-all"></i>
+
+                All Places
+
+            </button>
+
+            <button type="button"
+                    class="explore-filter"
+                    data-category="academic"
+                    aria-pressed="false">
+
+                <i class="fa-solid fa-graduation-cap"></i>
+
+                Academic
+
+            </button>
+
+            <button type="button"
+                    class="explore-filter"
+                    data-category="library"
+                    aria-pressed="false">
+
+                <i class="fa-solid fa-book"></i>
+
+                Library
+
+            </button>
+
+            <button type="button"
+                    class="explore-filter"
+                    data-category="hostel"
+                    aria-pressed="false">
+
+                <i class="fa-solid fa-bed"></i>
+
+                Hostels
+
+            </button>
+
+            <button type="button"
+                    class="explore-filter"
+                    data-category="shopping"
+                    aria-pressed="false">
+
+                <i class="fa-solid fa-bag-shopping"></i>
+
+                Shopping
+
+            </button>
+
+            <button type="button"
+                    class="explore-filter"
+                    data-category="food"
+                    aria-pressed="false">
+
+                <i class="fa-solid fa-utensils"></i>
+
+                Food &amp; Dining
+
+            </button>
+
+            <button type="button"
+                    class="explore-filter"
+                    data-category="sports"
+                    aria-pressed="false">
+
+                <i class="fa-solid fa-trophy"></i>
+
+                Sports
+
+            </button>
+
+            <button type="button"
+                    class="explore-filter"
+                    data-category="medical"
+                    aria-pressed="false">
+
+                <i class="fa-solid fa-heart-pulse"></i>
+
+                Healthcare
+
+            </button>
+
+            <button type="button"
+                    class="explore-filter"
+                    data-category="events"
+                    aria-pressed="false">
+
+                <i class="fa-solid fa-masks-theater"></i>
+
+                Events
+
+            </button>
+
+            <button type="button"
+                    class="explore-filter"
+                    data-category="recreation"
+                    aria-pressed="false">
+
+                <i class="fa-solid fa-tree"></i>
+
+                Recreation
+
+            </button>
+
+            <button type="button"
+                    class="explore-filter"
+                    data-category="transport"
+                    aria-pressed="false">
+
+                <i class="fa-solid fa-bus"></i>
+
+                Transport
+
+            </button>
+
+            <button type="button"
+                    class="explore-filter"
+                    data-category="banking"
+                    aria-pressed="false">
+
+                <i class="fa-solid fa-building-columns"></i>
+
+                Banking
+
+            </button>
+
+            <button type="button"
+                    class="explore-filter"
+                    data-category="support"
+                    aria-pressed="false">
+
+                <i class="fa-solid fa-headset"></i>
+
+                Student Services
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- FACILITY VIEW OPTIONS -->
+
+    <div class="explore-view-tabs">
+
+        <button type="button"
+                class="explore-view-tab active"
+                data-view="all"
+                aria-pressed="true">
+
+            <i class="fa-solid fa-location-dot"></i>
+
+            All Places
+
+        </button>
+
+        <button type="button"
+                class="explore-view-tab"
+                data-view="favourites"
+                aria-pressed="false">
+
+            <i class="fa-solid fa-heart"></i>
+
+            Favourites
+
+            <span id="exploreFavouriteCount">0</span>
+
+        </button>
+
+        <button type="button"
+                class="explore-view-tab"
+                data-view="explored"
+                aria-pressed="false">
+
+            <i class="fa-solid fa-circle-check"></i>
+
+            Explored
+
+            <span id="exploreVisitedCount">0</span>
+
+        </button>
+
+    </div>
+
+    <!-- CAMPUS FACILITY DIRECTORY -->
+
+    <div id="campusFacilities"
+         class="explore-facilities-section">
+
+        <div class="explore-section-heading">
+
+            <h2 id="exploreFacilitiesTitle">
+                Popular Campus Places
+            </h2>
+
+            <span id="exploreResultCount"></span>
+
+        </div>
+
+        <p id="exploreSearchMessage"
+           class="explore-search-message"
+           role="status"
+           aria-live="polite"
+           hidden>
+        </p>
+
+        <div id="exploreFacilitiesGrid"
+             class="explore-facilities-grid">
+        </div>
+
+        <!-- EMPTY STATE -->
+
+        <div id="exploreEmptyState"
+             class="explore-empty-state"
+             hidden>
+
+            <i class="fa-solid fa-compass"></i>
+
+            <h3 id="exploreEmptyTitle">
+                No places found
+            </h3>
+
+            <p id="exploreEmptyDescription">
+
+                Try searching for another
+                campus facility.
+
+            </p>
+
+            <button type="button"
+                    id="resetExploreFilters"
+                    class="explore-reset-button">
+
+                Show All Places
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- FACILITY DETAILS -->
+
+    <div id="exploreFacilityDetails"
+         class="explore-details-card"
+         hidden>
+
+        <div class="explore-section-heading">
+
+            <h2>Facility Details</h2>
+
+            <button type="button"
+                    id="closeExploreDetails"
+                    class="explore-close-button"
+                    aria-label="Close facility details">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+        <img id="exploreDetailImage"
+             class="explore-detail-image"
+             alt=""
+             hidden>
+
+        <div class="explore-detail-content">
+
+            <span id="exploreDetailCategory"
+                  class="explore-detail-category">
+            </span>
+
+            <h2 id="exploreDetailName"></h2>
+
+            <p id="exploreDetailDescription"></p>
+
+            <div class="explore-detail-information">
+
+                <div class="explore-info-item">
+
+                    <i class="fa-solid fa-location-dot"></i>
+
+                    <div>
+
+                        <h3>Location</h3>
+
+                        <p id="exploreDetailLocation"></p>
+
+                    </div>
+
+                </div>
+
+                <div class="explore-info-item">
+
+                    <i class="fa-solid fa-clock"></i>
+
+                    <div>
+
+                        <h3>Opening Hours</h3>
+
+                        <p id="exploreDetailHours"></p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <h3>Available Facilities</h3>
+
+            <ul id="exploreDetailAmenities"
+                class="explore-amenities-list">
+            </ul>
+
+            <div class="explore-detail-actions">
+
+                <a href="#map"
+                   id="exploreViewOnMap"
+                   class="explore-map-button">
+
+                    <i class="fa-solid fa-map-location-dot"></i>
+
+                    View on Map
+
+                </a>
+
+                <button type="button"
+                        id="exploreFavouriteButton"
+                        class="explore-favourite-button">
+
+                    <i class="fa-regular fa-heart"></i>
+
+                    Save to Favourites
+
+                </button>
+
+                <button type="button"
+                        id="exploreVisitedButton"
+                        class="explore-visited-button">
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                    Mark as Explored
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- CAMPUS EXPLORATION TIPS -->
+
+    <div class="explore-tips-card">
+
+        <div class="explore-section-heading">
+
+            <h2>
+
+                <i class="fa-solid fa-lightbulb"></i>
+
+                Campus Exploration Tips
+
+            </h2>
+
+        </div>
+
+        <div class="explore-tips-grid">
+
+            <div class="explore-tip">
+
+                <div class="explore-tip-icon">
+
+                    <i class="fa-solid fa-map"></i>
+
+                </div>
+
+                <h3>Use the Campus Map</h3>
+
+                <p>
+                    Locate important facilities
+                    before visiting them.
+                </p>
+
+            </div>
+
+            <div class="explore-tip">
+
+                <div class="explore-tip-icon">
+
+                    <i class="fa-solid fa-clock"></i>
+
+                </div>
+
+                <h3>Check Opening Hours</h3>
+
+                <p>
+                    Confirm facility timings
+                    before planning your visit.
+                </p>
+
+            </div>
+
+            <div class="explore-tip">
+
+                <div class="explore-tip-icon">
+
+                    <i class="fa-solid fa-users"></i>
+
+                </div>
+
+                <h3>Explore Together</h3>
+
+                <p>
+                    Discover the campus with
+                    your classmates and friends.
+                </p>
+
+            </div>
+
+            <div class="explore-tip">
+
+                <div class="explore-tip-icon">
+
+                    <i class="fa-solid fa-list-check"></i>
+
+                </div>
+
+                <h3>Track Your Progress</h3>
+
+                <p>
+                    Mark places as explored
+                    after visiting them.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- UNIVERSITY MAP ASSISTANCE -->
+
+    <div class="explore-navigation-banner">
+
+        <div class="explore-navigation-icon">
+
+            <i class="fa-solid fa-map-location-dot"></i>
+
+        </div>
+
+        <div class="explore-navigation-content">
+
+            <h2>Ready to Explore?</h2>
+
+            <p>
+                Use the interactive University Map
+                to locate campus destinations.
+            </p>
+
+        </div>
+
+        <a href="#map"
+           class="explore-navigation-button">
+
+            <i class="fa-solid fa-route"></i>
+
+            Open University Map
+
+        </a>
+
+    </div>
+
+    <!-- INFORMATION NOTICE -->
+
+    <div class="explore-information-notice">
+
+        <i class="fa-solid fa-circle-info"></i>
+
+        <div>
+
+            <h3>Campus Facility Information</h3>
+
+            <p>
+                Facility availability, opening hours
+                and access requirements may change.
+                Confirm important information with
+                the university before visiting.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
 
         <section id="ums" class="page-section" hidden>
             <h1>UMS Help</h1>
