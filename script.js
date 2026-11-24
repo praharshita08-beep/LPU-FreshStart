@@ -1850,10 +1850,15 @@ document.getElementById(
 
     if (lpuCampusMap !== null) {
 
-        lpuCampusMap.setView(
-            lpuCampusCenter,
-            lpuDefaultZoom
-        );
+        if (lpuCampusImageBounds) {
+
+    lpuCampusMap.fitBounds(
+        lpuCampusImageBounds
+    );
+
+    lpuCampusMap.zoomIn(1);
+
+}
 
         lpuCampusMap.closePopup();
 
@@ -3041,18 +3046,7 @@ selectCampusLocation = function() {
     );
 };
 
-document.getElementById("resetCampusMap")
-    .addEventListener("click", function() {
 
-        if (lpuCampusMap && lpuCampusImageBounds) {
-
-            lpuCampusMap.fitBounds(
-                lpuCampusImageBounds
-            );
-
-        }
-
-    });
 
 document.getElementById("findMyLocation")
     .disabled = true;
