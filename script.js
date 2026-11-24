@@ -2448,28 +2448,53 @@ document.querySelectorAll(
 // FIND MATCHING CAMPUS LOCATIONS
 // =========================================
 
+
 function findCampusLocations(query) {
 
-    const searchValue =
-        query.toLowerCase().trim();
+    const search = query.trim().toLowerCase();
 
-    if (!searchValue) {
+    if (search === "") {
         return [];
+    }
+
+    const blockSearch = search
+        .replace(/^block\s*/, "")
+        .replace(/\s/g, "")
+        .replace(/^0+/, "");
+
+    const exactBlockMatches = campusLocations.filter(
+        function(location) {
+
+            const block = location.block
+                .toLowerCase()
+                .replace(/^0+/, "");
+
+            return block === blockSearch;
+
+        }
+    );
+
+    if (exactBlockMatches.length > 0) {
+        return exactBlockMatches;
     }
 
     return campusLocations.filter(function(location) {
 
         const searchableText = (
+
             location.name + " " +
+            location.block + " " +
             location.categoryName + " " +
             location.keywords
+
         ).toLowerCase();
 
-        return searchableText.includes(searchValue);
+        return searchableText.includes(search);
 
     });
 
 }
+
 
 // =========================================
 // DISPLAY LIVE SEARCH SUGGESTIONS
