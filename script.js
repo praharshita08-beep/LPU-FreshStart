@@ -1943,6 +1943,202 @@ checkCampusMapVisibility();
 const campusLocations = [
 
     {
+        id: "girls-hostel-1",
+        name: "Girls Hostel 1",
+        block: "09",
+        category: "hostel",
+        categoryName: "Hostel",
+        icon: "fa-bed",
+        coordinates: null,
+        imagePosition: [367, 930],
+        description: "Girls Hostel 1, as listed on the campus site plan.",
+        keywords: "girls hostel 1 gh1 accommodation block 09"
+    },
+
+    {
+        id: "girls-hostel-2",
+        name: "Girls Hostel 2",
+        block: "10",
+        category: "hostel",
+        categoryName: "Hostel",
+        icon: "fa-bed",
+        coordinates: null,
+        imagePosition: [419, 895],
+        description: "Girls Hostel 2, as listed on the campus site plan.",
+        keywords: "girls hostel 2 gh2 accommodation block 10"
+    },
+
+    {
+        id: "girls-hostel-3",
+        name: "Girls Hostel 3",
+        block: "11",
+        category: "hostel",
+        categoryName: "Hostel",
+        icon: "fa-bed",
+        coordinates: null,
+        imagePosition: [404, 852],
+        description: "Girls Hostel 3, as listed on the campus site plan.",
+        keywords: "girls hostel 3 gh3 accommodation block 11"
+    },
+
+    {
+        id: "girls-hostel-4",
+        name: "Girls Hostel 4",
+        block: "12",
+        category: "hostel",
+        categoryName: "Hostel",
+        icon: "fa-bed",
+        coordinates: null,
+        imagePosition: [347, 903],
+        description: "Girls Hostel 4, as listed on the campus site plan.",
+        keywords: "girls hostel 4 gh4 accommodation block 12"
+    },
+
+    {
+        id: "girls-hostel-5",
+        name: "Girls Hostel 5",
+        block: "21A",
+        category: "hostel",
+        categoryName: "Hostel",
+        icon: "fa-bed",
+        coordinates: null,
+        imagePosition: [516, 574],
+        description: "Girls Hostel 5, as listed on the campus site plan.",
+        keywords: "girls hostel 5 gh5 accommodation block 21a"
+    },
+
+    {
+        id: "girls-hostel-6",
+        name: "Girls Hostel 6",
+        block: "21B",
+        category: "hostel",
+        categoryName: "Hostel",
+        icon: "fa-bed",
+        coordinates: null,
+        imagePosition: [551, 555],
+        description: "Girls Hostel 6, as listed on the campus site plan.",
+        keywords: "girls hostel 6 gh6 accommodation block 21b"
+    },
+
+    {
+        id: "boys-hostel-1",
+        name: "Boys Hostel 1",
+        block: "45",
+        category: "hostel",
+        categoryName: "Hostel",
+        icon: "fa-bed",
+        coordinates: null,
+        imagePosition: [495, 387],
+        description: "Boys Hostel 1, as listed on the campus site plan.",
+        keywords: "boys hostel 1 bh1 accommodation block 45"
+    },
+
+    {
+        id: "boys-hostel-2",
+        name: "Boys Hostel 2",
+        block: "48",
+        category: "hostel",
+        categoryName: "Hostel",
+        icon: "fa-bed",
+        coordinates: null,
+        imagePosition: [397, 297],
+        description: "Boys Hostel 2, as listed on the campus site plan.",
+        keywords: "boys hostel 2 bh2 accommodation block 48"
+    },
+
+    {
+        id: "boys-hostel-3",
+        name: "Boys Hostel 3",
+        block: "49",
+        category: "hostel",
+        categoryName: "Hostel",
+        icon: "fa-bed",
+        coordinates: null,
+        imagePosition: [439, 276],
+        description: "Boys Hostel 3, as listed on the campus site plan.",
+        keywords: "boys hostel 3 bh3 accommodation block 49"
+    },
+
+    {
+        id: "boys-hostel-3a",
+        name: "Boys Hostel 3A",
+        block: "50",
+        category: "hostel",
+        categoryName: "Hostel",
+        icon: "fa-bed",
+        coordinates: null,
+        imagePosition: [474, 249],
+        description: "Boys Hostel 3A, as listed on the campus site plan.",
+        keywords: "boys hostel 3a bh3a accommodation block 50"
+    },
+
+    {
+        id: "boys-hostel-4a",
+        name: "Boys Hostel 4",
+        block: "51A",
+        category: "hostel",
+        categoryName: "Hostel",
+        icon: "fa-bed",
+        coordinates: null,
+        imagePosition: [413, 208],
+        description: "Boys Hostel 4, Block 51A.",
+        keywords: "boys hostel 4 bh4 accommodation block 51a"
+    },
+
+    {
+        id: "boys-hostel-4b",
+        name: "Boys Hostel 4",
+        block: "51B",
+        category: "hostel",
+        categoryName: "Hostel",
+        icon: "fa-bed",
+        coordinates: null,
+        imagePosition: [463, 173],
+        description: "Boys Hostel 4, Block 51B.",
+        keywords: "boys hostel 4 bh4 accommodation block 51b"
+    },
+
+    {
+        id: "boys-hostel-5",
+        name: "Boys Hostel 5",
+        block: "53",
+        category: "hostel",
+        categoryName: "Hostel",
+        icon: "fa-bed",
+        coordinates: null,
+        imagePosition: [190, 309],
+        description: "Boys Hostel 5, as listed on the campus site plan.",
+        keywords: "boys hostel 5 bh5 accommodation block 53"
+    },
+
+    {
+        id: "boys-hostel-6",
+        name: "Boys Hostel 6",
+        block: "54",
+        category: "hostel",
+        categoryName: "Hostel",
+        icon: "fa-bed",
+        coordinates: null,
+        imagePosition: [163, 260],
+        description: "Boys Hostel 6, as listed on the campus site plan.",
+        keywords: "boys hostel 6 bh6 accommodation block 54"
+    },
+
+    {
+        id: "boys-hostel-7",
+        name: "Boys Hostel 7",
+        block: "47",
+        category: "hostel",
+        categoryName: "Hostel",
+        icon: "fa-bed",
+        coordinates: null,
+        imagePosition: [559, 205],
+        description: "Boys Hostel 7, as listed on the campus site plan.",
+        keywords: "boys hostel 7 bh7 accommodation block 47"
+    },
+
+
+    {
         id: "central-library",
         name: "Central Library",
         block: "37",
