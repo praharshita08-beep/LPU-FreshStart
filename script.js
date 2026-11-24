@@ -1722,6 +1722,9 @@ let lpuMapTiles = null;
 // INITIALIZE CAMPUS MAP
 // =========================================
 
+
+let lpuCampusImageBounds = null;
+
 function initializeCampusMap() {
 
     if (lpuCampusMap !== null) {
@@ -1735,8 +1738,7 @@ function initializeCampusMap() {
     if (typeof L === "undefined") {
 
         showCampusMapMessage(
-            "Map library could not be loaded. " +
-            "Please check your internet connection.",
+            "Map library could not be loaded.",
             true
         );
 
@@ -1746,53 +1748,73 @@ function initializeCampusMap() {
 
     lpuCampusMap = L.map("campusMap", {
 
-        center: lpuCampusCenter,
-        zoom: lpuDefaultZoom,
-        minZoom: 14,
-        maxZoom: 19,
-        zoomControl: true
+        crs: L.CRS.Simple,
+
+        center: [0, 0],
+
+        zoom: -2,
+
+        minZoom: -5,
+
+        maxZoom: 3,
+
+        zoomSnap: 0.25,
+
+        zoomControl: true,
+
+        maxBoundsViscosity: 1
 
     });
 
-    // Load actual OpenStreetMap geography
+    const campusImage = new Image();
 
-    lpuMapTiles = L.tileLayer(
+    campusImage.onload = function() {
 
-        "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+        lpuCampusImageBounds = [
 
-        {
-            maxZoom: 19,
+            [0, 0],
 
-            attribution:
-                '&copy; <a href="https://www.openstreetmap.org/copyright">' +
-                'OpenStreetMap</a> contributors'
-        }
+            [
+                campusImage.naturalHeight,
+                campusImage.naturalWidth
+            ]
 
-    ).addTo(lpuCampusMap);
+        ];
 
-    lpuMapTiles.on("tileerror", function() {
+        L.imageOverlay(
+
+            "lpu-campus-map.png",
+
+            lpuCampusImageBounds,
+
+            {
+                alt: "LPU Campus Site Plan"
+            }
+
+        ).addTo(lpuCampusMap);
+
+        lpuCampusMap.setMaxBounds(
+            lpuCampusImageBounds
+        );
+
+        lpuCampusMap.invalidateSize();
+
+        lpuCampusMap.fitBounds(
+            lpuCampusImageBounds
+        );
+
+    };
+
+    campusImage.onerror = function() {
 
         showCampusMapMessage(
-            "Some map tiles could not be loaded. " +
-            "Please check your internet connection.",
+            "Campus map image could not be loaded.",
             true
         );
 
-    });
+    };
 
-    // University reference marker
-
-    L.marker(lpuCampusCenter)
-
-        .addTo(lpuCampusMap)
-
-        .bindPopup(
-            "<h3>Lovely Professional University</h3>" +
-            "<p>Phagwara, Punjab, India</p>" +
-            "<p>Campus reference location</p>"
-        );
-
-    lpuCampusMap.invalidateSize();
+    campusImage.src = "lpu-campus-map.png";
 
 }
 
