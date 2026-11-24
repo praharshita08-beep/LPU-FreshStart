@@ -861,3 +861,843 @@ function loadStudentProfile() {
 loadStudentProfile();
 
 
+// =========================================
+// FIND MY CLASSROOM FUNCTIONALITY
+// =========================================
+
+const CLASSROOM_HISTORY_KEY =
+    "freshstart_classroom_history";
+
+// =========================================
+// DEMONSTRATION CLASSROOM DATABASE
+// =========================================
+
+// These are fictional classroom locations.
+// Replace with verified LPU data later.
+
+const classroomDatabase = [
+
+    {
+        id: "A-201",
+        block: "A",
+        room: "201",
+        building: "Example Academic Block A",
+        floor: "Second Floor",
+        type: "Lecture Hall",
+        landmarks: "Main staircase and reception area",
+        directions: [
+            "Locate Example Academic Block A.",
+            "Enter through the main entrance.",
+            "Proceed to the second floor.",
+            "Follow the classroom signs to Room 201."
+        ]
+    },
+
+    {
+        id: "A-202",
+        block: "A",
+        room: "202",
+        building: "Example Academic Block A",
+        floor: "Second Floor",
+        type: "Lecture Hall",
+        landmarks: "Room 201 and corridor notice board",
+        directions: [
+            "Locate Example Academic Block A.",
+            "Proceed to the second floor.",
+            "Follow the classroom signs to Room 202."
+        ]
+    },
+
+    {
+        id: "B-105",
+        block: "B",
+        room: "105",
+        building: "Example Academic Block B",
+        floor: "First Floor",
+        type: "Tutorial Room",
+        landmarks: "First-floor notice board",
+        directions: [
+            "Locate Example Academic Block B.",
+            "Proceed to the first floor.",
+            "Follow the classroom signs to Room 105."
+        ]
+    },
+
+    {
+        id: "B-203",
+        block: "B",
+        room: "203",
+        building: "Example Academic Block B",
+        floor: "Second Floor",
+        type: "Lecture Hall",
+        landmarks: "Second-floor staircase",
+        directions: [
+            "Locate Example Academic Block B.",
+            "Proceed to the second floor.",
+            "Follow the classroom signs to Room 203."
+        ]
+    },
+
+    {
+        id: "C-301",
+        block: "C",
+        room: "301",
+        building: "Example Academic Block C",
+        floor: "Third Floor",
+        type: "Computer Laboratory",
+        landmarks: "Laboratory notice board",
+        directions: [
+            "Locate Example Academic Block C.",
+            "Proceed to the third floor.",
+            "Follow the laboratory signs to Room 301."
+        ]
+    },
+
+    {
+        id: "C-302",
+        block: "C",
+        room: "302",
+        building: "Example Academic Block C",
+        floor: "Third Floor",
+        type: "Computer Laboratory",
+        landmarks: "Room 301",
+        directions: [
+            "Locate Example Academic Block C.",
+            "Proceed to the third floor.",
+            "Follow the laboratory signs to Room 302."
+        ]
+    }
+
+];
+
+// =========================================
+// CLASSROOM ELEMENTS
+// =========================================
+
+const classroomSearchForm =
+    document.getElementById("classroomSearchForm");
+
+const classroomSearchInput =
+    document.getElementById("classroomSearchInput");
+
+const roomSearchTab =
+    document.getElementById("roomSearchTab");
+
+const blockSearchTab =
+    document.getElementById("blockSearchTab");
+
+const classroomSuggestions =
+    document.getElementById("classroomSuggestions");
+
+const classroomResults =
+    document.getElementById("classroomResults");
+
+const classroomResultsSection =
+    document.getElementById("classroomResultsSection");
+
+const classroomSearchMessage =
+    document.getElementById("classroomSearchMessage");
+
+const classroomDirectionsPanel =
+    document.getElementById("classroomDirectionsPanel");
+
+const classroomHistoryList =
+    document.getElementById("classroomHistoryList");
+
+const classroomHistoryEmpty =
+    document.getElementById("classroomHistoryEmpty");
+
+const clearClassroomHistory =
+    document.getElementById("clearClassroomHistory");
+
+let classroomSearchMode = "room";
+
+// =========================================
+// SWITCH SEARCH MODE
+// =========================================
+
+function setClassroomSearchMode(mode) {
+
+    classroomSearchMode = mode;
+
+    roomSearchTab.classList.toggle(
+        "active", mode === "room"
+    );
+
+    blockSearchTab.classList.toggle(
+        "active", mode === "block"
+    );
+
+    roomSearchTab.setAttribute(
+        "aria-pressed", mode === "room"
+    );
+
+    blockSearchTab.setAttribute(
+        "aria-pressed", mode === "block"
+    );
+
+    classroomSearchInput.value = "";
+
+    classroomSuggestions.hidden = true;
+    classroomResultsSection.hidden = true;
+    classroomSearchMessage.hidden = true;
+    classroomDirectionsPanel.hidden = true;
+
+    if (mode === "room") {
+
+        classroomSearchInput.placeholder =
+            "Enter classroom number";
+
+        document.getElementById(
+            "classroomSearchButtonText"
+        ).textContent = "Find Classroom";
+
+        document.getElementById(
+            "classroomSearchHint"
+        ).textContent =
+            "Try searching for Room 201 or Room 105.";
+
+    } else {
+
+        classroomSearchInput.placeholder =
+            "Enter academic block number";
+
+        document.getElementById(
+            "classroomSearchButtonText"
+        ).textContent = "Find Block";
+
+        document.getElementById(
+            "classroomSearchHint"
+        ).textContent =
+            "Try searching for Block A, B or C.";
+
+    }
+
+}
+
+roomSearchTab.addEventListener("click", function() {
+
+    setClassroomSearchMode("room");
+
+    classroomSearchInput.focus();
+
+});
+
+blockSearchTab.addEventListener("click", function() {
+
+    setClassroomSearchMode("block");
+
+    classroomSearchInput.focus();
+
+});
+
+// =========================================
+// NORMALIZE SEARCH INPUT
+// =========================================
+
+function normalizeClassroomSearch(value) {
+
+    return value.toLowerCase()
+        .replace(/room|block/g, "")
+        .replace(/[^a-z0-9]/g, "");
+
+}
+
+// =========================================
+// FIND MATCHING CLASSROOMS
+// =========================================
+
+function findMatchingClassrooms(query, mode) {
+
+    const searchValue =
+        normalizeClassroomSearch(query);
+
+    if (!searchValue) {
+        return [];
+    }
+
+    return classroomDatabase.filter(function(room) {
+
+        if (mode === "block") {
+
+            return normalizeClassroomSearch(
+                room.block
+            ).includes(searchValue);
+
+        }
+
+        return normalizeClassroomSearch(
+            room.room
+        ).includes(searchValue) ||
+
+        normalizeClassroomSearch(
+            room.id
+        ).includes(searchValue);
+
+    });
+
+}
+
+// =========================================
+// SEARCH STATUS MESSAGE
+// =========================================
+
+function showClassroomMessage(message, isError) {
+
+    classroomSearchMessage.textContent = message;
+
+    classroomSearchMessage.classList.toggle(
+        "error", isError
+    );
+
+    classroomSearchMessage.hidden = false;
+
+}
+
+// =========================================
+// LIVE SEARCH SUGGESTIONS
+// =========================================
+
+function updateClassroomSuggestions() {
+
+    const query = classroomSearchInput.value.trim();
+
+    classroomSuggestions.textContent = "";
+
+    if (!query) {
+
+        classroomSuggestions.hidden = true;
+        return;
+
+    }
+
+    const matches = findMatchingClassrooms(
+        query,
+        classroomSearchMode
+    );
+
+    let suggestions = [];
+
+    if (classroomSearchMode === "block") {
+
+        const blocks = Array.from(
+            new Set(matches.map(function(room) {
+                return room.block;
+            }))
+        );
+
+        suggestions = blocks.map(function(block) {
+
+            return {
+                label: "Block " + block,
+                value: block
+            };
+
+        });
+
+    } else {
+
+        suggestions = matches.map(function(room) {
+
+            return {
+                label: "Block " + room.block +
+                    " - Room " + room.room,
+                value: room.id
+            };
+
+        });
+
+    }
+
+    if (suggestions.length === 0) {
+
+        classroomSuggestions.hidden = true;
+        return;
+
+    }
+
+    suggestions.slice(0, 6).forEach(function(item) {
+
+        const button = document.createElement("button");
+
+        button.type = "button";
+        button.className = "classroom-suggestion";
+
+        const icon = document.createElement("i");
+
+        icon.className =
+            "fa-solid fa-location-dot";
+
+        button.appendChild(icon);
+
+        const label = document.createElement("span");
+
+        label.textContent = item.label;
+
+        button.appendChild(label);
+
+        button.addEventListener("click", function() {
+
+            classroomSearchInput.value = item.value;
+
+            classroomSuggestions.hidden = true;
+
+            performClassroomSearch();
+
+        });
+
+        classroomSuggestions.appendChild(button);
+
+    });
+
+    classroomSuggestions.hidden = false;
+
+}
+
+classroomSearchInput.addEventListener(
+    "input",
+    updateClassroomSuggestions
+);
+
+document.addEventListener("click", function(event) {
+
+    if (!classroomSearchForm.contains(event.target)) {
+
+        classroomSuggestions.hidden = true;
+
+    }
+
+});
+
+classroomSearchForm.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key === "Escape") {
+
+            classroomSuggestions.hidden = true;
+
+        }
+
+    }
+);
+
+// =========================================
+// DISPLAY CLASSROOM RESULTS
+// =========================================
+
+function displayClassroomResults(matches) {
+
+    classroomResults.textContent = "";
+
+    document.getElementById(
+        "classroomResultCount"
+    ).textContent = matches.length +
+        (matches.length === 1
+            ? " classroom found"
+            : " classrooms found");
+
+    matches.forEach(function(room) {
+
+        const card = document.createElement("article");
+
+        card.className = "classroom-result-card";
+
+        // All values below come from the fixed
+        // demonstration database, not user input.
+
+        card.innerHTML = `
+
+            <div class="classroom-result-heading">
+
+                <div class="classroom-result-icon">
+                    <i class="fa-solid fa-building"></i>
+                </div>
+
+                <div>
+                    <h3>Room ${room.room}</h3>
+                    <p>${room.building}</p>
+                </div>
+
+            </div>
+
+            <div class="classroom-details-grid">
+
+                <div class="classroom-detail">
+
+                    <i class="fa-solid fa-building"></i>
+
+                    <div>
+                        <small>Block</small>
+                        <p>Block ${room.block}</p>
+                    </div>
+
+                </div>
+
+                <div class="classroom-detail">
+
+                    <i class="fa-solid fa-layer-group"></i>
+
+                    <div>
+                        <small>Floor</small>
+                        <p>${room.floor}</p>
+                    </div>
+
+                </div>
+
+                <div class="classroom-detail">
+
+                    <i class="fa-solid fa-door-open"></i>
+
+                    <div>
+                        <small>Room Number</small>
+                        <p>${room.room}</p>
+                    </div>
+
+                </div>
+
+                <div class="classroom-detail">
+
+                    <i class="fa-solid fa-book-open"></i>
+
+                    <div>
+                        <small>Room Type</small>
+                        <p>${room.type}</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="classroom-landmarks">
+
+                <h4>
+                    <i class="fa-solid fa-location-dot"></i>
+                    Nearby Landmarks
+                </h4>
+
+                <p>${room.landmarks}</p>
+
+            </div>
+
+            <div class="classroom-result-actions">
+
+                <button type="button"
+                    class="classroom-directions-button">
+
+                    <i class="fa-solid fa-route"></i>
+                    Get Directions
+
+                </button>
+
+                <a href="#map"
+                    class="classroom-map-button">
+
+                    <i class="fa-solid fa-map"></i>
+                    View on Map
+
+                </a>
+
+            </div>
+
+        `;
+
+        card.querySelector(
+            ".classroom-directions-button"
+        ).addEventListener("click", function() {
+
+            showClassroomDirections(room);
+
+        });
+
+        classroomResults.appendChild(card);
+
+    });
+
+    classroomResultsSection.hidden = false;
+
+}
+
+// =========================================
+// PERFORM CLASSROOM SEARCH
+// =========================================
+
+function performClassroomSearch() {
+
+    const query = classroomSearchInput.value.trim();
+
+    classroomSuggestions.hidden = true;
+    classroomDirectionsPanel.hidden = true;
+    classroomSearchMessage.hidden = true;
+    classroomResultsSection.hidden = true;
+
+    if (!normalizeClassroomSearch(query)) {
+
+        showClassroomMessage(
+            "Please enter a classroom or block number.",
+            true
+        );
+
+        return;
+
+    }
+
+    const matches = findMatchingClassrooms(
+        query,
+        classroomSearchMode
+    );
+
+    if (matches.length === 0) {
+
+        showClassroomMessage(
+            "No matching classrooms found in the " +
+            "demonstration database. Try another search " +
+            "or confirm your classroom through UMS.",
+            true
+        );
+
+        return;
+
+    }
+
+    displayClassroomResults(matches);
+
+    saveClassroomHistory(
+        query,
+        classroomSearchMode
+    );
+
+}
+
+classroomSearchForm.addEventListener(
+    "submit",
+    function(event) {
+
+        event.preventDefault();
+
+        performClassroomSearch();
+
+    }
+);
+
+// =========================================
+// CLASSROOM DIRECTIONS
+// =========================================
+
+function showClassroomDirections(room) {
+
+    document.getElementById(
+        "classroomDirectionTitle"
+    ).textContent =
+        "Block " + room.block +
+        " - Room " + room.room;
+
+    const steps = document.getElementById(
+        "classroomDirectionSteps"
+    );
+
+    steps.textContent = "";
+
+    room.directions.forEach(function(direction) {
+
+        const item = document.createElement("li");
+
+        item.textContent = direction;
+
+        steps.appendChild(item);
+
+    });
+
+    classroomDirectionsPanel.hidden = false;
+
+    classroomDirectionsPanel.scrollIntoView({
+        block: "start"
+    });
+
+}
+
+document.getElementById(
+    "closeClassroomDirections"
+).addEventListener("click", function() {
+
+    classroomDirectionsPanel.hidden = true;
+
+});
+
+// =========================================
+// RETRIEVE RECENT SEARCHES
+// =========================================
+
+function getClassroomHistory() {
+
+    try {
+
+        const history = JSON.parse(
+            localStorage.getItem(
+                CLASSROOM_HISTORY_KEY
+            ) || "[]"
+        );
+
+        if (!Array.isArray(history)) {
+            return [];
+        }
+
+        return history.filter(function(item) {
+
+            return item &&
+                typeof item.query === "string" &&
+                (item.mode === "room" ||
+                 item.mode === "block");
+
+        }).slice(0, 5);
+
+    } catch (error) {
+
+        return [];
+
+    }
+
+}
+
+// =========================================
+// SAVE RECENT SEARCHES
+// =========================================
+
+function saveClassroomHistory(query, mode) {
+
+    let history = getClassroomHistory();
+
+    history = history.filter(function(item) {
+
+        return !(
+            normalizeClassroomSearch(item.query) ===
+            normalizeClassroomSearch(query) &&
+            item.mode === mode
+        );
+
+    });
+
+    history.unshift({
+        query: query,
+        mode: mode
+    });
+
+    history = history.slice(0, 5);
+
+    try {
+
+        localStorage.setItem(
+            CLASSROOM_HISTORY_KEY,
+            JSON.stringify(history)
+        );
+
+        displayClassroomHistory();
+
+    } catch (error) {
+
+        showClassroomMessage(
+            "Results found, but search history could not be saved.",
+            false
+        );
+
+    }
+
+}
+
+// =========================================
+// DISPLAY RECENT SEARCHES
+// =========================================
+
+function displayClassroomHistory() {
+
+    const history = getClassroomHistory();
+
+    classroomHistoryList.textContent = "";
+
+    classroomHistoryEmpty.hidden =
+        history.length > 0;
+
+    clearClassroomHistory.hidden =
+        history.length === 0;
+
+    history.forEach(function(item) {
+
+        const button = document.createElement("button");
+
+        button.type = "button";
+        button.className = "classroom-history-item";
+
+        const clockIcon = document.createElement("i");
+
+        clockIcon.className =
+            "fa-solid fa-clock-rotate-left";
+
+        const label = document.createElement("span");
+
+        label.textContent =
+            (item.mode === "room"
+                ? "Room search: "
+                : "Block search: ") +
+            item.query;
+
+        const arrow = document.createElement("i");
+
+        arrow.className =
+            "fa-solid fa-chevron-right";
+
+        button.appendChild(clockIcon);
+        button.appendChild(label);
+        button.appendChild(arrow);
+
+        button.addEventListener("click", function() {
+
+            setClassroomSearchMode(item.mode);
+
+            classroomSearchInput.value = item.query;
+
+            performClassroomSearch();
+
+        });
+
+        classroomHistoryList.appendChild(button);
+
+    });
+
+}
+
+// =========================================
+// CLEAR RECENT SEARCHES
+// =========================================
+
+clearClassroomHistory.addEventListener(
+    "click",
+    function() {
+
+        try {
+
+            localStorage.removeItem(
+                CLASSROOM_HISTORY_KEY
+            );
+
+            displayClassroomHistory();
+
+        } catch (error) {
+
+            showClassroomMessage(
+                "Unable to clear recent searches.",
+                true
+            );
+
+        }
+
+    }
+);
+
+// =========================================
+// INITIALIZE FIND MY CLASSROOM
+// =========================================
+
+setClassroomSearchMode("room");
+
+displayClassroomHistory();
+
