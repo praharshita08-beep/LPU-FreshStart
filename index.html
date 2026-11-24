@@ -793,10 +793,443 @@
 <!-- End of My Profile Section -->
 
 
-        <section id="classroom" class="page-section" hidden>
-            <h1>Find My Classroom</h1>
-            <p>Locate your classroom and academic block.</p>
-        </section>
+        
+<!-- =========================================
+     FIND MY CLASSROOM SECTION
+========================================= -->
+
+<section id="classroom" class="page-section" hidden>
+
+    <!-- Page Heading -->
+
+    <div class="classroom-heading">
+
+        <h1>Find My Classroom</h1>
+
+        <p>
+            Find your classroom and reach your lectures
+            with confidence.
+        </p>
+
+    </div>
+
+    <!-- Classroom Search Banner -->
+
+    <div class="classroom-search-banner">
+
+        <div class="classroom-banner-heading">
+
+            <div>
+
+                <h2>Where is your next class?</h2>
+
+                <p>
+                    Search using your classroom number
+                    or academic block.
+                </p>
+
+            </div>
+
+            <i class="fa-solid fa-map-location-dot"></i>
+
+        </div>
+
+        <!-- Search Form -->
+
+        <form id="classroomSearchForm"
+            class="classroom-search-form">
+
+            <!-- Search Mode -->
+
+            <div class="classroom-search-tabs">
+
+                <button type="button"
+                    id="roomSearchTab"
+                    class="classroom-tab active"
+                    aria-pressed="true">
+
+                    <i class="fa-solid fa-door-open"></i>
+                    Room Number
+
+                </button>
+
+                <button type="button"
+                    id="blockSearchTab"
+                    class="classroom-tab"
+                    aria-pressed="false">
+
+                    <i class="fa-solid fa-building"></i>
+                    Block Number
+
+                </button>
+
+            </div>
+
+            <!-- Search Input -->
+
+            <div class="classroom-search-input">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input type="search"
+                    id="classroomSearchInput"
+                    placeholder="Enter classroom number"
+                    aria-label="Search classroom or block"
+                    autocomplete="off"
+                    required>
+
+            </div>
+
+            <!-- Search Suggestions -->
+
+            <div id="classroomSuggestions"
+                class="classroom-suggestions"
+                hidden>
+            </div>
+
+            <!-- Search Button -->
+
+            <button type="submit"
+                class="classroom-search-button">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <span id="classroomSearchButtonText">
+                    Find Classroom
+                </span>
+
+            </button>
+
+            <!-- Search Hint -->
+
+            <p id="classroomSearchHint"
+                class="classroom-search-hint">
+
+                Try searching for Room 201 or Room 105.
+
+            </p>
+
+        </form>
+
+    </div>
+
+    <!-- Demonstration Data Notice -->
+
+    <div class="classroom-demo-notice">
+
+        <i class="fa-solid fa-circle-info"></i>
+
+        <div>
+
+            <h3>Demonstration Mode</h3>
+
+            <p>
+                Classroom locations and directions are
+                illustrative examples for this prototype.
+                Confirm your actual classroom location
+                through UMS or university staff.
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- Search Status -->
+
+    <p id="classroomSearchMessage"
+        class="classroom-search-message"
+        role="status"
+        aria-live="polite"
+        hidden>
+    </p>
+
+    <!-- Search Results -->
+
+    <div id="classroomResultsSection"
+        class="classroom-results-section"
+        hidden>
+
+        <div class="classroom-section-heading">
+
+            <h2>
+
+                <i class="fa-solid fa-location-dot"></i>
+
+                Search Results
+
+            </h2>
+
+            <span id="classroomResultCount"></span>
+
+        </div>
+
+        <!-- Results Generated Using JavaScript -->
+
+        <div id="classroomResults"
+            class="classroom-results-grid">
+        </div>
+
+    </div>
+
+    <!-- Directions Section -->
+
+    <div id="classroomDirectionsPanel"
+        class="classroom-directions-panel"
+        hidden>
+
+        <div class="classroom-section-heading">
+
+            <h2>
+
+                <i class="fa-solid fa-route"></i>
+
+                Classroom Directions
+
+            </h2>
+
+            <button type="button"
+                id="closeClassroomDirections"
+                class="close-directions-button"
+                aria-label="Close directions">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+        <h3 id="classroomDirectionTitle"></h3>
+
+        <p class="classroom-direction-notice">
+
+            Example directions only. These are not
+            verified campus navigation instructions.
+
+        </p>
+
+        <ol id="classroomDirectionSteps"
+            class="classroom-direction-steps">
+        </ol>
+
+        <a href="#map"
+            class="classroom-map-button">
+
+            <i class="fa-solid fa-map"></i>
+
+            Open University Map
+
+        </a>
+
+    </div>
+
+    <!-- Recent Searches -->
+
+    <div class="classroom-history-card">
+
+        <div class="classroom-section-heading">
+
+            <h2>
+
+                <i class="fa-solid fa-clock-rotate-left"></i>
+
+                Recent Searches
+
+            </h2>
+
+            <button type="button"
+                id="clearClassroomHistory"
+                class="clear-history-button"
+                hidden>
+
+                <i class="fa-solid fa-trash"></i>
+
+                Clear All
+
+            </button>
+
+        </div>
+
+        <!-- Empty Search History -->
+
+        <div id="classroomHistoryEmpty"
+            class="classroom-history-empty">
+
+            <i class="fa-solid fa-clock-rotate-left"></i>
+
+            <h3>No recent searches</h3>
+
+            <p>
+                Your recent classroom searches
+                will appear here.
+            </p>
+
+        </div>
+
+        <!-- Saved Search History -->
+
+        <div id="classroomHistoryList"
+            class="classroom-history-list">
+        </div>
+
+    </div>
+
+    <!-- Classroom Search Tips -->
+
+    <div class="classroom-tips-card">
+
+        <div class="classroom-section-heading">
+
+            <h2>
+
+                <i class="fa-solid fa-lightbulb"></i>
+
+                Classroom Search Tips
+
+            </h2>
+
+        </div>
+
+        <div class="classroom-tips-grid">
+
+            <div class="classroom-tip">
+
+                <div class="classroom-tip-icon">
+
+                    <i class="fa-solid fa-calendar-days"></i>
+
+                </div>
+
+                <div>
+
+                    <h3>Check Your Timetable</h3>
+
+                    <p>
+                        Check your classroom and block
+                        number in your UMS timetable.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="classroom-tip">
+
+                <div class="classroom-tip-icon">
+
+                    <i class="fa-solid fa-building"></i>
+
+                </div>
+
+                <div>
+
+                    <h3>Identify Your Block</h3>
+
+                    <p>
+                        Look for building identification
+                        signs around the campus.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="classroom-tip">
+
+                <div class="classroom-tip-icon">
+
+                    <i class="fa-solid fa-stairs"></i>
+
+                </div>
+
+                <div>
+
+                    <h3>Check the Floor</h3>
+
+                    <p>
+                        Follow the floor directories
+                        and classroom signs inside
+                        the building.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="classroom-tip">
+
+                <div class="classroom-tip-icon">
+
+                    <i class="fa-solid fa-circle-question"></i>
+
+                </div>
+
+                <div>
+
+                    <h3>Ask for Assistance</h3>
+
+                    <p>
+                        Contact university staff or
+                        student support if you cannot
+                        locate your classroom.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Additional Help -->
+
+    <div class="classroom-help-banner">
+
+        <div class="classroom-help-icon">
+
+            <i class="fa-solid fa-map-location-dot"></i>
+
+        </div>
+
+        <div class="classroom-help-content">
+
+            <h3>Unable to find your classroom?</h3>
+
+            <p>
+                Explore the university map or get
+                assistance from student support.
+            </p>
+
+        </div>
+
+        <div class="classroom-help-actions">
+
+            <a href="#map"
+                class="classroom-help-map">
+
+                <i class="fa-solid fa-map"></i>
+
+                University Map
+
+            </a>
+
+            <a href="#support"
+                class="classroom-help-support">
+
+                <i class="fa-solid fa-headset"></i>
+
+                Student Support
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- END OF FIND MY CLASSROOM SECTION -->
+
 
         <section id="map" class="page-section" hidden>
             <h1>University Map</h1>
