@@ -4131,3 +4131,18 @@ body.sidebar-collapsed .main-content {
     }
 
 }
+
+/* LPU CAMPUS MAP SIZE */
+
+#campusMap {
+    height: 750px;
+    background: #e7ece6;
+}
+
+@media (max-width: 600px) {
+
+    #campusMap {
+        height: 500px;
+    }
+
+}
