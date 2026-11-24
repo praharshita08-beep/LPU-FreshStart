@@ -67,13 +67,19 @@ function showPage(pageId) {
     document.title =
         "LPU FreshStart | " + pageTitles[pageId];
 
+    if (pageId !== "dashboard") {
     globalSearch.value = "";
+}
 
     featureCards.forEach(function(card) {
         card.hidden = false;
     });
 
     searchMessage.hidden = true;
+
+if (pageId === "dashboard") {
+    filterFeatures();
+}
 
     window.scrollTo(0, 0);
 
