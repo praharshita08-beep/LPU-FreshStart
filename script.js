@@ -2357,9 +2357,9 @@ function displayPopularCampusLocations() {
                 <p>${location.categoryName}</p>
 
                 <p>
-                    ${location.coordinates
-                        ? "Mapped location"
-                        : "Location verification pending"}
+                    location.imagePosition
+    ? "Shown on campus site plan"
+    : "Location verification pending"
                 </p>
 
             </div>
