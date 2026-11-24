@@ -1934,98 +1934,163 @@ checkCampusMapVisibility();
 // LPU CAMPUS LOCATION DATABASE
 // =========================================
 
+
 const campusLocations = [
 
     {
         id: "central-library",
         name: "Central Library",
+        block: "37",
         category: "academic",
         categoryName: "Academic",
         icon: "fa-book",
-        coordinates: [31.251764, 75.70404],
-        description: "Central Library, Block 37. " +
-            "Access books, study spaces and academic resources.",
-        keywords: "library block 37 books study"
-    },
-
-    {
-        id: "lpu-ground",
-        name: "LPU Ground",
-        category: "sports",
-        categoryName: "Sports",
-        icon: "fa-futbol",
-        coordinates: [31.25578, 75.71037],
-        description: "University ground identified " +
-            "in public mapping data.",
-        keywords: "ground sports outdoor"
-    },
-
-    {
-        id: "uni-mall",
-        name: "Uni Mall",
-        category: "shopping",
-        categoryName: "Shopping",
-        icon: "fa-bag-shopping",
         coordinates: null,
-        description: "Campus shopping and retail facilities.",
-        keywords: "mall shopping store food"
+        imagePosition: [300, 515],
+        description: "Central Library, Block 37.",
+        keywords: "library books study block 37"
     },
 
     {
-        id: "uni-hospital",
-        name: "Uni Hospital",
-        category: "medical",
-        categoryName: "Medical",
-        icon: "fa-hospital",
+        id: "cse-block-33",
+        name: "School of Computer Science and Engineering",
+        block: "33",
+        category: "academic",
+        categoryName: "Academic",
+        icon: "fa-graduation-cap",
         coordinates: null,
-        description: "University healthcare facility.",
-        keywords: "hospital doctor medical health"
+        imagePosition: [235, 550],
+        description: "Academic Block 33, as listed in the campus site plan.",
+        keywords: "cse computer science engineering block 33"
+    },
+
+    {
+        id: "cse-block-34",
+        name: "School of Computer Science and Engineering",
+        block: "34",
+        category: "academic",
+        categoryName: "Academic",
+        icon: "fa-laptop-code",
+        coordinates: null,
+        imagePosition: [223, 525],
+        description: "Academic Block 34, as listed in the campus site plan.",
+        keywords: "cse computer science engineering block 34"
     },
 
     {
         id: "uni-auditorium",
         name: "Shanti Devi Mittal Auditorium",
+        block: "35",
         category: "academic",
-        categoryName: "Academic",
+        categoryName: "Auditorium",
         icon: "fa-masks-theater",
         coordinates: null,
-        description: "Auditorium for university " +
-            "events and programmes.",
-        keywords: "auditorium event shanti devi mittal"
+        imagePosition: [287, 544],
+        description: "University auditorium located in Block 35.",
+        keywords: "auditorium events block 35"
     },
 
     {
-        id: "uni-polis",
-        name: "Uni Polis",
-        category: "food",
-        categoryName: "Food and Recreation",
-        icon: "fa-utensils",
+        id: "uni-hospital",
+        name: "Uni Hospital",
+        block: "08C",
+        category: "medical",
+        categoryName: "Healthcare",
+        icon: "fa-hospital",
         coordinates: null,
-        description: "Campus recreation and gathering area.",
-        keywords: "uni polis food recreation"
-    },
-
-    {
-        id: "sports-stadium",
-        name: "Indoor Sports Stadium",
-        category: "sports",
-        categoryName: "Sports",
-        icon: "fa-trophy",
-        coordinates: null,
-        description: "University indoor sports facility.",
-        keywords: "sports stadium indoor games"
+        imagePosition: [297, 950],
+        description: "University hospital listed in Block 08C.",
+        keywords: "hospital medical doctor health block 8c 08c"
     },
 
     {
         id: "student-welfare",
-        name: "Division of Student Welfare",
+        name: "Division of Student Affairs",
+        block: "13",
         category: "support",
         categoryName: "Student Support",
         icon: "fa-headset",
         coordinates: null,
-        description: "Student welfare and university " +
-            "activity assistance.",
-        keywords: "student welfare dsw support help"
+        imagePosition: [275, 816],
+        description: "Student affairs and assistance facility.",
+        keywords: "dsa student affairs support help block 13"
+    },
+
+    {
+        id: "school-of-business",
+        name: "School of Business",
+        block: "14",
+        category: "academic",
+        categoryName: "Academic",
+        icon: "fa-briefcase",
+        coordinates: null,
+        imagePosition: [272, 748],
+        description: "School of Business, Block 14.",
+        keywords: "business management commerce block 14"
+    },
+
+    {
+        id: "campus-cafe",
+        name: "Campus Cafe",
+        block: "02B",
+        category: "food",
+        categoryName: "Food and Dining",
+        icon: "fa-mug-hot",
+        coordinates: null,
+        imagePosition: [274, 1105],
+        description: "Campus Cafe, as shown on the site plan.",
+        keywords: "cafe cafeteria food block 2b 02b"
+    },
+
+    {
+        id: "cricket-ground",
+        name: "Cricket Ground",
+        block: "52",
+        category: "sports",
+        categoryName: "Sports",
+        icon: "fa-trophy",
+        coordinates: null,
+        imagePosition: [323, 163],
+        description: "Cricket ground and playground area.",
+        keywords: "cricket sports playground block 52"
+    },
+
+    {
+        id: "school-of-law",
+        name: "School of Law",
+        block: "20",
+        category: "academic",
+        categoryName: "Academic",
+        icon: "fa-scale-balanced",
+        coordinates: null,
+        imagePosition: [556, 653],
+        description: "School of Law, Block 20.",
+        keywords: "law academic block 20"
+    },
+
+    {
+        id: "admission-office",
+        name: "Division of Admissions",
+        block: "31",
+        category: "support",
+        categoryName: "Student Support",
+        icon: "fa-address-card",
+        coordinates: null,
+        imagePosition: [252, 595],
+        description: "Division of Admissions, Block 31.",
+        keywords: "admission registration office block 31"
+    },
+
+    {
+        id: "school-of-agriculture",
+        name: "School of Agriculture",
+        block: "25",
+        category: "academic",
+        categoryName: "Academic",
+        icon: "fa-seedling",
+        coordinates: null,
+        imagePosition: [412, 544],
+        description: "School of Agriculture, Block 25.",
+        keywords: "agriculture academic block 25"
     }
 
 ];
