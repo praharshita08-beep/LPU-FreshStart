@@ -1802,6 +1802,7 @@ function initializeCampusMap() {
         lpuCampusMap.fitBounds(
             lpuCampusImageBounds
         );
+        lpuCampusMap.zoomIn(1);
 
     };
 
