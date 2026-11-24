@@ -1905,3 +1905,694 @@ document.getElementById(
 // Initialize map when page is refreshed
 
 checkCampusMapVisibility();
+
+
+// =========================================
+// LPU CAMPUS LOCATION DATABASE
+// =========================================
+
+const campusLocations = [
+
+    {
+        id: "central-library",
+        name: "Central Library",
+        category: "academic",
+        categoryName: "Academic",
+        icon: "fa-book",
+        coordinates: [31.251764, 75.70404],
+        description: "Central Library, Block 37. " +
+            "Access books, study spaces and academic resources.",
+        keywords: "library block 37 books study"
+    },
+
+    {
+        id: "lpu-ground",
+        name: "LPU Ground",
+        category: "sports",
+        categoryName: "Sports",
+        icon: "fa-futbol",
+        coordinates: [31.25578, 75.71037],
+        description: "University ground identified " +
+            "in public mapping data.",
+        keywords: "ground sports outdoor"
+    },
+
+    {
+        id: "uni-mall",
+        name: "Uni Mall",
+        category: "shopping",
+        categoryName: "Shopping",
+        icon: "fa-bag-shopping",
+        coordinates: null,
+        description: "Campus shopping and retail facilities.",
+        keywords: "mall shopping store food"
+    },
+
+    {
+        id: "uni-hospital",
+        name: "Uni Hospital",
+        category: "medical",
+        categoryName: "Medical",
+        icon: "fa-hospital",
+        coordinates: null,
+        description: "University healthcare facility.",
+        keywords: "hospital doctor medical health"
+    },
+
+    {
+        id: "uni-auditorium",
+        name: "Shanti Devi Mittal Auditorium",
+        category: "academic",
+        categoryName: "Academic",
+        icon: "fa-masks-theater",
+        coordinates: null,
+        description: "Auditorium for university " +
+            "events and programmes.",
+        keywords: "auditorium event shanti devi mittal"
+    },
+
+    {
+        id: "uni-polis",
+        name: "Uni Polis",
+        category: "food",
+        categoryName: "Food and Recreation",
+        icon: "fa-utensils",
+        coordinates: null,
+        description: "Campus recreation and gathering area.",
+        keywords: "uni polis food recreation"
+    },
+
+    {
+        id: "sports-stadium",
+        name: "Indoor Sports Stadium",
+        category: "sports",
+        categoryName: "Sports",
+        icon: "fa-trophy",
+        coordinates: null,
+        description: "University indoor sports facility.",
+        keywords: "sports stadium indoor games"
+    },
+
+    {
+        id: "student-welfare",
+        name: "Division of Student Welfare",
+        category: "support",
+        categoryName: "Student Support",
+        icon: "fa-headset",
+        coordinates: null,
+        description: "Student welfare and university " +
+            "activity assistance.",
+        keywords: "student welfare dsw support help"
+    }
+
+];
+
+// =========================================
+// CAMPUS LOCATION ELEMENTS
+// =========================================
+
+const campusMapSearchForm =
+    document.getElementById("campusMapSearchForm");
+
+const campusMapSearch =
+    document.getElementById("campusMapSearch");
+
+const campusMapSuggestions =
+    document.getElementById("campusMapSuggestions");
+
+const popularCampusLocations =
+    document.getElementById("popularCampusLocations");
+
+const selectedCampusLocation =
+    document.getElementById("selectedCampusLocation");
+
+const campusDirectionsButton =
+    document.getElementById("campusDirectionsButton");
+
+const campusMarkers = {};
+
+let campusActiveCategory = "all";
+
+let activeCampusLocation = null;
+
+// =========================================
+// GOOGLE MAPS LOCATION LINK
+// =========================================
+
+function getCampusLocationURL(location) {
+
+    const destination = location.coordinates
+        ? location.coordinates.join(",")
+        : location.name +
+          ", Lovely Professional University, Phagwara";
+
+    return "https://www.google.com/maps/search/?api=1&query=" +
+        encodeURIComponent(destination);
+
+}
+
+// =========================================
+// CREATE CAMPUS MAP MARKERS
+// =========================================
+
+function displayCampusMarkers() {
+
+    if (!lpuCampusMap) {
+        return;
+    }
+
+    Object.keys(campusMarkers).forEach(function(id) {
+
+        lpuCampusMap.removeLayer(campusMarkers[id]);
+
+        delete campusMarkers[id];
+
+    });
+
+    campusLocations.forEach(function(location) {
+
+        if (!location.coordinates) {
+            return;
+        }
+
+        if (
+            campusActiveCategory !== "all" &&
+            location.category !== campusActiveCategory
+        ) {
+            return;
+        }
+
+        const markerIcon = L.divIcon({
+
+            className: "campus-custom-marker",
+
+            html:
+                '<div class="campus-marker-icon">' +
+                '<i class="fa-solid ' +
+                location.icon +
+                '"></i></div>',
+
+            iconSize: [36, 36],
+
+            iconAnchor: [18, 18],
+
+            popupAnchor: [0, -18]
+
+        });
+
+        const marker = L.marker(
+            location.coordinates,
+            {
+                icon: markerIcon,
+                title: location.name
+            }
+        ).addTo(lpuCampusMap);
+
+        marker.bindPopup(
+            "<h3>" + location.name + "</h3>" +
+            "<p>" + location.categoryName + "</p>" +
+            "<p>Public map reference location</p>"
+        );
+
+        marker.on("click", function() {
+
+            selectCampusLocation(location, false);
+
+        });
+
+        campusMarkers[location.id] = marker;
+
+    });
+
+}
+
+// =========================================
+// SELECT CAMPUS LOCATION
+// =========================================
+
+function selectCampusLocation(location, moveMap) {
+
+    activeCampusLocation = location;
+
+    document.getElementById(
+        "selectedLocationName"
+    ).textContent = location.name;
+
+    document.getElementById(
+        "selectedLocationCategory"
+    ).textContent = location.categoryName;
+
+    document.getElementById(
+        "selectedLocationDescription"
+    ).textContent = location.description +
+        (location.coordinates
+            ? " Map position is based on public mapping data."
+            : " Exact campus coordinates are awaiting verification.");
+
+    const directionsLink = document.getElementById(
+        "selectedLocationDirections"
+    );
+
+    directionsLink.href =
+        getCampusLocationURL(location);
+
+    directionsLink.innerHTML =
+        '<i class="fa-solid fa-map"></i> ' +
+        "Find on Google Maps";
+
+    selectedCampusLocation.hidden = false;
+
+    campusDirectionsButton.disabled =
+        !location.coordinates;
+
+    campusMapSuggestions.hidden = true;
+
+    if (location.coordinates && lpuCampusMap) {
+
+        if (moveMap) {
+
+            if (!campusMarkers[location.id]) {
+
+                setCampusCategory("all");
+
+            }
+
+            lpuCampusMap.setView(
+                location.coordinates,
+                18
+            );
+
+        }
+
+        if (campusMarkers[location.id]) {
+
+            campusMarkers[location.id].openPopup();
+
+        }
+
+        document.getElementById(
+            "campusMapMessage"
+        ).hidden = true;
+
+    } else {
+
+        showCampusMapMessage(
+            "This facility is listed, but its exact " +
+            "map position has not yet been verified. " +
+            "Use the Google Maps search link.",
+            false
+        );
+
+    }
+
+    if (moveMap) {
+
+        selectedCampusLocation.scrollIntoView({
+            block: "nearest"
+        });
+
+    }
+
+}
+
+// =========================================
+// DISPLAY POPULAR CAMPUS LOCATIONS
+// =========================================
+
+function displayPopularCampusLocations() {
+
+    popularCampusLocations.textContent = "";
+
+    const locations = campusLocations.filter(
+        function(location) {
+
+            return campusActiveCategory === "all" ||
+                location.category === campusActiveCategory;
+
+        }
+    );
+
+    if (locations.length === 0) {
+
+        const message = document.createElement("p");
+
+        message.textContent =
+            "Locations in this category will be added " +
+            "after verification.";
+
+        popularCampusLocations.appendChild(message);
+
+        return;
+
+    }
+
+    locations.forEach(function(location) {
+
+        const button = document.createElement("button");
+
+        button.type = "button";
+
+        button.className = "popular-location-item";
+
+        button.innerHTML = `
+
+            <div class="popular-location-icon">
+
+                <i class="fa-solid ${location.icon}"></i>
+
+            </div>
+
+            <div class="popular-location-text">
+
+                <h3>${location.name}</h3>
+
+                <p>${location.categoryName}</p>
+
+                <p>
+                    ${location.coordinates
+                        ? "Mapped location"
+                        : "Location verification pending"}
+                </p>
+
+            </div>
+
+            <i class="fa-solid fa-chevron-right"></i>
+
+        `;
+
+        button.addEventListener("click", function() {
+
+            selectCampusLocation(location, true);
+
+        });
+
+        popularCampusLocations.appendChild(button);
+
+    });
+
+}
+
+// =========================================
+// CAMPUS CATEGORY FILTERS
+// =========================================
+
+function setCampusCategory(category) {
+
+    campusActiveCategory = category;
+
+    document.querySelectorAll(
+        ".map-filter"
+    ).forEach(function(button) {
+
+        const isActive =
+            button.dataset.category === category;
+
+        button.classList.toggle(
+            "active",
+            isActive
+        );
+
+        button.setAttribute(
+            "aria-pressed",
+            isActive
+        );
+
+    });
+
+    displayCampusMarkers();
+
+    displayPopularCampusLocations();
+
+}
+
+document.querySelectorAll(
+    ".map-filter"
+).forEach(function(button) {
+
+    button.addEventListener("click", function() {
+
+        selectedCampusLocation.hidden = true;
+
+        activeCampusLocation = null;
+
+        campusDirectionsButton.disabled = true;
+
+        campusMapSuggestions.hidden = true;
+
+        document.getElementById(
+            "campusMapMessage"
+        ).hidden = true;
+
+        setCampusCategory(
+            button.dataset.category
+        );
+
+    });
+
+});
+
+// =========================================
+// FIND MATCHING CAMPUS LOCATIONS
+// =========================================
+
+function findCampusLocations(query) {
+
+    const searchValue =
+        query.toLowerCase().trim();
+
+    if (!searchValue) {
+        return [];
+    }
+
+    return campusLocations.filter(function(location) {
+
+        const searchableText = (
+            location.name + " " +
+            location.categoryName + " " +
+            location.keywords
+        ).toLowerCase();
+
+        return searchableText.includes(searchValue);
+
+    });
+
+}
+
+// =========================================
+// DISPLAY LIVE SEARCH SUGGESTIONS
+// =========================================
+
+function displayCampusSearchSuggestions() {
+
+    const matches = findCampusLocations(
+        campusMapSearch.value
+    );
+
+    campusMapSuggestions.textContent = "";
+
+    if (matches.length === 0) {
+
+        campusMapSuggestions.hidden = true;
+
+        return;
+
+    }
+
+    matches.forEach(function(location) {
+
+        const button = document.createElement("button");
+
+        button.type = "button";
+
+        button.className = "map-suggestion";
+
+        const icon = document.createElement("i");
+
+        icon.className =
+            "fa-solid " + location.icon;
+
+        const label = document.createElement("span");
+
+        label.textContent = location.name;
+
+        button.appendChild(icon);
+
+        button.appendChild(label);
+
+        button.addEventListener("click", function() {
+
+            campusMapSearch.value = location.name;
+
+            selectCampusLocation(location, true);
+
+        });
+
+        campusMapSuggestions.appendChild(button);
+
+    });
+
+    campusMapSuggestions.hidden = false;
+
+}
+
+campusMapSearch.addEventListener(
+    "input",
+    displayCampusSearchSuggestions
+);
+
+// =========================================
+// CAMPUS SEARCH FORM
+// =========================================
+
+campusMapSearchForm.addEventListener(
+    "submit",
+    function(event) {
+
+        event.preventDefault();
+
+        const matches = findCampusLocations(
+            campusMapSearch.value
+        );
+
+        if (matches.length === 0) {
+
+            showCampusMapMessage(
+                "No matching campus locations found. " +
+                "Try another location name.",
+                true
+            );
+
+            campusMapSuggestions.hidden = true;
+
+            return;
+
+        }
+
+        if (matches.length === 1) {
+
+            selectCampusLocation(matches[0], true);
+
+        } else {
+
+            displayCampusSearchSuggestions();
+
+            showCampusMapMessage(
+                "Select your destination from the suggestions.",
+                false
+            );
+
+        }
+
+    }
+);
+
+// =========================================
+// CLOSE SEARCH SUGGESTIONS
+// =========================================
+
+document.addEventListener("click", function(event) {
+
+    if (
+        !campusMapSearchForm.contains(event.target) &&
+        !campusMapSuggestions.contains(event.target)
+    ) {
+
+        campusMapSuggestions.hidden = true;
+
+    }
+
+});
+
+campusMapSearch.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key === "Escape") {
+
+            campusMapSuggestions.hidden = true;
+
+        }
+
+    }
+);
+
+// =========================================
+// CLOSE SELECTED LOCATION DETAILS
+// =========================================
+
+document.getElementById(
+    "closeCampusLocation"
+).addEventListener("click", function() {
+
+    selectedCampusLocation.hidden = true;
+
+    activeCampusLocation = null;
+
+    campusDirectionsButton.disabled = true;
+
+    if (lpuCampusMap) {
+
+        lpuCampusMap.closePopup();
+
+    }
+
+});
+
+// =========================================
+// RESET LOCATION FILTERS
+// =========================================
+
+document.getElementById(
+    "resetCampusMap"
+).addEventListener("click", function() {
+
+    campusMapSearch.value = "";
+
+    campusMapSuggestions.hidden = true;
+
+    selectedCampusLocation.hidden = true;
+
+    activeCampusLocation = null;
+
+    campusDirectionsButton.disabled = true;
+
+    document.getElementById(
+        "campusMapMessage"
+    ).hidden = true;
+
+    setCampusCategory("all");
+
+});
+
+// =========================================
+// LOAD MARKERS WHEN MAP PAGE IS OPENED
+// =========================================
+
+function loadCampusLocationMarkers() {
+
+    if (!document.getElementById("map").hidden) {
+
+        requestAnimationFrame(function() {
+
+            initializeCampusMap();
+
+            displayCampusMarkers();
+
+        });
+
+    }
+
+}
+
+window.addEventListener(
+    "hashchange",
+    loadCampusLocationMarkers
+);
+
+// =========================================
+// INITIALIZE CAMPUS LOCATION DIRECTORY
+// =========================================
+
+displayPopularCampusLocations();
+
+loadCampusLocationMarkers();
