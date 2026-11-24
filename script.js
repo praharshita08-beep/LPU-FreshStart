@@ -2596,3 +2596,343 @@ window.addEventListener(
 displayPopularCampusLocations();
 
 loadCampusLocationMarkers();
+
+
+// =========================================
+// CAMPUS GPS AND NAVIGATION ASSISTANCE
+// =========================================
+
+const findMyLocationButton =
+    document.getElementById("findMyLocation");
+
+const lostAssistancePanel =
+    document.getElementById("lostAssistancePanel");
+
+let campusUserMarker = null;
+
+let campusAccuracyCircle = null;
+
+// =========================================
+// REMOVE CURRENT LOCATION MARKERS
+// =========================================
+
+function clearCampusUserLocation() {
+
+    if (campusUserMarker && lpuCampusMap) {
+
+        lpuCampusMap.removeLayer(campusUserMarker);
+
+        campusUserMarker = null;
+
+    }
+
+    if (campusAccuracyCircle && lpuCampusMap) {
+
+        lpuCampusMap.removeLayer(campusAccuracyCircle);
+
+        campusAccuracyCircle = null;
+
+    }
+
+}
+
+// =========================================
+// FIND STUDENT'S CURRENT LOCATION
+// =========================================
+
+function findCampusUserLocation() {
+
+    if (!navigator.geolocation) {
+
+        showCampusMapMessage(
+            "Your browser does not support location access.",
+            true
+        );
+
+        return;
+
+    }
+
+    initializeCampusMap();
+
+    if (!lpuCampusMap) {
+        return;
+    }
+
+    findMyLocationButton.disabled = true;
+
+    findMyLocationButton.innerHTML =
+        '<i class="fa-solid fa-spinner fa-spin"></i> ' +
+        "Finding Location...";
+
+    showCampusMapMessage(
+        "Requesting your current location...",
+        false
+    );
+
+    navigator.geolocation.getCurrentPosition(
+
+        function(position) {
+
+            const latitude =
+                position.coords.latitude;
+
+            const longitude =
+                position.coords.longitude;
+
+            const accuracy =
+                position.coords.accuracy;
+
+            const currentLocation = [
+                latitude,
+                longitude
+            ];
+
+            clearCampusUserLocation();
+
+            // Blue marker for current location
+
+            campusUserMarker = L.circleMarker(
+                currentLocation,
+                {
+                    radius: 9,
+                    color: "#ffffff",
+                    weight: 3,
+                    fillColor: "#2563eb",
+                    fillOpacity: 1
+                }
+            ).addTo(lpuCampusMap);
+
+            campusUserMarker.bindPopup(
+                "<h3>You Are Here</h3>" +
+                "<p>Your estimated current location.</p>" +
+                "<p>Accuracy: approximately " +
+                Math.round(accuracy) +
+                " metres</p>"
+            );
+
+            // GPS accuracy area
+
+            campusAccuracyCircle = L.circle(
+                currentLocation,
+                {
+                    radius: accuracy,
+                    color: "#2563eb",
+                    weight: 1,
+                    fillColor: "#2563eb",
+                    fillOpacity: 0.12
+                }
+            ).addTo(lpuCampusMap);
+
+            // Check distance from campus reference
+
+            const distanceFromCampus =
+                lpuCampusMap.distance(
+                    currentLocation,
+                    lpuCampusCenter
+                );
+
+            if (distanceFromCampus > 2000) {
+
+                lpuCampusMap.setView(
+                    lpuCampusCenter,
+                    lpuDefaultZoom
+                );
+
+                showCampusMapMessage(
+                    "Your current location is more than " +
+                    "2 km from the campus reference point. " +
+                    "The map will remain centred on LPU.",
+                    false
+                );
+
+            } else {
+
+                lpuCampusMap.setView(
+                    currentLocation,
+                    18
+                );
+
+                campusUserMarker.openPopup();
+
+                showCampusMapMessage(
+                    "Your estimated location has been found.",
+                    false
+                );
+
+            }
+
+            restoreLocationButton();
+
+        },
+
+        function(error) {
+
+            let message =
+                "Unable to determine your location.";
+
+            if (error.code === 1) {
+
+                message =
+                    "Location permission was denied. " +
+                    "You can still search campus locations.";
+
+            } else if (error.code === 2) {
+
+                message =
+                    "Your current location is unavailable.";
+
+            } else if (error.code === 3) {
+
+                message =
+                    "Location request timed out. " +
+                    "Please try again.";
+
+            }
+
+            showCampusMapMessage(message, true);
+
+            restoreLocationButton();
+
+        },
+
+        {
+            enableHighAccuracy: true,
+            timeout: 15000,
+            maximumAge: 0
+        }
+
+    );
+
+}
+
+// =========================================
+// RESTORE LOCATION BUTTON
+// =========================================
+
+function restoreLocationButton() {
+
+    findMyLocationButton.disabled = false;
+
+    findMyLocationButton.innerHTML =
+        '<i class="fa-solid fa-location-crosshairs"></i> ' +
+        "My Location";
+
+}
+
+findMyLocationButton.addEventListener(
+    "click",
+    findCampusUserLocation
+);
+
+// =========================================
+// GOOGLE MAPS WALKING DIRECTIONS
+// =========================================
+
+function getCampusWalkingDirections(location) {
+
+    const destination = location.coordinates
+        ? location.coordinates.join(",")
+        : location.name +
+          ", Lovely Professional University, Phagwara";
+
+    return "https://www.google.com/maps/dir/?api=1" +
+        "&destination=" +
+        encodeURIComponent(destination) +
+        "&travelmode=walking";
+
+}
+
+// =========================================
+// GET DIRECTIONS BUTTON
+// =========================================
+
+campusDirectionsButton.addEventListener(
+    "click",
+    function() {
+
+        if (!activeCampusLocation) {
+
+            showCampusMapMessage(
+                "Please select a campus destination first.",
+                true
+            );
+
+            return;
+
+        }
+
+        if (!activeCampusLocation.coordinates) {
+
+            showCampusMapMessage(
+                "Exact coordinates are not verified. " +
+                "Please use the location search link.",
+                true
+            );
+
+            return;
+
+        }
+
+        window.open(
+            getCampusWalkingDirections(
+                activeCampusLocation
+            ),
+            "_blank",
+            "noopener,noreferrer"
+        );
+
+    }
+);
+
+// =========================================
+// I'M LOST ASSISTANCE
+// =========================================
+
+document.getElementById(
+    "lostAssistanceButton"
+).addEventListener("click", function() {
+
+    lostAssistancePanel.hidden = false;
+
+    lostAssistancePanel.scrollIntoView({
+        block: "nearest"
+    });
+
+});
+
+document.getElementById(
+    "closeLostAssistance"
+).addEventListener("click", function() {
+
+    lostAssistancePanel.hidden = true;
+
+});
+
+document.getElementById(
+    "lostFindLocation"
+).addEventListener("click", function() {
+
+    document.getElementById(
+        "campusMap"
+    ).scrollIntoView({
+        block: "center"
+    });
+
+    findCampusUserLocation();
+
+});
+
+// =========================================
+// RESET GPS AND LOST ASSISTANCE
+// =========================================
+
+document.getElementById(
+    "resetCampusMap"
+).addEventListener("click", function() {
+
+    clearCampusUserLocation();
+
+    lostAssistancePanel.hidden = true;
+
+});
