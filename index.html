@@ -1,1 +1,467 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="LPU FreshStart - A digital campus companion for new students at Lovely Professional University.">
+
+    <title>LPU FreshStart | Student Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+
+        <div class="brand">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <div>
+                <h2>LPU FreshStart</h2>
+                <p>Your Campus Companion</p>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav" aria-label="Main navigation">
+
+            <p class="nav-heading">MAIN MENU</p>
+
+            <a href="#dashboard" class="nav-link active">
+                <i class="fa-solid fa-table-columns"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="#profile" class="nav-link">
+                <i class="fa-solid fa-user"></i>
+                <span>My Profile</span>
+            </a>
+
+            <p class="nav-heading">CAMPUS NAVIGATION</p>
+
+            <a href="#classroom" class="nav-link">
+                <i class="fa-solid fa-school"></i>
+                <span>Find My Classroom</span>
+            </a>
+
+            <a href="#map" class="nav-link">
+                <i class="fa-solid fa-map-location-dot"></i>
+                <span>University Map</span>
+            </a>
+
+            <a href="#explore" class="nav-link">
+                <i class="fa-solid fa-compass"></i>
+                <span>Explore Campus</span>
+            </a>
+
+            <p class="nav-heading">ACADEMICS & ONBOARDING</p>
+
+            <a href="#ums" class="nav-link">
+                <i class="fa-solid fa-desktop"></i>
+                <span>UMS Help</span>
+            </a>
+
+            <a href="#onboarding" class="nav-link">
+                <i class="fa-solid fa-list-check"></i>
+                <span>First 15 Days</span>
+            </a>
+
+            <a href="#timetable" class="nav-link">
+                <i class="fa-solid fa-calendar-days"></i>
+                <span>15-Day Timetable</span>
+            </a>
+
+            <p class="nav-heading">STUDENT ASSISTANCE</p>
+
+            <a href="#support" class="nav-link">
+                <i class="fa-solid fa-headset"></i>
+                <span>Student Support</span>
+            </a>
+
+            <a href="#international" class="nav-link">
+                <i class="fa-solid fa-language"></i>
+                <span>International Help Desk</span>
+            </a>
+
+            <a href="#rules" class="nav-link">
+                <i class="fa-solid fa-book-open"></i>
+                <span>Rules & Policies</span>
+            </a>
+
+            <a href="#banking" class="nav-link">
+                <i class="fa-solid fa-building-columns"></i>
+                <span>Banking Assistance</span>
+            </a>
+
+            <a href="#food" class="nav-link">
+                <i class="fa-solid fa-utensils"></i>
+                <span>Food & Dining</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-footer">
+            <p>LPU FreshStart</p>
+            <small>Explore. Connect. Belong.</small>
+        </div>
+
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Top Navigation -->
+        <header class="topbar">
+
+            <div class="topbar-left">
+
+                <button type="button" id="menuToggle"
+                    class="icon-button"
+                    aria-label="Toggle navigation"
+                    aria-controls="sidebar"
+                    aria-expanded="false">
+
+                    <i class="fa-solid fa-bars"></i>
+
+                </button>
+
+                <h2 id="pageTitle">Dashboard</h2>
+
+            </div>
+
+            <div class="topbar-right">
+
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <input type="search"
+                        id="globalSearch"
+                        aria-label="Search campus features"
+                        placeholder="Search anything...">
+                </div>
+
+                <button type="button"
+                    class="icon-button"
+                    id="notificationButton"
+                    aria-label="Notifications">
+
+                    <i class="fa-regular fa-bell"></i>
+
+                </button>
+
+                <a href="#profile"
+                    class="profile-button"
+                    aria-label="My Profile">
+
+                    <i class="fa-solid fa-circle-user"></i>
+
+                </a>
+
+            </div>
+
+        </header>
+
+        <!-- Dashboard -->
+        <section id="dashboard" class="page-section">
+
+            <!-- Welcome Banner -->
+            <div class="welcome-banner">
+
+                <div class="welcome-content">
+
+                    <span class="welcome-label">
+                        YOUR UNIVERSITY JOURNEY STARTS HERE
+                    </span>
+
+                    <h1 id="welcomeMessage">Welcome to LPU!</h1>
+
+                    <p>
+                        Your first 15 days, made simpler.
+                        Discover your campus, manage your
+                        onboarding and find the support you need.
+                    </p>
+
+                    <a href="#onboarding" class="primary-button">
+                        Start Your Journey
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+
+                </div>
+
+                <div class="welcome-illustration">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+
+            </div>
+
+            <!-- Progress Tracker -->
+            <div class="progress-card">
+
+                <div class="progress-header">
+
+                    <div>
+                        <h2>Your Onboarding Progress</h2>
+                        <p>Every small step brings you closer.</p>
+                    </div>
+
+                    <span id="progressPercentage">0%</span>
+
+                </div>
+
+                <div class="progress-track"
+                    role="progressbar"
+                    aria-label="Onboarding progress"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    aria-valuenow="0"
+                    id="progressTrack">
+
+                    <div class="progress-fill" id="progressFill"></div>
+
+                </div>
+
+                <p id="progressText">0 of 15 days completed</p>
+
+            </div>
+
+            <!-- Quick Access -->
+            <div class="section-heading">
+                <h2>Quick Access</h2>
+                <p>Everything you need, all in one place.</p>
+            </div>
+
+            <div class="feature-grid" id="featureGrid">
+
+                <!-- My Profile -->
+                <a href="#profile" class="feature-card">
+                    <div class="feature-icon purple">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <h3>My Profile</h3>
+                    <p>Manage your personal and academic information.</p>
+                    <span class="card-link">View Profile &rarr;</span>
+                </a>
+
+                <!-- Classroom -->
+                <a href="#classroom" class="feature-card">
+                    <div class="feature-icon orange">
+                        <i class="fa-solid fa-school"></i>
+                    </div>
+                    <h3>Find My Classroom</h3>
+                    <p>Locate your academic block, floor and classroom.</p>
+                    <span class="card-link">Find Classroom &rarr;</span>
+                </a>
+
+                <!-- University Map -->
+                <a href="#map" class="feature-card">
+                    <div class="feature-icon blue">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                    </div>
+                    <h3>University Map</h3>
+                    <p>Find your way around campus when you are lost.</p>
+                    <span class="card-link">Open Map &rarr;</span>
+                </a>
+
+                <!-- Explore Campus -->
+                <a href="#explore" class="feature-card">
+                    <div class="feature-icon green">
+                        <i class="fa-solid fa-compass"></i>
+                    </div>
+                    <h3>Explore Campus</h3>
+                    <p>Discover university facilities and important places.</p>
+                    <span class="card-link">Explore Now &rarr;</span>
+                </a>
+
+                <!-- UMS Help -->
+                <a href="#ums" class="feature-card">
+                    <div class="feature-icon purple">
+                        <i class="fa-solid fa-desktop"></i>
+                    </div>
+                    <h3>UMS Help</h3>
+                    <p>Learn how to use the University Management System.</p>
+                    <span class="card-link">Get Help &rarr;</span>
+                </a>
+
+                <!-- First 15 Days -->
+                <a href="#onboarding" class="feature-card">
+                    <div class="feature-icon blue">
+                        <i class="fa-solid fa-list-check"></i>
+                    </div>
+                    <h3>First 15 Days</h3>
+                    <p>Complete your onboarding tasks step by step.</p>
+                    <span class="card-link">View Checklist &rarr;</span>
+                </a>
+
+                <!-- Student Support -->
+                <a href="#support" class="feature-card">
+                    <div class="feature-icon red">
+                        <i class="fa-solid fa-headset"></i>
+                    </div>
+                    <h3>Student Support</h3>
+                    <p>Find academic, technical and personal assistance.</p>
+                    <span class="card-link">Get Support &rarr;</span>
+                </a>
+
+                <!-- International Help Desk -->
+                <a href="#international" class="feature-card">
+                    <div class="feature-icon purple">
+                        <i class="fa-solid fa-language"></i>
+                    </div>
+                    <h3>International Students Help Desk</h3>
+                    <p>Language assistance, translation and cultural guidance.</p>
+                    <span class="card-link">Explore Resources &rarr;</span>
+                </a>
+
+                <!-- Rules -->
+                <a href="#rules" class="feature-card">
+                    <div class="feature-icon orange">
+                        <i class="fa-solid fa-book-open"></i>
+                    </div>
+                    <h3>Hostel & University Rules</h3>
+                    <p>Understand important campus and hostel policies.</p>
+                    <span class="card-link">View Rules &rarr;</span>
+                </a>
+
+                <!-- Timetable -->
+                <a href="#timetable" class="feature-card">
+                    <div class="feature-icon blue">
+                        <i class="fa-solid fa-calendar-days"></i>
+                    </div>
+                    <h3>First 15 Days Timetable</h3>
+                    <p>Keep track of orientation and induction activities.</p>
+                    <span class="card-link">View Timetable &rarr;</span>
+                </a>
+
+                <!-- Banking -->
+                <a href="#banking" class="feature-card">
+                    <div class="feature-icon green">
+                        <i class="fa-solid fa-building-columns"></i>
+                    </div>
+                    <h3>Banking Assistance</h3>
+                    <p>Find banking, ATM and digital payment guidance.</p>
+                    <span class="card-link">Get Assistance &rarr;</span>
+                </a>
+
+                <!-- Food -->
+                <a href="#food" class="feature-card">
+                    <div class="feature-icon orange">
+                        <i class="fa-solid fa-utensils"></i>
+                    </div>
+                    <h3>Food & Dining</h3>
+                    <p>Discover mess facilities and campus food outlets.</p>
+                    <span class="card-link">Explore Food &rarr;</span>
+                </a>
+
+            </div>
+
+            <!-- Emergency Assistance -->
+            <div class="emergency-banner">
+
+                <div class="emergency-icon">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+
+                <div class="emergency-content">
+                    <h3>Need Immediate Assistance?</h3>
+                    <p>
+                        Find campus security, medical assistance
+                        and emergency support information.
+                    </p>
+                </div>
+
+                <a href="#support" class="emergency-button">
+                    Get Help
+                </a>
+
+            </div>
+
+        </section>
+
+        <!-- Individual Feature Sections -->
+
+        <section id="profile" class="page-section" hidden>
+            <h1>My Profile</h1>
+            <p>Manage your student profile.</p>
+        </section>
+
+        <section id="classroom" class="page-section" hidden>
+            <h1>Find My Classroom</h1>
+            <p>Locate your classroom and academic block.</p>
+        </section>
+
+        <section id="map" class="page-section" hidden>
+            <h1>University Map</h1>
+            <p>Navigate the university campus.</p>
+        </section>
+
+        <section id="explore" class="page-section" hidden>
+            <h1>Explore Campus</h1>
+            <p>Discover campus facilities and important locations.</p>
+        </section>
+
+        <section id="ums" class="page-section" hidden>
+            <h1>UMS Help</h1>
+            <p>Learn how to use UMS effectively.</p>
+        </section>
+
+        <section id="onboarding" class="page-section" hidden>
+            <h1>First 15 Days</h1>
+            <p>Track your onboarding journey.</p>
+        </section>
+
+        <section id="support" class="page-section" hidden>
+            <h1>Student Support</h1>
+            <p>Find the assistance you need.</p>
+        </section>
+
+        <section id="international" class="page-section" hidden>
+            <h1>International Students Help Desk</h1>
+            <p>Language, cultural and international student assistance.</p>
+        </section>
+
+        <section id="rules" class="page-section" hidden>
+            <h1>Hostel & University Rules</h1>
+            <p>Understand university policies and guidelines.</p>
+        </section>
+
+        <section id="timetable" class="page-section" hidden>
+            <h1>First 15 Days Timetable</h1>
+            <p>View orientation and induction schedules.</p>
+        </section>
+
+        <section id="banking" class="page-section" hidden>
+            <h1>Banking Assistance</h1>
+            <p>Find banking and financial guidance.</p>
+        </section>
+
+        <section id="food" class="page-section" hidden>
+            <h1>Food & Dining</h1>
+            <p>Discover campus dining facilities.</p>
+        </section>
+
+        <!-- Footer -->
+        <footer class="main-footer">
+
+            <p>&copy; 2026 LPU FreshStart.</p>
+
+            <p>Designed for students, by students.</p>
+
+            <small>
+                An independent student-led Design Thinking project.
+                Not an official LPU platform.
+            </small>
+
+        </footer>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
+
