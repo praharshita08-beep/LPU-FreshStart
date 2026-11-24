@@ -3062,3 +3062,219 @@ document.getElementById("lostFindLocation")
 
 document.getElementById("campusDirectionsButton")
     .disabled = true;
+
+
+// =========================================
+// INTERACTIVE CAMPUS IMAGE MARKERS
+// =========================================
+
+function getCampusImagePosition(location) {
+
+    if (!lpuCampusImageBounds || !location.imagePosition) {
+        return null;
+    }
+
+    const imageHeight = lpuCampusImageBounds[1][0];
+    const imageWidth = lpuCampusImageBounds[1][1];
+
+    const x = location.imagePosition[0];
+    const y = location.imagePosition[1];
+
+    return [
+
+        imageHeight - (y / 1506) * imageHeight,
+
+        (x / 991) * imageWidth
+
+    ];
+
+}
+
+// DISPLAY BUILDING MARKERS
+
+displayCampusMarkers = function() {
+
+    if (!lpuCampusMap || !lpuCampusImageBounds) {
+        return;
+    }
+
+    Object.keys(campusMarkers).forEach(function(id) {
+
+        lpuCampusMap.removeLayer(campusMarkers[id]);
+
+        delete campusMarkers[id];
+
+    });
+
+    campusLocations.forEach(function(location) {
+
+        if (
+            campusActiveCategory !== "all" &&
+            location.category !== campusActiveCategory
+        ) {
+            return;
+        }
+
+        const position = getCampusImagePosition(location);
+
+        if (!position) {
+            return;
+        }
+
+        const marker = L.circleMarker(position, {
+
+            radius: 8,
+
+            color: "#ffffff",
+
+            weight: 2,
+
+            fillColor: "#e97826",
+
+            fillOpacity: 1
+
+        }).addTo(lpuCampusMap);
+
+        marker.bindTooltip(
+
+            "Block " + location.block +
+            " - " + location.name
+
+        );
+
+        marker.bindPopup(
+
+            "<h3>" + location.name + "</h3>" +
+
+            "<p>Block " + location.block + "</p>" +
+
+            "<p>" + location.categoryName + "</p>"
+
+        );
+
+        marker.on("click", function() {
+
+            selectCampusLocation(location, false);
+
+        });
+
+        campusMarkers[location.id] = marker;
+
+    });
+
+};
+
+// SELECT AND HIGHLIGHT A BUILDING
+
+selectCampusLocation = function(location, moveMap) {
+
+    activeCampusLocation = location;
+
+    document.getElementById(
+        "selectedLocationName"
+    ).textContent = location.name;
+
+    document.getElementById(
+        "selectedLocationCategory"
+    ).textContent =
+        "Block " + location.block +
+        " | " + location.categoryName;
+
+    document.getElementById(
+        "selectedLocationDescription"
+    ).textContent = location.description;
+
+    selectedCampusLocation.hidden = false;
+
+    campusMapSuggestions.hidden = true;
+
+    campusDirectionsButton.disabled = true;
+
+    const directionsLink = document.getElementById(
+        "selectedLocationDirections"
+    );
+
+    directionsLink.hidden = true;
+
+    const position = getCampusImagePosition(location);
+
+    if (!position) {
+
+        showCampusMapMessage(
+            "Please wait for the campus map to load.",
+            false
+        );
+
+        return;
+
+    }
+
+    if (moveMap) {
+
+        setCampusCategory("all");
+
+        lpuCampusMap.setView(
+
+            position,
+
+            Math.max(lpuCampusMap.getZoom(), 0.5)
+
+        );
+
+    }
+
+    if (campusMarkers[location.id]) {
+
+        campusMarkers[location.id].openPopup();
+
+    }
+
+    showCampusMapMessage(
+
+        location.name +
+        " - Block " + location.block +
+        " located on the campus site plan.",
+
+        false
+
+    );
+
+    if (moveMap) {
+
+        document.getElementById("campusMap")
+            .scrollIntoView({
+
+                block: "center"
+
+            });
+
+    }
+
+};
+
+// LOAD MARKERS AFTER IMAGE IS READY
+
+function loadCampusImageMarkers() {
+
+    if (document.getElementById("map").hidden) {
+        return;
+    }
+
+    if (lpuCampusMap && lpuCampusImageBounds) {
+
+        displayCampusMarkers();
+
+    } else {
+
+        setTimeout(loadCampusImageMarkers, 300);
+
+    }
+
+}
+
+window.addEventListener(
+    "hashchange",
+    loadCampusImageMarkers
+);
+
+loadCampusImageMarkers();
