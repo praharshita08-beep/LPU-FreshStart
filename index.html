@@ -1233,10 +1233,439 @@
 <!-- END OF FIND MY CLASSROOM SECTION -->
 
 
-        <section id="map" class="page-section" hidden>
-            <h1>University Map</h1>
-            <p>Navigate the university campus.</p>
-        </section>
+        
+<!-- =========================================
+     UNIVERSITY MAP SECTION
+========================================= -->
+
+<section id="map" class="page-section" hidden>
+
+    <div class="map-heading">
+
+        <h1>University Map</h1>
+
+        <p>
+            Explore the LPU campus and find your
+            destination with confidence.
+        </p>
+
+    </div>
+
+    <!-- MAP SEARCH BANNER -->
+
+    <div class="map-search-banner">
+
+        <div class="map-banner-heading">
+
+            <div>
+
+                <h2>Find your way around LPU</h2>
+
+                <p>
+                    Search university buildings,
+                    facilities and campus locations.
+                </p>
+
+            </div>
+
+            <i class="fa-solid fa-map-location-dot"></i>
+
+        </div>
+
+        <form id="campusMapSearchForm"
+              class="map-search-form">
+
+            <div class="map-search-input">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input
+                    type="search"
+                    id="campusMapSearch"
+                    placeholder="Search campus locations..."
+                    aria-label="Search campus locations"
+                    autocomplete="off"
+                    required
+                >
+
+            </div>
+
+            <button type="submit"
+                    class="map-search-button">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                Search
+
+            </button>
+
+        </form>
+
+        <div id="campusMapSuggestions"
+             class="map-search-suggestions"
+             hidden>
+        </div>
+
+    </div>
+
+    <!-- LOCATION CATEGORY FILTERS -->
+
+    <div class="map-category-filters">
+
+        <button type="button"
+                class="map-filter active"
+                data-category="all"
+                aria-pressed="true">
+
+            <i class="fa-solid fa-map"></i>
+            All Locations
+
+        </button>
+
+        <button type="button"
+                class="map-filter"
+                data-category="academic"
+                aria-pressed="false">
+
+            <i class="fa-solid fa-graduation-cap"></i>
+            Academic
+
+        </button>
+
+        <button type="button"
+                class="map-filter"
+                data-category="hostel"
+                aria-pressed="false">
+
+            <i class="fa-solid fa-bed"></i>
+            Hostels
+
+        </button>
+
+        <button type="button"
+                class="map-filter"
+                data-category="food"
+                aria-pressed="false">
+
+            <i class="fa-solid fa-utensils"></i>
+            Food
+
+        </button>
+
+        <button type="button"
+                class="map-filter"
+                data-category="medical"
+                aria-pressed="false">
+
+            <i class="fa-solid fa-heart-pulse"></i>
+            Medical
+
+        </button>
+
+        <button type="button"
+                class="map-filter"
+                data-category="sports"
+                aria-pressed="false">
+
+            <i class="fa-solid fa-trophy"></i>
+            Sports
+
+        </button>
+
+        <button type="button"
+                class="map-filter"
+                data-category="shopping"
+                aria-pressed="false">
+
+            <i class="fa-solid fa-bag-shopping"></i>
+            Shopping
+
+        </button>
+
+        <button type="button"
+                class="map-filter"
+                data-category="banking"
+                aria-pressed="false">
+
+            <i class="fa-solid fa-building-columns"></i>
+            Banking
+
+        </button>
+
+        <button type="button"
+                class="map-filter"
+                data-category="support"
+                aria-pressed="false">
+
+            <i class="fa-solid fa-headset"></i>
+            Student Support
+
+        </button>
+
+    </div>
+
+    <!-- MAP STATUS MESSAGE -->
+
+    <p id="campusMapMessage"
+       class="map-status-message"
+       role="status"
+       aria-live="polite"
+       hidden>
+    </p>
+
+    <!-- INTERACTIVE CAMPUS MAP -->
+
+    <div class="campus-map-card">
+
+        <div class="campus-map-header">
+
+            <div>
+
+                <h2>
+                    <i class="fa-solid fa-map-location-dot"></i>
+                    LPU Campus Map
+                </h2>
+
+                <p>Phagwara, Punjab, India</p>
+
+            </div>
+
+            <button type="button"
+                    id="resetCampusMap"
+                    class="map-reset-button">
+
+                <i class="fa-solid fa-rotate-right"></i>
+                Reset Map
+
+            </button>
+
+        </div>
+
+        <div id="campusMap"
+             class="campus-map"
+             aria-label="Interactive LPU campus map">
+        </div>
+
+        <div class="campus-map-controls">
+
+            <button type="button"
+                    id="findMyLocation"
+                    class="map-location-button">
+
+                <i class="fa-solid fa-location-crosshairs"></i>
+                My Location
+
+            </button>
+
+            <button type="button"
+                    id="campusDirectionsButton"
+                    class="map-directions-button"
+                    disabled>
+
+                <i class="fa-solid fa-route"></i>
+                Get Directions
+
+            </button>
+
+        </div>
+
+        <p class="map-privacy-note">
+
+            <i class="fa-solid fa-shield-halved"></i>
+
+            Location access is optional and requires
+            your permission.
+
+        </p>
+
+    </div>
+
+    <!-- SELECTED LOCATION DETAILS -->
+
+    <div id="selectedCampusLocation"
+         class="selected-location-card"
+         hidden>
+
+        <div class="map-section-heading">
+
+            <h2>
+                <i class="fa-solid fa-location-dot"></i>
+                Location Details
+            </h2>
+
+            <button type="button"
+                    id="closeCampusLocation"
+                    class="map-close-button"
+                    aria-label="Close location details">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+        <h3 id="selectedLocationName"></h3>
+
+        <p id="selectedLocationCategory"></p>
+
+        <p id="selectedLocationDescription"></p>
+
+        <a id="selectedLocationDirections"
+           class="map-external-directions"
+           target="_blank"
+           rel="noopener noreferrer">
+
+            <i class="fa-solid fa-route"></i>
+            Open Walking Directions
+
+        </a>
+
+    </div>
+
+    <!-- POPULAR CAMPUS LOCATIONS -->
+
+    <div class="popular-locations-card">
+
+        <div class="map-section-heading">
+
+            <h2>
+                <i class="fa-solid fa-location-dot"></i>
+                Popular Campus Locations
+            </h2>
+
+        </div>
+
+        <p>
+            Select a location to view it on the map.
+        </p>
+
+        <div id="popularCampusLocations"
+             class="popular-locations-grid">
+        </div>
+
+    </div>
+
+    <!-- I'M LOST ASSISTANCE -->
+
+    <div class="lost-assistance-banner">
+
+        <div class="lost-assistance-icon">
+
+            <i class="fa-solid fa-map-location-dot"></i>
+
+        </div>
+
+        <div class="lost-assistance-content">
+
+            <h2>I'm Lost</h2>
+
+            <p>
+                Unable to find your destination?
+                Get assistance navigating the campus.
+            </p>
+
+        </div>
+
+        <button type="button"
+                id="lostAssistanceButton"
+                class="lost-assistance-button">
+
+            <i class="fa-solid fa-circle-question"></i>
+
+            Help Me Find My Way
+
+        </button>
+
+    </div>
+
+    <!-- LOST STUDENT HELP PANEL -->
+
+    <div id="lostAssistancePanel"
+         class="lost-assistance-panel"
+         hidden>
+
+        <div class="map-section-heading">
+
+            <h2>Navigation Assistance</h2>
+
+            <button type="button"
+                    id="closeLostAssistance"
+                    class="map-close-button"
+                    aria-label="Close navigation assistance">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+        <p>
+            If you are unfamiliar with your surroundings,
+            use the following options.
+        </p>
+
+        <div class="lost-help-options">
+
+            <button type="button"
+                    id="lostFindLocation">
+
+                <i class="fa-solid fa-location-crosshairs"></i>
+
+                Find My Current Location
+
+            </button>
+
+            <a href="#classroom">
+
+                <i class="fa-solid fa-door-open"></i>
+
+                Find My Classroom
+
+            </a>
+
+            <a href="#support">
+
+                <i class="fa-solid fa-headset"></i>
+
+                Contact Student Support
+
+            </a>
+
+        </div>
+
+        <p class="lost-help-note">
+
+            If you need immediate assistance, approach
+            nearby university staff or campus security.
+
+        </p>
+
+    </div>
+
+    <!-- MAP INFORMATION NOTICE -->
+
+    <div class="map-information-notice">
+
+        <i class="fa-solid fa-circle-info"></i>
+
+        <div>
+
+            <h3>Campus Navigation Information</h3>
+
+            <p>
+                Map information is provided for general
+                campus assistance. Building entrances,
+                indoor routes and walking paths may vary.
+                Confirm important locations with
+                university staff when necessary.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
 
         <section id="explore" class="page-section" hidden>
             <h1>Explore Campus</h1>
