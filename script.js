@@ -2359,7 +2359,7 @@ function displayPopularCampusLocations() {
 
                 <h3>${location.name}</h3>
 
-                <p>${location.categoryName}</p>
+                <p>Block ${location.block} | ${location.categoryName}</p>
 
                 <p>
                    ${location.imagePosition
