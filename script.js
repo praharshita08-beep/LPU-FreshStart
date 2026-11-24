@@ -1701,3 +1701,207 @@ setClassroomSearchMode("room");
 
 displayClassroomHistory();
 
+
+// =========================================
+// UNIVERSITY MAP FUNCTIONALITY
+// =========================================
+
+// LPU campus reference coordinates
+
+const lpuCampusCenter = [
+    31.25492,
+    75.70462
+];
+
+const lpuDefaultZoom = 16;
+
+let lpuCampusMap = null;
+let lpuMapTiles = null;
+
+// =========================================
+// INITIALIZE CAMPUS MAP
+// =========================================
+
+function initializeCampusMap() {
+
+    if (lpuCampusMap !== null) {
+
+        lpuCampusMap.invalidateSize();
+
+        return;
+
+    }
+
+    if (typeof L === "undefined") {
+
+        showCampusMapMessage(
+            "Map library could not be loaded. " +
+            "Please check your internet connection.",
+            true
+        );
+
+        return;
+
+    }
+
+    lpuCampusMap = L.map("campusMap", {
+
+        center: lpuCampusCenter,
+        zoom: lpuDefaultZoom,
+        minZoom: 14,
+        maxZoom: 19,
+        zoomControl: true
+
+    });
+
+    // Load actual OpenStreetMap geography
+
+    lpuMapTiles = L.tileLayer(
+
+        "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+
+        {
+            maxZoom: 19,
+
+            attribution:
+                '&copy; <a href="https://www.openstreetmap.org/copyright">' +
+                'OpenStreetMap</a> contributors'
+        }
+
+    ).addTo(lpuCampusMap);
+
+    lpuMapTiles.on("tileerror", function() {
+
+        showCampusMapMessage(
+            "Some map tiles could not be loaded. " +
+            "Please check your internet connection.",
+            true
+        );
+
+    });
+
+    // University reference marker
+
+    L.marker(lpuCampusCenter)
+
+        .addTo(lpuCampusMap)
+
+        .bindPopup(
+            "<h3>Lovely Professional University</h3>" +
+            "<p>Phagwara, Punjab, India</p>" +
+            "<p>Campus reference location</p>"
+        );
+
+    lpuCampusMap.invalidateSize();
+
+}
+
+// =========================================
+// MAP STATUS MESSAGE
+// =========================================
+
+function showCampusMapMessage(message, isError) {
+
+    const mapMessage = document.getElementById(
+        "campusMapMessage"
+    );
+
+    mapMessage.textContent = message;
+
+    mapMessage.classList.toggle(
+        "error",
+        isError
+    );
+
+    mapMessage.hidden = false;
+
+}
+
+// =========================================
+// RESET CAMPUS MAP
+// =========================================
+
+document.getElementById(
+    "resetCampusMap"
+).addEventListener("click", function() {
+
+    if (lpuCampusMap !== null) {
+
+        lpuCampusMap.setView(
+            lpuCampusCenter,
+            lpuDefaultZoom
+        );
+
+        lpuCampusMap.closePopup();
+
+        document.getElementById(
+            "campusMapMessage"
+        ).hidden = true;
+
+    }
+
+});
+
+// =========================================
+// LOAD MAP WHEN UNIVERSITY MAP IS OPENED
+// =========================================
+
+function checkCampusMapVisibility() {
+
+    const mapSection = document.getElementById("map");
+
+    if (!mapSection.hidden) {
+
+        requestAnimationFrame(function() {
+
+            initializeCampusMap();
+
+        });
+
+    }
+
+}
+
+window.addEventListener(
+    "hashchange",
+    checkCampusMapVisibility
+);
+
+document.querySelectorAll(
+    'a[href="#map"]'
+).forEach(function(link) {
+
+    link.addEventListener("click", function() {
+
+        requestAnimationFrame(
+            checkCampusMapVisibility
+        );
+
+    });
+
+});
+
+// Adjust map size when sidebar is toggled
+
+document.getElementById(
+    "menuToggle"
+).addEventListener("click", function() {
+
+    setTimeout(function() {
+
+        if (
+            lpuCampusMap !== null &&
+            !document.getElementById("map").hidden
+        ) {
+
+            lpuCampusMap.invalidateSize();
+
+        }
+
+    }, 350);
+
+});
+
+// Initialize map when page is refreshed
+
+checkCampusMapVisibility();
