@@ -9020,3 +9020,907 @@ const timetableCategoryNames = {
     personal: "Personal"
 
 };
+
+
+// =========================================
+// FIRST 15 DAYS TIMETABLE FUNCTIONALITY
+// =========================================
+
+const TIMETABLE_DATE_KEY =
+    "freshstart_timetable_joining_date";
+
+const TIMETABLE_EVENTS_KEY =
+    "freshstart_timetable_personal_events";
+
+const TIMETABLE_REMINDERS_KEY =
+    "freshstart_timetable_reminders";
+
+
+// HTML ELEMENTS
+
+const timetableJoiningDate =
+    document.getElementById("timetableJoiningDate");
+
+const timetableDayButtons =
+    document.getElementById("timetableDayButtons");
+
+const timetableEventsList =
+    document.getElementById("timetableEventsList");
+
+const timetableSearchInput =
+    document.getElementById("timetableSearchInput");
+
+
+// =========================================
+// LOAD SAVED DATA
+// =========================================
+
+function getTimetableSavedItems(key) {
+
+    try {
+
+        const saved = JSON.parse(
+            localStorage.getItem(key) || "[]"
+        );
+
+        return Array.isArray(saved) ? saved : [];
+
+    } catch (error) {
+
+        return [];
+
+    }
+
+}
+
+let timetableSavedDate =
+    localStorage.getItem(TIMETABLE_DATE_KEY) || "";
+
+let timetablePersonalEvents =
+    getTimetableSavedItems(TIMETABLE_EVENTS_KEY);
+
+let timetableSavedReminders =
+    getTimetableSavedItems(TIMETABLE_REMINDERS_KEY);
+
+let timetableActiveDay = 1;
+
+let timetableActiveCategory = "all";
+
+
+// =========================================
+// DATE CALCULATION
+// =========================================
+
+function getTimetableDayDate(day) {
+
+    if (!timetableSavedDate) {
+
+        return null;
+
+    }
+
+    const date = new Date(
+        timetableSavedDate + "T00:00:00"
+    );
+
+    if (isNaN(date.getTime())) {
+
+        return null;
+
+    }
+
+    date.setDate(date.getDate() + day - 1);
+
+    return date;
+
+}
+
+
+function formatTimetableDate(date) {
+
+    return date.toLocaleDateString("en-IN", {
+
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+
+    });
+
+}
+
+
+function getTimetableCurrentDay() {
+
+    const joiningDate = getTimetableDayDate(1);
+
+    if (!joiningDate) {
+
+        return null;
+
+    }
+
+    const today = new Date();
+
+    const todayUTC = Date.UTC(
+        today.getFullYear(),
+        today.getMonth(),
+        today.getDate()
+    );
+
+    const joiningUTC = Date.UTC(
+        joiningDate.getFullYear(),
+        joiningDate.getMonth(),
+        joiningDate.getDate()
+    );
+
+    const difference = Math.round(
+        (todayUTC - joiningUTC) / 86400000
+    );
+
+    return difference + 1;
+
+}
+
+
+// =========================================
+// DATE MESSAGES
+// =========================================
+
+function showTimetableMessage(id, message, type) {
+
+    const element = document.getElementById(id);
+
+    element.textContent = message;
+
+    element.classList.remove("success", "error");
+
+    element.classList.add(type);
+
+    element.hidden = false;
+
+}
+
+
+// =========================================
+// UPDATE JOINING DATE SUMMARY
+// =========================================
+
+function updateTimetableDateSummary() {
+
+    const summary = document.getElementById(
+        "timetableDateSummary"
+    );
+
+    const firstDate = getTimetableDayDate(1);
+
+    const lastDate = getTimetableDayDate(15);
+
+    const todayButton = document.getElementById(
+        "todayTimetableDay"
+    );
+
+    const currentDay = getTimetableCurrentDay();
+
+    todayButton.disabled =
+
+        currentDay === null ||
+        currentDay < 1 ||
+        currentDay > 15;
+
+    if (!firstDate || !lastDate) {
+
+        summary.hidden = true;
+
+        return;
+
+    }
+
+    summary.hidden = false;
+
+    document.getElementById(
+        "timetableDateRange"
+    ).textContent =
+
+        formatTimetableDate(firstDate) +
+        " — " +
+        formatTimetableDate(lastDate);
+
+    let status = "";
+
+    if (currentDay < 1) {
+
+        status = "Your onboarding journey has not started yet.";
+
+    } else if (currentDay > 15) {
+
+        status = "Your first 15-day period has ended.";
+
+    } else {
+
+        status = "You are currently on Day " +
+            currentDay + " of 15.";
+
+    }
+
+    document.getElementById(
+        "timetableCurrentStatus"
+    ).textContent = status;
+
+}
+
+
+// =========================================
+// SAVE JOINING DATE
+// =========================================
+
+document.getElementById(
+    "timetableDateForm"
+).addEventListener("submit", function (event) {
+
+    event.preventDefault();
+
+    const selectedDate = timetableJoiningDate.value;
+
+    if (!selectedDate) {
+
+        showTimetableMessage(
+            "timetableDateMessage",
+            "Please select your joining date.",
+            "error"
+        );
+
+        return;
+
+    }
+
+    try {
+
+        localStorage.setItem(
+            TIMETABLE_DATE_KEY,
+            selectedDate
+        );
+
+    } catch (error) {
+
+        showTimetableMessage(
+            "timetableDateMessage",
+            "Your date could not be saved in this browser.",
+            "error"
+        );
+
+        return;
+
+    }
+
+    timetableSavedDate = selectedDate;
+
+    const currentDay = getTimetableCurrentDay();
+
+    timetableActiveDay =
+
+        currentDay >= 1 && currentDay <= 15
+            ? currentDay
+            : 1;
+
+    updateTimetableDateSummary();
+
+    displayTimetableDayButtons();
+
+    filterTimetableEvents();
+
+    showTimetableMessage(
+        "timetableDateMessage",
+        "Joining date saved successfully.",
+        "success"
+    );
+
+});
+
+
+// =========================================
+// RESET JOINING DATE
+// =========================================
+
+document.getElementById(
+    "resetTimetableDate"
+).addEventListener("click", function () {
+
+    if (!timetableSavedDate) {
+
+        return;
+
+    }
+
+    const confirmed = confirm(
+
+        "Reset your joining date? Your personal events " +
+        "and saved reminders will not be deleted."
+
+    );
+
+    if (!confirmed) {
+
+        return;
+
+    }
+
+    try {
+
+        localStorage.removeItem(TIMETABLE_DATE_KEY);
+
+    } catch (error) {
+
+        showTimetableMessage(
+            "timetableDateMessage",
+            "Your saved date could not be removed.",
+            "error"
+        );
+
+        return;
+
+    }
+
+    timetableSavedDate = "";
+
+    timetableJoiningDate.value = "";
+
+    timetableActiveDay = 1;
+
+    updateTimetableDateSummary();
+
+    displayTimetableDayButtons();
+
+    filterTimetableEvents();
+
+    showTimetableMessage(
+        "timetableDateMessage",
+        "Joining date has been reset.",
+        "success"
+    );
+
+});
+
+
+// =========================================
+// DISPLAY ALL 15 DAY BUTTONS
+// =========================================
+
+function displayTimetableDayButtons() {
+
+    timetableDayButtons.innerHTML = "";
+
+    const currentDay = getTimetableCurrentDay();
+
+    for (let day = 1; day <= 15; day++) {
+
+        const button = document.createElement("button");
+
+        button.type = "button";
+
+        button.className = "timetable-day-button";
+
+        button.dataset.day = day;
+
+        button.classList.toggle(
+            "active",
+            day === timetableActiveDay
+        );
+
+        button.classList.toggle(
+            "today",
+            day === currentDay
+        );
+
+        button.setAttribute(
+            "aria-pressed",
+            day === timetableActiveDay
+        );
+
+        const date = getTimetableDayDate(day);
+
+        const shortDate = date
+            ? date.toLocaleDateString("en-IN", {
+                day: "numeric",
+                month: "short"
+            })
+            : "";
+
+        button.innerHTML = `
+
+            <strong>Day ${day}</strong>
+
+            ${shortDate
+                ? `<span>${shortDate}</span>`
+                : ""}
+
+            ${day === currentDay
+                ? '<span class="timetable-today-label">Today</span>'
+                : ""}
+
+        `;
+
+        timetableDayButtons.appendChild(button);
+
+    }
+
+    document.getElementById(
+        "previousTimetableDay"
+    ).disabled = timetableActiveDay === 1;
+
+    document.getElementById(
+        "nextTimetableDay"
+    ).disabled = timetableActiveDay === 15;
+
+}
+
+
+// =========================================
+// SELECT TIMETABLE DAY
+// =========================================
+
+function selectTimetableDay(day) {
+
+    if (day < 1 || day > 15) {
+
+        return;
+
+    }
+
+    timetableActiveDay = day;
+
+    displayTimetableDayButtons();
+
+    filterTimetableEvents();
+
+}
+
+
+timetableDayButtons.addEventListener(
+    "click",
+    function (event) {
+
+        const button = event.target.closest(
+            ".timetable-day-button"
+        );
+
+        if (!button) {
+
+            return;
+
+        }
+
+        selectTimetableDay(
+            Number(button.dataset.day)
+        );
+
+    }
+);
+
+
+document.getElementById(
+    "previousTimetableDay"
+).addEventListener("click", function () {
+
+    selectTimetableDay(timetableActiveDay - 1);
+
+});
+
+
+document.getElementById(
+    "nextTimetableDay"
+).addEventListener("click", function () {
+
+    selectTimetableDay(timetableActiveDay + 1);
+
+});
+
+
+document.getElementById(
+    "todayTimetableDay"
+).addEventListener("click", function () {
+
+    const currentDay = getTimetableCurrentDay();
+
+    if (currentDay >= 1 && currentDay <= 15) {
+
+        selectTimetableDay(currentDay);
+
+    }
+
+});
+
+
+// =========================================
+// FORMAT EVENT TIMES
+// =========================================
+
+function formatTimetableTime(time) {
+
+    const parts = time.split(":");
+
+    const hours = Number(parts[0]);
+
+    const minutes = parts[1];
+
+    const period = hours >= 12 ? "PM" : "AM";
+
+    const displayHours = hours % 12 || 12;
+
+    return displayHours + ":" + minutes + " " + period;
+
+}
+
+
+// =========================================
+// COMBINE SAMPLE AND PERSONAL EVENTS
+// =========================================
+
+function getAllTimetableEvents() {
+
+    return timetableSampleEvents.concat(
+        timetablePersonalEvents
+    );
+
+}
+
+
+// PREVENT USER TEXT FROM BEING TREATED AS HTML
+
+function escapeTimetableText(value) {
+
+    const element = document.createElement("div");
+
+    element.textContent = String(value || "");
+
+    return element.innerHTML
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+
+}
+
+
+// =========================================
+// UPDATE TIMETABLE STATISTICS
+// =========================================
+
+function updateTimetableStatistics() {
+
+    document.getElementById(
+        "timetableActivityCount"
+    ).textContent = timetableSampleEvents.length;
+
+    document.getElementById(
+        "timetablePersonalCount"
+    ).textContent = timetablePersonalEvents.length;
+
+    document.getElementById(
+        "timetableReminderCount"
+    ).textContent = timetableSavedReminders.length;
+
+}
+
+
+// =========================================
+// DISPLAY TIMETABLE EVENTS
+// =========================================
+
+function displayTimetableEvents(events) {
+
+    timetableEventsList.innerHTML = "";
+
+    document.getElementById(
+        "timetableSelectedDay"
+    ).textContent = "Day " + timetableActiveDay;
+
+    document.getElementById(
+        "timetableDayTitle"
+    ).textContent =
+
+        timetableDayTitles[timetableActiveDay - 1];
+
+    const selectedDate = getTimetableDayDate(
+        timetableActiveDay
+    );
+
+    document.getElementById(
+        "timetableSelectedDate"
+    ).textContent = selectedDate
+
+        ? formatTimetableDate(selectedDate)
+
+        : "Set your joining date to view the date.";
+
+    document.getElementById(
+        "timetableResultCount"
+    ).textContent = events.length +
+
+        (events.length === 1
+            ? " activity"
+            : " activities");
+
+    document.getElementById(
+        "timetableEmptyState"
+    ).hidden = events.length !== 0;
+
+    events.forEach(function (event) {
+
+        const card = document.createElement("article");
+
+        card.className = "timetable-event-card";
+
+        const eventId = escapeTimetableText(event.id);
+
+        const isSaved = timetableSavedReminders.includes(
+            event.id
+        );
+
+        const categoryName =
+            timetableCategoryNames[event.category] ||
+            "Personal";
+
+        card.innerHTML = `
+
+            <div class="timetable-event-time">
+
+                <strong>
+                    ${formatTimetableTime(event.start)}
+                </strong>
+
+                <span>to</span>
+
+                <strong>
+                    ${formatTimetableTime(event.end)}
+                </strong>
+
+            </div>
+
+            <div class="timetable-event-content">
+
+                <span class="timetable-event-category">
+
+                    ${categoryName}
+
+                </span>
+
+                <span class="timetable-personal-label">
+
+                    ${event.isPersonal
+                        ? "Personal Event"
+                        : "Sample Activity"}
+
+                </span>
+
+                <h3>
+                    ${escapeTimetableText(event.name)}
+                </h3>
+
+                <p class="timetable-event-venue">
+
+                    <i class="fa-solid fa-location-dot"></i>
+
+                    ${escapeTimetableText(event.venue)}
+
+                </p>
+
+                <p class="timetable-event-description">
+
+                    ${escapeTimetableText(event.description)}
+
+                </p>
+
+                <div class="timetable-event-actions">
+
+                    <button type="button"
+                        class="timetable-action-button
+                            ${isSaved ? "saved" : ""}"
+                        data-action="reminder"
+                        data-id="${eventId}"
+                        aria-pressed="${isSaved}">
+
+                        <i class="fa-solid fa-bell"></i>
+
+                        ${isSaved
+                            ? "Reminder Saved"
+                            : "Save Reminder"}
+
+                    </button>
+
+                    ${!event.isPersonal && event.link ? `
+
+                        <a href="${event.link}"
+                            class="timetable-action-button">
+
+                            ${escapeTimetableText(event.linkText)}
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </a>
+
+                    ` : ""}
+
+                    ${event.isPersonal ? `
+
+                        <button type="button"
+                            class="timetable-action-button"
+                            data-action="edit"
+                            data-id="${eventId}">
+
+                            <i class="fa-solid fa-pen"></i>
+
+                            Edit
+
+                        </button>
+
+                        <button type="button"
+                            class="timetable-action-button delete"
+                            data-action="delete"
+                            data-id="${eventId}">
+
+                            <i class="fa-solid fa-trash"></i>
+
+                            Delete
+
+                        </button>
+
+                    ` : ""}
+
+                </div>
+
+            </div>
+
+        `;
+
+        timetableEventsList.appendChild(card);
+
+    });
+
+    updateTimetableStatistics();
+
+}
+
+
+// =========================================
+// SEARCH AND FILTER EVENTS
+// =========================================
+
+function filterTimetableEvents() {
+
+    const query = timetableSearchInput.value
+        .trim()
+        .toLowerCase();
+
+    const events = getAllTimetableEvents().filter(
+        function (event) {
+
+            const matchesDay =
+                event.day === timetableActiveDay;
+
+            const matchesCategory =
+
+                timetableActiveCategory === "all" ||
+
+                event.category === timetableActiveCategory;
+
+            const searchableText = (
+
+                event.name + " " +
+
+                event.venue + " " +
+
+                event.description + " " +
+
+                timetableCategoryNames[event.category]
+
+            ).toLowerCase();
+
+            const matchesSearch =
+                searchableText.includes(query);
+
+            return matchesDay &&
+                matchesCategory &&
+                matchesSearch;
+
+        }
+    );
+
+    events.sort(function (first, second) {
+
+        return first.start.localeCompare(second.start);
+
+    });
+
+    displayTimetableEvents(events);
+
+}
+
+
+// LIVE SEARCH
+
+timetableSearchInput.addEventListener(
+    "input",
+    filterTimetableEvents
+);
+
+
+document.getElementById(
+    "timetableSearchForm"
+).addEventListener("submit", function (event) {
+
+    event.preventDefault();
+
+    filterTimetableEvents();
+
+});
+
+
+// =========================================
+// CATEGORY FILTERS
+// =========================================
+
+function setTimetableCategory(category) {
+
+    timetableActiveCategory = category;
+
+    document.querySelectorAll(
+        ".timetable-filter"
+    ).forEach(function (button) {
+
+        const isActive =
+            button.dataset.category === category;
+
+        button.classList.toggle("active", isActive);
+
+        button.setAttribute("aria-pressed", isActive);
+
+    });
+
+    filterTimetableEvents();
+
+}
+
+
+document.querySelectorAll(
+    ".timetable-filter"
+).forEach(function (button) {
+
+    button.addEventListener("click", function () {
+
+        setTimetableCategory(button.dataset.category);
+
+    });
+
+});
+
+
+document.getElementById(
+    "resetTimetableFilters"
+).addEventListener("click", function () {
+
+    timetableSearchInput.value = "";
+
+    setTimetableCategory("all");
+
+});
+
+
+// =========================================
+// INITIALIZE TIMETABLE
+// =========================================
+
+timetableJoiningDate.value = timetableSavedDate;
+
+const initialTimetableDay = getTimetableCurrentDay();
+
+if (initialTimetableDay >= 1 &&
+    initialTimetableDay <= 15) {
+
+    timetableActiveDay = initialTimetableDay;
+
+}
+
+updateTimetableDateSummary();
+
+displayTimetableDayButtons();
+
+filterTimetableEvents();
