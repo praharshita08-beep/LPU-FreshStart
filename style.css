@@ -4544,3 +4544,568 @@ body.sidebar-collapsed .main-content {
     }
 
 }
+
+
+/* =========================================
+   FIRST 15 DAYS ONBOARDING SECTION
+========================================= */
+
+.onboarding-heading {
+    margin-bottom: 24px;
+}
+
+/* PROGRESS BANNER */
+
+.onboarding-banner {
+    background: linear-gradient(
+        135deg,
+        #14243b,
+        #203650
+    );
+    color: #ffffff;
+    padding: 32px;
+    border-radius: 14px;
+    margin-bottom: 24px;
+}
+
+.onboarding-banner h2 {
+    color: #ffffff;
+    font-size: 26px;
+    margin-bottom: 12px;
+}
+
+.onboarding-banner p {
+    color: #d1dbe8;
+    line-height: 1.7;
+}
+
+.onboarding-progress-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 26px;
+    margin-bottom: 12px;
+}
+
+.onboarding-progress-header h3 {
+    color: #ffffff;
+    font-size: 17px;
+}
+
+#onboardingPercentage {
+    color: #e97826;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.onboarding-progress-track {
+    height: 12px;
+    background: rgba(255, 255, 255, 0.18);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.onboarding-progress-fill {
+    width: 0%;
+    height: 100%;
+    background: #e97826;
+    border-radius: 20px;
+    transition: width 0.3s ease;
+}
+
+/* PROGRESS STATISTICS */
+
+.onboarding-stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 30px;
+}
+
+.onboarding-stat-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 20px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+
+.onboarding-stat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 46px;
+    height: 46px;
+    background: #fff1e7;
+    color: #e97826;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+.onboarding-stat-icon.completed {
+    background: #e8f5ed;
+    color: #27966c;
+}
+
+.onboarding-stat-icon.pending {
+    background: #fff5eb;
+    color: #c65d16;
+}
+
+.onboarding-stat-card h2 {
+    font-size: 24px;
+    color: #14243b;
+    margin-bottom: 4px;
+}
+
+.onboarding-stat-card p {
+    font-size: 13px;
+    color: #64748b;
+}
+
+/* CHECKLIST HEADING */
+
+.onboarding-checklist-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.onboarding-checklist-heading h2 {
+    color: #14243b;
+    font-size: 22px;
+    margin-bottom: 6px;
+}
+
+.onboarding-reset-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 15px;
+    background: #ffffff;
+    color: #64748b;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font: inherit;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.onboarding-reset-button:hover {
+    color: #b91c1c;
+    border-color: #b91c1c;
+}
+
+/* FILTERS */
+
+.onboarding-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.onboarding-filter {
+    padding: 10px 20px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #64748b;
+    font: inherit;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.onboarding-filter:hover {
+    border-color: #e97826;
+}
+
+.onboarding-filter.active {
+    background: #14243b;
+    color: #ffffff;
+    border-color: #14243b;
+}
+
+/* DAILY CHECKLIST CARDS */
+
+.onboarding-days-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.onboarding-day-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.onboarding-day-card.completed {
+    border-left: 4px solid #27966c;
+}
+
+.onboarding-day-card[open] {
+    border-color: #e97826;
+}
+
+.onboarding-day-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    cursor: pointer;
+    list-style: none;
+}
+
+.onboarding-day-header::-webkit-details-marker {
+    display: none;
+}
+
+.onboarding-day-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    background: #fff1e7;
+    color: #e97826;
+    font-size: 22px;
+}
+
+.onboarding-day-card.completed .onboarding-day-icon {
+    background: #e8f5ed;
+    color: #27966c;
+}
+
+.onboarding-day-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.onboarding-day-number {
+    display: block;
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.onboarding-day-info h3 {
+    font-size: 17px;
+    color: #14243b;
+}
+
+.onboarding-day-status {
+    padding: 6px 10px;
+    border-radius: 20px;
+    background: #f1f5f9;
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.onboarding-day-card.completed .onboarding-day-status {
+    background: #e8f5ed;
+    color: #18734d;
+}
+
+.onboarding-chevron {
+    color: #64748b;
+    transition: transform 0.2s ease;
+}
+
+.onboarding-day-card[open] .onboarding-chevron {
+    transform: rotate(180deg);
+}
+
+/* DAILY TASKS */
+
+.onboarding-day-content {
+    padding: 0 24px 24px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.onboarding-day-description {
+    margin: 18px 0;
+    line-height: 1.7;
+}
+
+.onboarding-task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.onboarding-task {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.onboarding-task input {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    accent-color: #27966c;
+    cursor: pointer;
+}
+
+.onboarding-task span {
+    color: #334155;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.onboarding-task:has(input:checked) {
+    background: #f0fdf4;
+    border-color: #bbf7d0;
+}
+
+.onboarding-task input:checked + span {
+    color: #64748b;
+    text-decoration: line-through;
+}
+
+/* INDIVIDUAL DAY PROGRESS */
+
+.onboarding-day-progress-track {
+    height: 7px;
+    background: #e2e8f0;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.onboarding-day-progress-fill {
+    height: 100%;
+    background: #e97826;
+    border-radius: 10px;
+    transition: width 0.2s ease;
+}
+
+.onboarding-day-card.completed
+.onboarding-day-progress-fill {
+    background: #27966c;
+}
+
+.onboarding-day-progress-text {
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 16px;
+}
+
+.onboarding-related-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff1e7;
+    color: #c65d16;
+    padding: 10px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.onboarding-related-link:hover {
+    background: #ffe5d1;
+}
+
+/* EMPTY STATE */
+
+.onboarding-empty-state {
+    padding: 40px 20px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.onboarding-empty-state > i {
+    color: #64748b;
+    font-size: 38px;
+    margin-bottom: 16px;
+}
+
+.onboarding-empty-state h3 {
+    color: #14243b;
+    margin-bottom: 10px;
+}
+
+.onboarding-empty-state p {
+    margin-bottom: 20px;
+}
+
+/* COMPLETION BANNER */
+
+.onboarding-completion-banner {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: #e8f5ed;
+    border: 1px solid #bbdfc8;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.onboarding-completion-banner > i {
+    color: #27966c;
+    font-size: 36px;
+}
+
+.onboarding-completion-banner h2 {
+    color: #18734d;
+    margin-bottom: 8px;
+}
+
+/* TIMETABLE BANNER */
+
+.onboarding-timetable-banner {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 24px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    margin-bottom: 24px;
+}
+
+.onboarding-timetable-banner > i {
+    font-size: 32px;
+    color: #e97826;
+}
+
+.onboarding-timetable-banner > div {
+    flex: 1;
+}
+
+.onboarding-timetable-banner h2 {
+    color: #14243b;
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+/* INFORMATION NOTICE */
+
+.onboarding-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 20px;
+    background: #eef3f9;
+    border-left: 4px solid #14243b;
+    border-radius: 8px;
+}
+
+.onboarding-notice > i {
+    font-size: 22px;
+    color: #14243b;
+}
+
+.onboarding-notice h3 {
+    color: #14243b;
+    margin-bottom: 8px;
+}
+
+.onboarding-notice p {
+    line-height: 1.7;
+    margin-bottom: 8px;
+}
+
+/* RESPONSIVE DESIGN */
+
+@media (max-width: 1200px) {
+
+    .onboarding-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .onboarding-banner {
+        padding: 22px;
+    }
+
+    .onboarding-banner h2 {
+        font-size: 23px;
+    }
+
+    .onboarding-stat-card {
+        padding: 14px;
+        gap: 10px;
+    }
+
+    .onboarding-stat-card h2 {
+        font-size: 20px;
+    }
+
+    .onboarding-stat-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+    }
+
+    .onboarding-checklist-heading {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .onboarding-day-header {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 15px;
+    }
+
+    .onboarding-day-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+
+    .onboarding-day-info h3 {
+        font-size: 15px;
+    }
+
+    .onboarding-day-content {
+        padding: 0 16px 18px;
+    }
+
+    .onboarding-timetable-banner,
+    .onboarding-completion-banner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+}
+
+@media (max-width: 380px) {
+
+    .onboarding-stats {
+        grid-template-columns: 1fr;
+    }
+
+}
