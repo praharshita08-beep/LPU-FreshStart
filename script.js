@@ -11048,3 +11048,354 @@ const bankingServices = [
 ];
 
 /* END OF BANKING ASSISTANCE DATABASE */
+
+// =========================================
+// BANKING ASSISTANCE FUNCTIONALITY
+// =========================================
+
+const bankingServicesGrid =
+    document.getElementById("bankingServicesGrid");
+
+const bankingSearchInput =
+    document.getElementById("bankingSearchInput");
+
+const bankingSearchForm =
+    document.getElementById("bankingSearchForm");
+
+const bankingServiceDetails =
+    document.getElementById("bankingServiceDetails");
+
+let bankingActiveCategory = "all";
+
+
+// DISPLAY BANKING SERVICE CARDS
+
+function displayBankingServices(services) {
+
+    bankingServicesGrid.innerHTML = "";
+
+    document.getElementById(
+        "bankingResultCount"
+    ).textContent = services.length +
+
+        (services.length === 1
+            ? " service found"
+            : " services found");
+
+    document.getElementById(
+        "bankingEmptyState"
+    ).hidden = services.length !== 0;
+
+    services.forEach(function (service) {
+
+        const card = document.createElement("article");
+
+        card.className = "banking-service-card";
+
+        card.innerHTML = `
+
+            <div class="banking-service-icon">
+
+                <i class="fa-solid ${service.icon}"></i>
+
+            </div>
+
+            <h3>${service.title}</h3>
+
+            <p>${service.description}</p>
+
+            <button type="button"
+                class="banking-service-button"
+                data-id="${service.id}">
+
+                Explore Assistance
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </button>
+
+        `;
+
+        bankingServicesGrid.appendChild(card);
+
+    });
+
+}
+
+
+// SEARCH AND FILTER BANKING SERVICES
+
+function filterBankingServices() {
+
+    const query = bankingSearchInput.value
+        .trim()
+        .toLowerCase();
+
+    const filteredServices = bankingServices.filter(
+        function (service) {
+
+            const matchesCategory =
+
+                bankingActiveCategory === "all" ||
+
+                service.category === bankingActiveCategory;
+
+            const searchableText = (
+
+                service.title + " " +
+                service.description + " " +
+                service.categoryName + " " +
+                service.keywords + " " +
+                service.information.join(" ")
+
+            ).toLowerCase();
+
+            const matchesSearch =
+                searchableText.includes(query);
+
+            return matchesCategory && matchesSearch;
+
+        }
+    );
+
+    bankingServiceDetails.hidden = true;
+
+    displayBankingServices(filteredServices);
+
+}
+
+
+// LIVE SEARCH
+
+bankingSearchInput.addEventListener(
+    "input",
+    filterBankingServices
+);
+
+
+bankingSearchForm.addEventListener(
+    "submit",
+    function (event) {
+
+        event.preventDefault();
+
+        filterBankingServices();
+
+    }
+);
+
+
+// CATEGORY FILTERS
+
+function setBankingCategory(category) {
+
+    bankingActiveCategory = category;
+
+    document.querySelectorAll(
+        ".banking-filter"
+    ).forEach(function (button) {
+
+        const isActive =
+            button.dataset.category === category;
+
+        button.classList.toggle("active", isActive);
+
+        button.setAttribute("aria-pressed", isActive);
+
+    });
+
+    filterBankingServices();
+
+}
+
+
+document.querySelectorAll(
+    ".banking-filter"
+).forEach(function (button) {
+
+    button.addEventListener("click", function () {
+
+        setBankingCategory(button.dataset.category);
+
+    });
+
+});
+
+
+// RESET SEARCH AND FILTERS
+
+document.getElementById(
+    "resetBankingFilters"
+).addEventListener("click", function () {
+
+    bankingSearchInput.value = "";
+
+    setBankingCategory("all");
+
+});
+
+
+// DISPLAY DETAILED BANKING GUIDANCE
+
+function showBankingServiceDetails(service) {
+
+    document.getElementById(
+        "bankingDetailCategory"
+    ).textContent = service.categoryName;
+
+    document.getElementById(
+        "bankingDetailTitle"
+    ).textContent = service.title;
+
+    document.getElementById(
+        "bankingDetailDescription"
+    ).textContent = service.description;
+
+    document.getElementById(
+        "bankingDetailTip"
+    ).textContent = service.tip;
+
+
+    // IMPORTANT INFORMATION
+
+    const informationList = document.getElementById(
+        "bankingDetailInformation"
+    );
+
+    informationList.innerHTML = "";
+
+    service.information.forEach(function (information) {
+
+        const item = document.createElement("li");
+
+        item.textContent = information;
+
+        informationList.appendChild(item);
+
+    });
+
+
+    // RECOMMENDED STEPS
+
+    const stepsList = document.getElementById(
+        "bankingDetailSteps"
+    );
+
+    stepsList.innerHTML = "";
+
+    service.steps.forEach(function (step) {
+
+        const item = document.createElement("li");
+
+        item.textContent = step;
+
+        stepsList.appendChild(item);
+
+    });
+
+
+    // RELATED RESOURCE LINKS
+
+    const linksContainer = document.getElementById(
+        "bankingDetailLinks"
+    );
+
+    linksContainer.innerHTML = "";
+
+    service.links.forEach(function (resource) {
+
+        const link = document.createElement("a");
+
+        link.href = resource.url;
+
+        link.className = "primary-button";
+
+        link.textContent = resource.text;
+
+        if (resource.url.startsWith("https://")) {
+
+            link.target = "_blank";
+
+            link.rel = "noopener noreferrer";
+
+        }
+
+        const icon = document.createElement("i");
+
+        icon.className = resource.url.startsWith("https://")
+
+            ? "fa-solid fa-arrow-up-right-from-square"
+
+            : "fa-solid fa-arrow-right";
+
+        link.appendChild(icon);
+
+        linksContainer.appendChild(link);
+
+    });
+
+
+    // OPEN DETAILS PANEL
+
+    bankingServiceDetails.hidden = false;
+
+    bankingServiceDetails.scrollIntoView({
+
+        behavior: "smooth",
+        block: "start"
+
+    });
+
+}
+
+
+// BANKING SERVICE BUTTONS
+
+bankingServicesGrid.addEventListener(
+    "click",
+    function (event) {
+
+        const button = event.target.closest(
+            ".banking-service-button"
+        );
+
+        if (!button) {
+
+            return;
+
+        }
+
+        const selectedService = bankingServices.find(
+            function (service) {
+
+                return service.id === button.dataset.id;
+
+            }
+        );
+
+        if (selectedService) {
+
+            showBankingServiceDetails(selectedService);
+
+        }
+
+    }
+);
+
+
+// CLOSE DETAILS PANEL
+
+document.getElementById(
+    "closeBankingDetails"
+).addEventListener("click", function () {
+
+    bankingServiceDetails.hidden = true;
+
+});
+
+
+// INITIALIZE BANKING SERVICES
+
+displayBankingServices(bankingServices);
+
+/* END OF BANKING ASSISTANCE FUNCTIONALITY */
