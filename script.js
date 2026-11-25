@@ -4797,3 +4797,474 @@ const onboardingDays = [
     }
 
 ];
+
+
+
+// =========================================
+// ONBOARDING CHECKLIST FUNCTIONALITY
+// =========================================
+
+const ONBOARDING_TASKS_KEY =
+    "freshstart_onboarding_tasks";
+
+let onboardingActiveFilter = "all";
+
+// LOAD SAVED TASKS
+
+function getSavedOnboardingTasks() {
+
+    try {
+
+        const saved = JSON.parse(
+            localStorage.getItem(
+                ONBOARDING_TASKS_KEY
+            ) || "[]"
+        );
+
+        return Array.isArray(saved) ? saved : [];
+
+    } catch (error) {
+
+        return [];
+
+    }
+
+}
+
+let completedOnboardingTasks =
+    getSavedOnboardingTasks();
+
+// CALCULATE DAILY TASK COMPLETION
+
+function getDayCompletedTasks(day) {
+
+    return day.tasks.filter(function(task, index) {
+
+        return completedOnboardingTasks.includes(
+            day.day + "-" + index
+        );
+
+    }).length;
+
+}
+
+function isOnboardingDayCompleted(day) {
+
+    return getDayCompletedTasks(day) === day.tasks.length;
+
+}
+
+// DISPLAY DAILY CHECKLIST CARDS
+
+function displayOnboardingDays() {
+
+    const list = document.getElementById(
+        "onboardingDaysList"
+    );
+
+    const openDays = Array.from(
+        list.querySelectorAll("details[open]")
+    ).map(function(card) {
+
+        return card.dataset.day;
+
+    });
+
+    list.innerHTML = "";
+
+    const filteredDays = onboardingDays.filter(
+        function(day) {
+
+            if (onboardingActiveFilter === "completed") {
+
+                return isOnboardingDayCompleted(day);
+
+            }
+
+            if (onboardingActiveFilter === "pending") {
+
+                return !isOnboardingDayCompleted(day);
+
+            }
+
+            return true;
+
+        }
+    );
+
+    document.getElementById(
+        "onboardingEmptyState"
+    ).hidden = filteredDays.length !== 0;
+
+    document.getElementById(
+        "onboardingEmptyTitle"
+    ).textContent =
+        onboardingActiveFilter === "completed"
+        ? "No completed days yet"
+        : "No pending days";
+
+    document.getElementById(
+        "onboardingEmptyDescription"
+    ).textContent =
+        onboardingActiveFilter === "completed"
+        ? "Complete all tasks for a day to see it here."
+        : "Select All Days to review your checklist.";
+
+    filteredDays.forEach(function(day) {
+
+        const completed = getDayCompletedTasks(day);
+
+        const isCompleted =
+            isOnboardingDayCompleted(day);
+
+        const percentage = Math.round(
+            completed / day.tasks.length * 100
+        );
+
+        const card = document.createElement("details");
+
+        card.className = "onboarding-day-card";
+
+        card.dataset.day = day.day;
+
+        card.open = openDays.includes(
+            String(day.day)
+        );
+
+        if (isCompleted) {
+
+            card.classList.add("completed");
+
+        }
+
+        let tasksHTML = "";
+
+        day.tasks.forEach(function(task, index) {
+
+            const taskId = day.day + "-" + index;
+
+            const checked =
+                completedOnboardingTasks.includes(taskId);
+
+            tasksHTML += `
+
+                <label class="onboarding-task">
+
+                    <input type="checkbox"
+                        class="onboarding-task-checkbox"
+                        data-task-id="${taskId}"
+                        ${checked ? "checked" : ""}>
+
+                    <span>${task}</span>
+
+                </label>
+
+            `;
+
+        });
+
+        card.innerHTML = `
+
+            <summary class="onboarding-day-header">
+
+                <div class="onboarding-day-icon">
+
+                    <i class="fa-solid ${
+                        isCompleted
+                        ? "fa-circle-check"
+                        : day.icon
+                    }"></i>
+
+                </div>
+
+                <div class="onboarding-day-info">
+
+                    <span class="onboarding-day-number">
+                        DAY ${day.day}
+                    </span>
+
+                    <h3>${day.title}</h3>
+
+                </div>
+
+                <span class="onboarding-day-status">
+
+                    ${isCompleted
+                        ? "Completed"
+                        : completed + "/" + day.tasks.length}
+
+                </span>
+
+                <i class="fa-solid fa-chevron-down
+                    onboarding-chevron"></i>
+
+            </summary>
+
+            <div class="onboarding-day-content">
+
+                <p class="onboarding-day-description">
+
+                    ${day.description}
+
+                </p>
+
+                <div class="onboarding-task-list">
+
+                    ${tasksHTML}
+
+                </div>
+
+                <div class="onboarding-day-progress-track"
+                    role="progressbar"
+                    aria-label="Day ${day.day} progress"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    aria-valuenow="${percentage}">
+
+                    <div class="onboarding-day-progress-fill"
+                        style="width: ${percentage}%">
+
+                    </div>
+
+                </div>
+
+                <p class="onboarding-day-progress-text">
+
+                    ${completed} of ${day.tasks.length}
+                    tasks completed
+
+                </p>
+
+                <a href="${day.link}"
+                    class="onboarding-related-link">
+
+                    ${day.linkText}
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+        `;
+
+        list.appendChild(card);
+
+    });
+
+}
+
+// UPDATE OVERALL ONBOARDING PROGRESS
+
+function updateOnboardingProgress() {
+
+    const completedDays = onboardingDays.filter(
+        function(day) {
+
+            return isOnboardingDayCompleted(day);
+
+        }
+    );
+
+    const totalDays = onboardingDays.length;
+
+    const completedCount = completedDays.length;
+
+    const percentage = Math.round(
+        completedCount / totalDays * 100
+    );
+
+    let totalTasks = 0;
+
+    let completedTasks = 0;
+
+    onboardingDays.forEach(function(day) {
+
+        totalTasks += day.tasks.length;
+
+        completedTasks += getDayCompletedTasks(day);
+
+    });
+
+    document.getElementById(
+        "onboardingPercentage"
+    ).textContent = percentage + "%";
+
+    document.getElementById(
+        "onboardingProgressFill"
+    ).style.width = percentage + "%";
+
+    document.getElementById(
+        "onboardingProgressTrack"
+    ).setAttribute("aria-valuenow", percentage);
+
+    document.getElementById(
+        "onboardingProgressText"
+    ).textContent =
+        completedCount + " of " + totalDays +
+        " days completed";
+
+    document.getElementById(
+        "onboardingCompletedDays"
+    ).textContent = completedCount;
+
+    document.getElementById(
+        "onboardingRemainingDays"
+    ).textContent = totalDays - completedCount;
+
+    document.getElementById(
+        "onboardingTaskCount"
+    ).textContent =
+        completedTasks + " / " + totalTasks;
+
+    document.getElementById(
+        "onboardingCompletionBanner"
+    ).hidden = completedCount !== totalDays;
+
+    // CONNECT WITH DASHBOARD PROGRESS
+
+    const completedDayNumbers = completedDays.map(
+        function(day) {
+
+            return day.day;
+
+        }
+    );
+
+    localStorage.setItem(
+        ONBOARDING_KEY,
+        JSON.stringify(completedDayNumbers)
+    );
+
+    updateProgress();
+
+}
+
+// SAVE TASK COMPLETION
+
+document.getElementById("onboardingDaysList")
+    .addEventListener("change", function(event) {
+
+        if (!event.target.matches(
+            ".onboarding-task-checkbox"
+        )) {
+
+            return;
+
+        }
+
+        const taskId = event.target.dataset.taskId;
+
+        if (event.target.checked) {
+
+            if (!completedOnboardingTasks.includes(taskId)) {
+
+                completedOnboardingTasks.push(taskId);
+
+            }
+
+        } else {
+
+            completedOnboardingTasks =
+                completedOnboardingTasks.filter(
+                    function(item) {
+
+                        return item !== taskId;
+
+                    }
+                );
+
+        }
+
+        localStorage.setItem(
+            ONBOARDING_TASKS_KEY,
+            JSON.stringify(completedOnboardingTasks)
+        );
+
+        updateOnboardingProgress();
+
+        displayOnboardingDays();
+
+    });
+
+// FILTER DAILY CHECKLIST
+
+function setOnboardingFilter(filter) {
+
+    onboardingActiveFilter = filter;
+
+    document.querySelectorAll(".onboarding-filter")
+        .forEach(function(button) {
+
+            const active =
+                button.dataset.filter === filter;
+
+            button.classList.toggle("active", active);
+
+            button.setAttribute(
+                "aria-pressed", active
+            );
+
+        });
+
+    displayOnboardingDays();
+
+}
+
+document.querySelectorAll(".onboarding-filter")
+    .forEach(function(button) {
+
+        button.addEventListener("click", function() {
+
+            setOnboardingFilter(
+                button.dataset.filter
+            );
+
+        });
+
+    });
+
+// VIEW ALL DAYS
+
+document.getElementById("showAllOnboardingDays")
+    .addEventListener("click", function() {
+
+        setOnboardingFilter("all");
+
+    });
+
+// RESET ONBOARDING PROGRESS
+
+document.getElementById("resetOnboardingProgress")
+    .addEventListener("click", function() {
+
+        const confirmed = confirm(
+
+            "Are you sure you want to reset your " +
+            "entire onboarding checklist progress?"
+
+        );
+
+        if (!confirmed) {
+
+            return;
+
+        }
+
+        completedOnboardingTasks = [];
+
+        localStorage.removeItem(
+            ONBOARDING_TASKS_KEY
+        );
+
+        updateOnboardingProgress();
+
+        setOnboardingFilter("all");
+
+    });
+
+// INITIALIZE ONBOARDING SECTION
+
+displayOnboardingDays();
+
+updateOnboardingProgress();
