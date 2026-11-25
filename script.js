@@ -4506,6 +4506,7 @@ function showUmsTopicDetails(topic) {
 
 }
 
+
 // CLOSE TOPIC DETAILS
 
 document.getElementById("closeUmsDetails")
