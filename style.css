@@ -5739,3 +5739,774 @@ body.sidebar-collapsed .main-content {
     }
 
 }
+
+
+/* =========================================
+   INTERNATIONAL STUDENTS HELP DESK
+========================================= */
+
+.international-heading {
+    margin-bottom: 24px;
+}
+
+/* WELCOME BANNER */
+
+.international-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    background: linear-gradient(
+        135deg,
+        #14243b,
+        #203650
+    );
+    padding: 32px;
+    border-radius: 14px;
+    margin-bottom: 24px;
+}
+
+.international-welcome {
+    display: inline-block;
+    color: #e97826;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.international-banner h2 {
+    color: #ffffff;
+    font-size: 28px;
+    margin-bottom: 12px;
+}
+
+.international-banner p {
+    color: #d1dbe8;
+    max-width: 650px;
+    line-height: 1.7;
+}
+
+.international-banner-icon {
+    font-size: 85px;
+    color: #e97826;
+}
+
+/* COMMON SECTION STYLING */
+
+.international-translator,
+.international-phrases-section,
+.international-resources-section,
+.international-resource-details,
+.international-faq-section {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 26px;
+    margin-bottom: 24px;
+}
+
+.international-section-heading {
+    margin-bottom: 24px;
+}
+
+.international-section-heading h2 {
+    color: #14243b;
+    font-size: 23px;
+    margin-bottom: 10px;
+}
+
+.international-section-heading h2 i {
+    color: #e97826;
+    margin-right: 8px;
+}
+
+.international-section-heading p {
+    line-height: 1.6;
+}
+
+/* LANGUAGE SELECTORS */
+
+.international-language-selectors {
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.international-language-field {
+    flex: 1;
+    min-width: 0;
+}
+
+.international-language-field label,
+.international-translation-input label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #14243b;
+    margin-bottom: 8px;
+}
+
+.international-language-field select {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: #f5f7fb;
+    color: #14243b;
+    font: inherit;
+    cursor: pointer;
+}
+
+.international-swap-button {
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: #fff1e7;
+    color: #c65d16;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.international-swap-button:hover {
+    background: #ffe5d1;
+}
+
+/* TRANSLATION INPUT */
+
+.international-translation-input textarea {
+    width: 100%;
+    min-height: 130px;
+    padding: 16px;
+    background: #f5f7fb;
+    border: 1px solid #e2e8f0;
+    border-radius: 9px;
+    color: #1e293b;
+    font: inherit;
+    line-height: 1.7;
+    resize: vertical;
+}
+
+.international-translation-input textarea:focus,
+.international-language-field select:focus {
+    outline: 2px solid rgba(233, 120, 38, 0.2);
+    border-color: #e97826;
+}
+
+#translationCharacterCount {
+    text-align: right;
+    font-size: 12px;
+    margin-top: 8px;
+}
+
+.international-translator-actions,
+.international-result-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 18px;
+}
+
+/* SECONDARY BUTTONS */
+
+.international-secondary-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 16px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    color: #14243b;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.international-secondary-button:hover {
+    border-color: #e97826;
+    color: #c65d16;
+}
+
+/* TRANSLATION RESULT */
+
+.international-translation-result {
+    background: #f5f7fb;
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid #e97826;
+    border-radius: 9px;
+    padding: 22px;
+    margin-top: 24px;
+}
+
+.international-translation-result h3 {
+    color: #14243b;
+    font-size: 15px;
+    margin-bottom: 14px;
+}
+
+#translationOutput {
+    color: #14243b;
+    font-size: 23px;
+    font-weight: 600;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.international-pronunciation {
+    font-size: 14px;
+    line-height: 1.7;
+    margin-top: 8px;
+}
+
+.international-message {
+    padding: 12px 16px;
+    margin-top: 16px;
+    background: #eef3f9;
+    color: #14243b;
+    border-radius: 8px;
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+.international-message.error {
+    background: #fef2f2;
+    color: #b91c1c;
+}
+
+.international-message.success {
+    background: #ecfdf5;
+    color: #166534;
+}
+
+/* EXTERNAL TRANSLATOR */
+
+.international-external-translator {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 18px;
+    background: #eef3f9;
+    border-radius: 9px;
+    margin-top: 24px;
+}
+
+.international-external-translator > i {
+    color: #14243b;
+    font-size: 20px;
+    margin-top: 3px;
+}
+
+.international-external-translator h3 {
+    color: #14243b;
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.international-external-translator p {
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 12px;
+}
+
+.international-external-translator a {
+    color: #c65d16;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.international-external-translator a:hover {
+    text-decoration: underline;
+}
+
+/* COMMON PHRASE SEARCH */
+
+.international-phrase-search {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 9px;
+    padding: 13px 16px;
+    margin-bottom: 18px;
+}
+
+.international-phrase-search i {
+    color: #64748b;
+}
+
+.international-phrase-search input {
+    width: 100%;
+    min-width: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    font: inherit;
+}
+
+.international-phrase-search:focus-within {
+    border-color: #e97826;
+    outline: 2px solid rgba(233, 120, 38, 0.2);
+}
+
+/* PHRASE FILTERS */
+
+.international-phrase-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.international-phrase-filter {
+    padding: 9px 15px;
+    background: #ffffff;
+    color: #64748b;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font: inherit;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.international-phrase-filter:hover {
+    border-color: #e97826;
+}
+
+.international-phrase-filter.active {
+    background: #14243b;
+    color: #ffffff;
+    border-color: #14243b;
+}
+
+#internationalPhraseCount {
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+
+/* PHRASE CARDS */
+
+.international-phrases-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.international-phrase-card {
+    padding: 20px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+}
+
+.international-phrase-card:hover {
+    border-color: #e97826;
+}
+
+.international-phrase-card h3 {
+    color: #14243b;
+    font-size: 17px;
+    margin-bottom: 16px;
+}
+
+.international-phrase-language {
+    padding: 12px;
+    background: #f5f7fb;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.international-phrase-language strong {
+    display: block;
+    color: #64748b;
+    font-size: 12px;
+    margin-bottom: 6px;
+}
+
+.international-phrase-text {
+    color: #14243b;
+    font-size: 17px;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+}
+
+.international-phrase-pronunciation {
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-top: 4px;
+}
+
+.international-phrase-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.international-phrase-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    background: #ffffff;
+    color: #c65d16;
+    font: inherit;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.international-phrase-button:hover {
+    background: #fff1e7;
+}
+
+/* EMPTY STATE */
+
+.international-empty-state {
+    padding: 36px 20px;
+    text-align: center;
+    background: #f5f7fb;
+    border-radius: 10px;
+}
+
+.international-empty-state > i {
+    color: #64748b;
+    font-size: 32px;
+    margin-bottom: 14px;
+}
+
+.international-empty-state h3 {
+    color: #14243b;
+    margin-bottom: 10px;
+}
+
+.international-empty-state p {
+    margin-bottom: 18px;
+}
+
+/* ESSENTIAL RESOURCE CARDS */
+
+.international-resources-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.international-resource-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 20px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    background: #ffffff;
+}
+
+.international-resource-card:hover {
+    border-color: #e97826;
+}
+
+.international-resource-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 9px;
+    background: #fff1e7;
+    color: #e97826;
+    font-size: 22px;
+}
+
+.international-resource-card h3 {
+    color: #14243b;
+    font-size: 17px;
+}
+
+.international-resource-card p {
+    font-size: 14px;
+    line-height: 1.6;
+    flex: 1;
+}
+
+.international-resource-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff1e7;
+    color: #c65d16;
+    border: none;
+    border-radius: 7px;
+    padding: 10px 14px;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.international-resource-button:hover {
+    background: #ffe5d1;
+}
+
+/* RESOURCE DETAILS */
+
+.international-resource-details {
+    scroll-margin-top: 100px;
+}
+
+.international-details-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.international-details-header h2 {
+    color: #14243b;
+    font-size: 24px;
+}
+
+.international-close-button {
+    background: #f5f7fb;
+    color: #14243b;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 14px;
+    cursor: pointer;
+}
+
+.international-resource-details > p {
+    line-height: 1.7;
+}
+
+.international-resource-details h3 {
+    color: #14243b;
+    margin-top: 22px;
+    margin-bottom: 12px;
+}
+
+.international-resource-details ul,
+.international-resource-details ol {
+    padding-left: 24px;
+    margin-bottom: 20px;
+}
+
+.international-resource-details li {
+    color: #475569;
+    line-height: 1.7;
+    margin-bottom: 8px;
+}
+
+.international-resource-tip {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px;
+    background: #fff5eb;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.international-resource-tip i {
+    color: #e97826;
+    font-size: 20px;
+}
+
+.international-resource-tip p {
+    line-height: 1.7;
+}
+
+.international-resource-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+/* FREQUENTLY ASKED QUESTIONS */
+
+.international-faq-section h2 {
+    color: #14243b;
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+.international-faq-section h2 i {
+    color: #e97826;
+    margin-right: 8px;
+}
+
+.international-faq {
+    padding: 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+.international-faq summary {
+    color: #14243b;
+    font-weight: 600;
+    line-height: 1.5;
+    cursor: pointer;
+}
+
+.international-faq[open] {
+    border-color: #e97826;
+}
+
+.international-faq p {
+    margin-top: 12px;
+    line-height: 1.7;
+}
+
+/* STUDENT SUPPORT BANNER */
+
+.international-support-banner {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.international-support-banner > i {
+    color: #e97826;
+    font-size: 34px;
+}
+
+.international-support-banner > div {
+    flex: 1;
+}
+
+.international-support-banner h2 {
+    color: #14243b;
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+/* IMPORTANT INFORMATION */
+
+.international-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: #eef3f9;
+    border-left: 4px solid #14243b;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.international-notice > i {
+    color: #14243b;
+    font-size: 22px;
+}
+
+.international-notice h3 {
+    color: #14243b;
+    margin-bottom: 8px;
+}
+
+.international-notice p {
+    line-height: 1.7;
+    margin-bottom: 8px;
+}
+
+/* RESPONSIVE DESIGN */
+
+@media (max-width: 1200px) {
+
+    .international-resources-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .international-banner {
+        padding: 22px;
+    }
+
+    .international-banner h2 {
+        font-size: 23px;
+    }
+
+    .international-banner-icon {
+        display: none;
+    }
+
+    .international-translator,
+    .international-phrases-section,
+    .international-resources-section,
+    .international-resource-details,
+    .international-faq-section {
+        padding: 18px;
+    }
+
+    .international-language-selectors {
+        gap: 8px;
+    }
+
+    .international-language-field select {
+        padding: 10px 8px;
+        font-size: 14px;
+    }
+
+    .international-swap-button {
+        width: 40px;
+        height: 40px;
+    }
+
+    .international-phrases-grid,
+    .international-resources-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .international-phrase-card,
+    .international-resource-card {
+        padding: 16px;
+    }
+
+    .international-translation-result {
+        padding: 16px;
+    }
+
+    #translationOutput {
+        font-size: 20px;
+    }
+
+    .international-support-banner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+}
+
+@media (max-width: 380px) {
+
+    .international-language-selectors {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .international-swap-button {
+        align-self: center;
+    }
+
+    .international-translator-actions > button {
+        flex: 1;
+    }
+
+}
