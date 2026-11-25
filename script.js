@@ -3493,3 +3493,91 @@ window.addEventListener(
 );
 
 loadCampusImageMarkers();
+
+
+// DISPLAY EXPLORE CAMPUS FACILITIES
+
+function displayExploreFacilities(facilities) {
+
+    const grid = document.getElementById(
+        "exploreFacilitiesGrid"
+    );
+
+    const emptyState = document.getElementById(
+        "exploreEmptyState"
+    );
+
+    grid.innerHTML = "";
+
+    document.getElementById(
+        "exploreResultCount"
+    ).textContent = facilities.length + " facilities";
+
+    emptyState.hidden = facilities.length !== 0;
+
+    facilities.forEach(function(facility) {
+
+        const card = document.createElement("article");
+
+        card.className = "explore-facility-card";
+
+        card.innerHTML = `
+
+            <div class="explore-card-image-wrapper">
+
+                <div class="explore-image-placeholder">
+                    <i class="fa-solid ${facility.icon}"></i>
+                </div>
+
+                <button type="button"
+                    class="explore-card-favourite"
+                    data-id="${facility.id}"
+                    aria-label="Add ${facility.name} to favourites">
+
+                    <i class="fa-regular fa-heart"></i>
+
+                </button>
+
+            </div>
+
+            <div class="explore-card-content">
+
+                <span class="explore-card-category">
+                    ${facility.categoryName}
+                </span>
+
+                <h3>${facility.name}</h3>
+
+                <p class="explore-card-description">
+                    ${facility.description}
+                </p>
+
+                <p class="explore-card-location">
+
+                    <i class="fa-solid fa-location-dot"></i>
+
+                    ${facility.location}
+
+                </p>
+
+                <button type="button"
+                    class="explore-card-button"
+                    data-id="${facility.id}">
+
+                    View Details
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </button>
+
+            </div>
+
+        `;
+
+        grid.appendChild(card);
+
+    });
+
+}
+
+displayExploreFacilities(exploreFacilities);
