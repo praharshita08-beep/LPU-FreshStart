@@ -5268,3 +5268,392 @@ document.getElementById("resetOnboardingProgress")
 displayOnboardingDays();
 
 updateOnboardingProgress();
+
+
+// =========================================
+// STUDENT SUPPORT SERVICES DATABASE
+// =========================================
+
+const supportServices = [
+
+    {
+        id: "academic-support",
+        title: "Academic Support",
+        category: "academic",
+        categoryName: "Academic",
+        icon: "fa-graduation-cap",
+
+        description: "Get assistance with academic concerns, classes, subjects and faculty guidance.",
+
+        keywords: "faculty teacher mentor classes subjects attendance marks exams academic",
+
+        issues: [
+            "Difficulty understanding course subjects",
+            "Attendance and academic concerns",
+            "Classroom and timetable confusion",
+            "Faculty and mentor guidance",
+            "Academic performance concerns"
+        ],
+
+        steps: [
+            "Identify your academic concern.",
+            "Approach your faculty member or academic mentor.",
+            "Explain your concern clearly.",
+            "Contact your academic department if further assistance is required.",
+            "Follow the official academic support procedure."
+        ],
+
+        department: "Academic Department or Assigned Mentor",
+        location: "Your respective academic block",
+        contact: "Check faculty and mentor details through UMS.",
+        hours: "Confirm with your academic department.",
+
+        tip: "Seek academic assistance early instead of waiting until examinations.",
+
+        link: "#ums",
+        linkText: "UMS Help"
+    },
+
+    {
+        id: "technical-support",
+        title: "Technical Support",
+        category: "technical",
+        categoryName: "Technical",
+        icon: "fa-laptop-code",
+
+        description: "Find assistance with UMS, university accounts, internet connectivity and technical problems.",
+
+        keywords: "ums password login wifi internet account laptop software technical error",
+
+        issues: [
+            "UMS login problems",
+            "Forgotten passwords",
+            "University Wi-Fi connectivity",
+            "University account access",
+            "Technical errors in digital services"
+        ],
+
+        steps: [
+            "Identify the technical problem.",
+            "Check your internet connection.",
+            "Review the troubleshooting guidance in UMS Help.",
+            "Contact the official university technical support service.",
+            "Provide relevant error information without sharing passwords."
+        ],
+
+        department: "University IT Support",
+        location: "Confirm through official university sources.",
+        contact: "Check the official UMS help channels.",
+        hours: "Confirm with the technical support department.",
+
+        tip: "Never share your password, OTP or account recovery codes.",
+
+        link: "#ums",
+        linkText: "UMS Help"
+    },
+
+    {
+        id: "hostel-support",
+        title: "Hostel Support",
+        category: "campus",
+        categoryName: "Campus Life",
+        icon: "fa-bed",
+
+        description: "Get guidance regarding accommodation, hostel facilities and maintenance concerns.",
+
+        keywords: "hostel room roommate warden accommodation maintenance electricity water laundry",
+
+        issues: [
+            "Hostel room allocation concerns",
+            "Water and electricity problems",
+            "Room maintenance",
+            "Hostel facilities and cleanliness",
+            "Roommate-related concerns"
+        ],
+
+        steps: [
+            "Identify the accommodation-related concern.",
+            "Contact your hostel warden or designated staff member.",
+            "Explain the issue and provide relevant room details privately.",
+            "Use the official maintenance or complaint procedure.",
+            "Follow up through the appropriate residential support channel."
+        ],
+
+        department: "Hostel Administration or Residential Services",
+        location: "Your respective hostel office",
+        contact: "Check the official hostel noticeboard or UMS.",
+        hours: "Confirm with your hostel administration.",
+
+        tip: "Keep your hostel warden's verified contact information accessible.",
+
+        link: "#rules",
+        linkText: "Hostel and University Rules"
+    },
+
+    {
+        id: "medical-assistance",
+        title: "Medical Assistance",
+        category: "health",
+        categoryName: "Health and Wellness",
+        icon: "fa-hospital",
+
+        description: "Find guidance for accessing healthcare and medical assistance on campus.",
+
+        keywords: "doctor hospital medicine health illness injury medical emergency healthcare",
+
+        issues: [
+            "General health concerns",
+            "Illness or injury",
+            "Medical consultations",
+            "Accessing campus healthcare facilities",
+            "Understanding medical assistance procedures"
+        ],
+
+        steps: [
+            "For a medical emergency, call 112 immediately.",
+            "Inform a trusted adult or nearby university staff member.",
+            "For non-emergency concerns, contact the campus healthcare service.",
+            "Consult a qualified healthcare professional.",
+            "Follow the medical professional's advice."
+        ],
+
+        department: "Campus Healthcare Services",
+        location: "University healthcare facility; confirm its current location.",
+        contact: "Check official university healthcare contacts. Emergency: 112.",
+        hours: "Confirm directly with the healthcare facility.",
+
+        tip: "Do not delay urgent medical assistance or rely on this portal for diagnosis.",
+
+        link: "#map",
+        linkText: "University Map"
+    },
+
+    {
+        id: "counselling-support",
+        title: "Counselling and Wellness",
+        category: "health",
+        categoryName: "Health and Wellness",
+        icon: "fa-hand-holding-heart",
+
+        description: "Find support for emotional wellbeing and adjustment to university life.",
+
+        keywords: "stress anxiety homesickness loneliness counselling wellness adjustment emotional",
+
+        issues: [
+            "Homesickness",
+            "Academic stress",
+            "Difficulty adjusting to university life",
+            "Feeling overwhelmed",
+            "Personal and emotional concerns"
+        ],
+
+        steps: [
+            "Speak with a trusted adult, family member or faculty mentor.",
+            "Contact the university's counselling or wellness service.",
+            "Ask about available appointments and confidentiality.",
+            "Discuss your concerns with a qualified professional.",
+            "Continue seeking support whenever needed."
+        ],
+
+        department: "University Counselling and Wellness Services",
+        location: "Confirm through official student support channels.",
+        contact: "Request verified counselling contact details from the university.",
+        hours: "Confirm appointment availability with the service.",
+
+        tip: "You do not need to wait until a concern becomes serious before seeking support.",
+
+        link: "#onboarding",
+        linkText: "First 15 Days"
+    },
+
+    {
+        id: "anti-ragging-support",
+        title: "Anti-Ragging Support",
+        category: "safety",
+        categoryName: "Safety",
+        icon: "fa-shield-halved",
+
+        description: "Understand how to seek assistance and report ragging, bullying or harassment.",
+
+        keywords: "ragging bullying harassment discrimination abuse threat safety complaint",
+
+        issues: [
+            "Ragging incidents",
+            "Bullying and intimidation",
+            "Harassment",
+            "Threatening behaviour",
+            "Concerns about student safety"
+        ],
+
+        steps: [
+            "Move to a safe place if possible.",
+            "Call 112 if you are in immediate danger.",
+            "Inform a trusted adult, university staff member or campus security.",
+            "Contact the official university anti-ragging service.",
+            "Follow the official reporting procedure with appropriate support."
+        ],
+
+        department: "University Anti-Ragging Committee",
+        location: "Confirm through official university channels.",
+        contact: "Check the university's official anti-ragging contact information.",
+        hours: "Confirm with the official service.",
+
+        tip: "You do not have to confront the person responsible. Prioritize your safety and seek assistance.",
+
+        link: "#rules",
+        linkText: "University Rules"
+    },
+
+    {
+        id: "lost-and-found",
+        title: "Lost and Found",
+        category: "campus",
+        categoryName: "Campus Life",
+        icon: "fa-magnifying-glass",
+
+        description: "Get guidance when personal belongings or university identification items are misplaced.",
+
+        keywords: "lost found missing wallet phone bag id card keys belongings",
+
+        issues: [
+            "Lost student ID card",
+            "Misplaced mobile phone",
+            "Lost wallet or bag",
+            "Missing personal belongings",
+            "Found items belonging to another student"
+        ],
+
+        steps: [
+            "Recall where the item was last seen.",
+            "Check nearby staffed reception areas.",
+            "Inform campus security or the appropriate university office.",
+            "Provide a description of the missing item.",
+            "Follow the official recovery or replacement procedure."
+        ],
+
+        department: "Campus Security or Designated Lost and Found Service",
+        location: "Confirm the appropriate reporting location.",
+        contact: "Check official campus security contact details.",
+        hours: "Confirm with the relevant university service.",
+
+        tip: "If a bank card is missing, contact your bank promptly through its official channels.",
+
+        link: "#map",
+        linkText: "University Map"
+    },
+
+    {
+        id: "administrative-support",
+        title: "Administrative Support",
+        category: "administrative",
+        categoryName: "Administrative",
+        icon: "fa-file-lines",
+
+        description: "Find assistance with university documents, registration and administrative formalities.",
+
+        keywords: "documents registration admission certificate verification fees records identity card",
+
+        issues: [
+            "Document verification",
+            "Student registration concerns",
+            "Student ID card assistance",
+            "Incorrect university records",
+            "Certificates and administrative requests"
+        ],
+
+        steps: [
+            "Identify the administrative requirement.",
+            "Check relevant university announcements and UMS.",
+            "Prepare the required documents.",
+            "Approach the appropriate administrative department.",
+            "Follow the official request procedure."
+        ],
+
+        department: "Relevant University Administrative Office",
+        location: "Confirm the office location through university sources.",
+        contact: "Check official university contact details or UMS.",
+        hours: "Confirm official office timings.",
+
+        tip: "Submit sensitive documents only through authorized university channels.",
+
+        link: "#onboarding",
+        linkText: "First 15 Days"
+    },
+
+    {
+        id: "campus-security",
+        title: "Campus Security",
+        category: "safety",
+        categoryName: "Safety",
+        icon: "fa-user-shield",
+
+        description: "Find assistance with campus safety, security concerns and emergency situations.",
+
+        keywords: "security emergency danger unsafe theft gate safety suspicious",
+
+        issues: [
+            "Campus safety concerns",
+            "Theft or missing property",
+            "Unsafe situations",
+            "Security-related assistance",
+            "Campus entry and exit concerns"
+        ],
+
+        steps: [
+            "Move to a safe and staffed location if possible.",
+            "Call 112 if there is immediate danger.",
+            "Approach nearby university security personnel.",
+            "Inform a trusted adult or university staff member.",
+            "Follow the official security reporting procedure."
+        ],
+
+        department: "University Security and Safety Services",
+        location: "Nearest staffed campus security point",
+        contact: "Check official campus security contacts. Emergency: 112.",
+        hours: "Confirm campus security service availability.",
+
+        tip: "Prioritize your personal safety rather than investigating a dangerous situation yourself.",
+
+        link: "#map",
+        linkText: "University Map"
+    },
+
+    {
+        id: "international-support",
+        title: "International Student Support",
+        category: "international",
+        categoryName: "International",
+        icon: "fa-earth-asia",
+
+        description: "Find guidance for international students adjusting to university life in India.",
+
+        keywords: "international foreign language translator visa passport culture frro sim currency",
+
+        issues: [
+            "Language and communication difficulties",
+            "Cultural adjustment",
+            "International student documentation",
+            "Visa and registration guidance",
+            "Understanding local facilities and services"
+        ],
+
+        steps: [
+            "Identify the type of assistance required.",
+            "Contact the university's international student support service.",
+            "Request guidance about the relevant official procedure.",
+            "Prepare documents only when requested through authorized channels.",
+            "Use the International Help Desk for general onboarding guidance."
+        ],
+
+        department: "University International Affairs or International Student Services",
+        location: "Confirm through official university sources.",
+        contact: "Check official international student support contacts.",
+        hours: "Confirm with the relevant department.",
+
+        tip: "Use official government and university sources for visa and immigration requirements.",
+
+        link: "#international",
+        linkText: "International Help Desk"
+    }
+
+];
