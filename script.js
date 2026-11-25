@@ -6356,3 +6356,821 @@ const internationalPhrases = [
     }
 
 ];
+
+
+// =========================================
+// INTERNATIONAL TRANSLATOR FUNCTIONALITY
+// =========================================
+
+const internationalTranslatorForm =
+    document.getElementById("internationalTranslatorForm");
+
+const translationSource =
+    document.getElementById("translationSource");
+
+const translationTarget =
+    document.getElementById("translationTarget");
+
+const translationInput =
+    document.getElementById("translationInput");
+
+const translationOutput =
+    document.getElementById("translationOutput");
+
+const translationResultPanel =
+    document.getElementById("translationResultPanel");
+
+const internationalLanguageNames = {
+    en: "English",
+    hi: "Hindi",
+    pa: "Punjabi"
+};
+
+const internationalSpeechLanguages = {
+    en: "en-IN",
+    hi: "hi-IN",
+    pa: "pa-IN"
+};
+
+let currentInternationalTranslation = "";
+let currentInternationalLanguage = "";
+
+
+// NORMALIZE TEXT FOR MATCHING
+
+function normalizeInternationalText(text) {
+
+    return text
+        .normalize("NFC")
+        .toLowerCase()
+        .trim()
+        .replace(/[?!.,।]/g, "")
+        .replace(/\s+/g, " ");
+
+}
+
+
+// DISPLAY MESSAGES
+
+function showInternationalMessage(id, message, type) {
+
+    const element = document.getElementById(id);
+
+    element.textContent = message;
+
+    element.classList.remove("error", "success");
+
+    if (type) {
+        element.classList.add(type);
+    }
+
+    element.hidden = false;
+
+}
+
+
+// CHARACTER COUNTER
+
+function updateTranslationCharacterCount() {
+
+    document.getElementById(
+        "translationCharacterCount"
+    ).textContent =
+        translationInput.value.length + " / 500 characters";
+
+}
+
+
+// RESET TRANSLATION RESULT
+
+function resetInternationalTranslationResult() {
+
+    currentInternationalTranslation = "";
+    currentInternationalLanguage = "";
+
+    translationResultPanel.hidden = true;
+
+    translationOutput.textContent = "";
+
+    document.getElementById(
+        "translationPronunciation"
+    ).textContent = "";
+
+    document.getElementById(
+        "translationMessage"
+    ).hidden = true;
+
+}
+
+
+// INPUT EVENT
+
+translationInput.addEventListener("input", function () {
+
+    updateTranslationCharacterCount();
+
+    resetInternationalTranslationResult();
+
+});
+
+
+// LANGUAGE CHANGE EVENTS
+
+translationSource.addEventListener(
+    "change",
+    resetInternationalTranslationResult
+);
+
+translationTarget.addEventListener(
+    "change",
+    resetInternationalTranslationResult
+);
+
+
+// TRANSLATION FUNCTION
+
+function performInternationalTranslation() {
+
+    const source = translationSource.value;
+
+    const target = translationTarget.value;
+
+    const input = translationInput.value.trim();
+
+    resetInternationalTranslationResult();
+
+    if (input === "") {
+
+        showInternationalMessage(
+            "translationMessage",
+            "Please enter a word or phrase.",
+            "error"
+        );
+
+        return;
+
+    }
+
+    if (source === target) {
+
+        showInternationalMessage(
+            "translationMessage",
+            "Please select two different languages.",
+            "error"
+        );
+
+        return;
+
+    }
+
+    const normalizedInput =
+        normalizeInternationalText(input);
+
+    const matchingPhrase = internationalPhrases.find(
+        function (phrase) {
+
+            const originalText =
+                normalizeInternationalText(phrase[source]);
+
+            const pronunciation =
+                phrase[source + "Pronunciation"] || "";
+
+            return originalText === normalizedInput ||
+
+                (
+                    pronunciation !== "" &&
+                    normalizeInternationalText(pronunciation)
+                        === normalizedInput
+                );
+
+        }
+    );
+
+    if (!matchingPhrase) {
+
+        showInternationalMessage(
+            "translationMessage",
+            "This phrase is not available in our built-in database. Please use Google Translate for a more detailed translation.",
+            "error"
+        );
+
+        return;
+
+    }
+
+    currentInternationalTranslation =
+        matchingPhrase[target];
+
+    currentInternationalLanguage = target;
+
+    translationOutput.textContent =
+        currentInternationalTranslation;
+
+    translationOutput.lang = target;
+
+    const pronunciation =
+        matchingPhrase[target + "Pronunciation"];
+
+    document.getElementById(
+        "translationPronunciation"
+    ).textContent = pronunciation
+        ? "Pronunciation: " + pronunciation
+        : "";
+
+    translationResultPanel.hidden = false;
+
+}
+
+
+// TRANSLATOR FORM
+
+internationalTranslatorForm.addEventListener(
+    "submit",
+    function (event) {
+
+        event.preventDefault();
+
+        performInternationalTranslation();
+
+    }
+);
+
+
+// SWAP LANGUAGES
+
+document.getElementById(
+    "swapTranslationLanguages"
+).addEventListener("click", function () {
+
+    const previousSource = translationSource.value;
+
+    translationSource.value = translationTarget.value;
+
+    translationTarget.value = previousSource;
+
+    if (currentInternationalTranslation !== "") {
+
+        translationInput.value =
+            currentInternationalTranslation;
+
+    }
+
+    updateTranslationCharacterCount();
+
+    resetInternationalTranslationResult();
+
+});
+
+
+// CLEAR TRANSLATOR
+
+document.getElementById(
+    "clearTranslation"
+).addEventListener("click", function () {
+
+    translationInput.value = "";
+
+    resetInternationalTranslationResult();
+
+    updateTranslationCharacterCount();
+
+    translationInput.focus();
+
+});
+
+
+// =========================================
+// PRONUNCIATION FUNCTIONALITY
+// =========================================
+
+function speakInternationalText(text, language, messageId) {
+
+    if (
+        !("speechSynthesis" in window) ||
+        !("SpeechSynthesisUtterance" in window)
+    ) {
+
+        showInternationalMessage(
+            messageId,
+            "Pronunciation is not supported by your browser.",
+            "error"
+        );
+
+        return;
+
+    }
+
+    const voices = window.speechSynthesis.getVoices();
+
+    const languageVoice = voices.find(function (voice) {
+
+        return voice.lang.toLowerCase().split("-")[0]
+            === language;
+
+    });
+
+    if (!languageVoice) {
+
+        showInternationalMessage(
+            messageId,
+            "A voice for " +
+            internationalLanguageNames[language] +
+            " is not currently available. Please use the written pronunciation guide.",
+            "error"
+        );
+
+        return;
+
+    }
+
+    window.speechSynthesis.cancel();
+
+    const speech = new SpeechSynthesisUtterance(text);
+
+    speech.lang = internationalSpeechLanguages[language];
+
+    speech.voice = languageVoice;
+
+    speech.rate = 0.85;
+
+    speech.pitch = 1;
+
+    speech.onerror = function (event) {
+
+        if (
+            event.error === "canceled" ||
+            event.error === "interrupted"
+        ) {
+            return;
+        }
+
+        showInternationalMessage(
+            messageId,
+            "Pronunciation could not be played.",
+            "error"
+        );
+
+    };
+
+    window.speechSynthesis.speak(speech);
+
+}
+
+
+// LOAD AVAILABLE BROWSER VOICES
+
+if ("speechSynthesis" in window) {
+
+    window.speechSynthesis.getVoices();
+
+    window.speechSynthesis.addEventListener(
+        "voiceschanged",
+        function () {
+            window.speechSynthesis.getVoices();
+        }
+    );
+
+}
+
+
+// LISTEN TO TRANSLATION
+
+document.getElementById(
+    "speakTranslation"
+).addEventListener("click", function () {
+
+    if (currentInternationalTranslation !== "") {
+
+        speakInternationalText(
+            currentInternationalTranslation,
+            currentInternationalLanguage,
+            "translationMessage"
+        );
+
+    }
+
+});
+
+
+// =========================================
+// COPY FUNCTIONALITY
+// =========================================
+
+async function copyInternationalText(text, messageId) {
+
+    try {
+
+        if (!navigator.clipboard) {
+
+            throw new Error("Clipboard unavailable");
+
+        }
+
+        await navigator.clipboard.writeText(text);
+
+        showInternationalMessage(
+            messageId,
+            "Text copied successfully.",
+            "success"
+        );
+
+    } catch (error) {
+
+        showInternationalMessage(
+            messageId,
+            "Automatic copying is unavailable. Please select and copy the text manually.",
+            "error"
+        );
+
+    }
+
+}
+
+
+// COPY TRANSLATION
+
+document.getElementById(
+    "copyTranslation"
+).addEventListener("click", function () {
+
+    if (currentInternationalTranslation !== "") {
+
+        copyInternationalText(
+            currentInternationalTranslation,
+            "translationMessage"
+        );
+
+    }
+
+});
+
+
+// =========================================
+// COMMON PHRASES FUNCTIONALITY
+// =========================================
+
+const internationalPhrasesGrid =
+    document.getElementById("internationalPhrasesGrid");
+
+const internationalPhraseSearch =
+    document.getElementById("internationalPhraseSearch");
+
+let internationalActiveCategory = "all";
+
+
+// GENERATE PHRASE CARDS
+
+function displayInternationalPhrases(phrases) {
+
+    internationalPhrasesGrid.innerHTML = "";
+
+    document.getElementById(
+        "internationalPhraseCount"
+    ).textContent = phrases.length +
+        (phrases.length === 1 ? " phrase" : " phrases");
+
+    document.getElementById(
+        "internationalPhraseEmpty"
+    ).hidden = phrases.length !== 0;
+
+    phrases.forEach(function (phrase) {
+
+        const card = document.createElement("article");
+
+        card.className = "international-phrase-card";
+
+        card.innerHTML = `
+
+            <h3 lang="en">${phrase.en}</h3>
+
+            <div class="international-phrase-language">
+
+                <strong>Hindi</strong>
+
+                <div class="international-phrase-text"
+                    lang="hi">
+
+                    ${phrase.hi}
+
+                </div>
+
+                <div class="international-phrase-pronunciation">
+
+                    ${phrase.hiPronunciation}
+
+                </div>
+
+                <div class="international-phrase-actions">
+
+                    <button type="button"
+                        class="international-phrase-button"
+                        data-id="${phrase.id}"
+                        data-language="hi"
+                        data-action="listen">
+
+                        <i class="fa-solid fa-volume-high"></i>
+
+                        Listen
+
+                    </button>
+
+                    <button type="button"
+                        class="international-phrase-button"
+                        data-id="${phrase.id}"
+                        data-language="hi"
+                        data-action="copy">
+
+                        <i class="fa-solid fa-copy"></i>
+
+                        Copy
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="international-phrase-language">
+
+                <strong>Punjabi</strong>
+
+                <div class="international-phrase-text"
+                    lang="pa">
+
+                    ${phrase.pa}
+
+                </div>
+
+                <div class="international-phrase-pronunciation">
+
+                    ${phrase.paPronunciation}
+
+                </div>
+
+                <div class="international-phrase-actions">
+
+                    <button type="button"
+                        class="international-phrase-button"
+                        data-id="${phrase.id}"
+                        data-language="pa"
+                        data-action="listen">
+
+                        <i class="fa-solid fa-volume-high"></i>
+
+                        Listen
+
+                    </button>
+
+                    <button type="button"
+                        class="international-phrase-button"
+                        data-id="${phrase.id}"
+                        data-language="pa"
+                        data-action="copy">
+
+                        <i class="fa-solid fa-copy"></i>
+
+                        Copy
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="international-phrase-actions">
+
+                <button type="button"
+                    class="international-phrase-button"
+                    data-id="${phrase.id}"
+                    data-language="en"
+                    data-action="listen">
+
+                    <i class="fa-solid fa-volume-high"></i>
+
+                    Listen in English
+
+                </button>
+
+                <button type="button"
+                    class="international-phrase-button"
+                    data-id="${phrase.id}"
+                    data-language="en"
+                    data-action="copy">
+
+                    <i class="fa-solid fa-copy"></i>
+
+                    Copy English
+
+                </button>
+
+                <button type="button"
+                    class="international-phrase-button"
+                    data-id="${phrase.id}"
+                    data-action="translate">
+
+                    <i class="fa-solid fa-language"></i>
+
+                    Use in Translator
+
+                </button>
+
+            </div>
+
+        `;
+
+        internationalPhrasesGrid.appendChild(card);
+
+    });
+
+}
+
+
+// SEARCH AND FILTER PHRASES
+
+function filterInternationalPhrases() {
+
+    const query = normalizeInternationalText(
+        internationalPhraseSearch.value
+    );
+
+    const filteredPhrases = internationalPhrases.filter(
+        function (phrase) {
+
+            const matchesCategory =
+                internationalActiveCategory === "all" ||
+
+                phrase.category === internationalActiveCategory;
+
+            const searchableText = normalizeInternationalText(
+
+                phrase.en + " " +
+                phrase.hi + " " +
+                phrase.pa + " " +
+                phrase.hiPronunciation + " " +
+                phrase.paPronunciation + " " +
+                phrase.category
+
+            );
+
+            const matchesSearch =
+                searchableText.includes(query);
+
+            return matchesCategory && matchesSearch;
+
+        }
+    );
+
+    document.getElementById(
+        "internationalPhraseMessage"
+    ).hidden = true;
+
+    displayInternationalPhrases(filteredPhrases);
+
+}
+
+
+// LIVE PHRASE SEARCH
+
+internationalPhraseSearch.addEventListener(
+    "input",
+    filterInternationalPhrases
+);
+
+
+// CATEGORY FILTERS
+
+function setInternationalPhraseCategory(category) {
+
+    internationalActiveCategory = category;
+
+    document.querySelectorAll(
+        ".international-phrase-filter"
+    ).forEach(function (button) {
+
+        const isActive =
+            button.dataset.category === category;
+
+        button.classList.toggle("active", isActive);
+
+        button.setAttribute("aria-pressed", isActive);
+
+    });
+
+    filterInternationalPhrases();
+
+}
+
+
+document.querySelectorAll(
+    ".international-phrase-filter"
+).forEach(function (button) {
+
+    button.addEventListener("click", function () {
+
+        setInternationalPhraseCategory(
+            button.dataset.category
+        );
+
+    });
+
+});
+
+
+// RESET SEARCH AND FILTERS
+
+document.getElementById(
+    "resetInternationalPhrases"
+).addEventListener("click", function () {
+
+    internationalPhraseSearch.value = "";
+
+    setInternationalPhraseCategory("all");
+
+});
+
+
+// PHRASE CARD BUTTONS
+
+internationalPhrasesGrid.addEventListener(
+    "click",
+    function (event) {
+
+        const button = event.target.closest(
+            ".international-phrase-button"
+        );
+
+        if (!button) {
+            return;
+        }
+
+        const phrase = internationalPhrases.find(
+            function (item) {
+
+                return item.id === Number(button.dataset.id);
+
+            }
+        );
+
+        if (!phrase) {
+            return;
+        }
+
+        const action = button.dataset.action;
+
+        const language = button.dataset.language;
+
+        if (action === "listen") {
+
+            speakInternationalText(
+                phrase[language],
+                language,
+                "internationalPhraseMessage"
+            );
+
+        }
+
+        if (action === "copy") {
+
+            copyInternationalText(
+                phrase[language],
+                "internationalPhraseMessage"
+            );
+
+        }
+
+        if (action === "translate") {
+
+            translationSource.value = "en";
+
+            if (translationTarget.value === "en") {
+
+                translationTarget.value = "hi";
+
+            }
+
+            translationInput.value = phrase.en;
+
+            updateTranslationCharacterCount();
+
+            performInternationalTranslation();
+
+            document.querySelector(
+                ".international-translator"
+            ).scrollIntoView({
+
+                behavior: "auto",
+                block: "start"
+
+            });
+
+        }
+
+    }
+);
+
+
+// INITIALIZE INTERNATIONAL PHRASES
+
+updateTranslationCharacterCount();
+
+displayInternationalPhrases(internationalPhrases);
