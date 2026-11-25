@@ -7174,3 +7174,547 @@ internationalPhrasesGrid.addEventListener(
 updateTranslationCharacterCount();
 
 displayInternationalPhrases(internationalPhrases);
+
+
+// =========================================
+// INTERNATIONAL STUDENT RESOURCES
+// =========================================
+
+const internationalResources = [
+
+    // CULTURAL GUIDANCE
+
+    {
+        id: "culture",
+
+        title: "Cultural Guidance",
+
+        icon: "fa-people-group",
+
+        description:
+            "Understand Indian customs, everyday etiquette and cultural diversity.",
+
+        points: [
+            "India is home to many languages, religions and cultural traditions.",
+            "Namaste and Sat Sri Akaal are common greetings.",
+            "Respect different cultural and religious practices.",
+            "Some religious places require visitors to remove their shoes.",
+            "Food preferences and traditions may differ between communities."
+        ],
+
+        steps: [
+            "Learn basic Hindi and Punjabi greetings.",
+            "Participate in university cultural activities.",
+            "Interact respectfully with students from different backgrounds.",
+            "Ask a trusted mentor if you are unfamiliar with a local custom."
+        ],
+
+        tip:
+            "You do not need to change your cultural identity to feel included. Respectful communication helps build friendships.",
+
+        links: [
+            {
+                text: "Explore Campus",
+                url: "#explore"
+            },
+            {
+                text: "Student Support",
+                url: "#support"
+            }
+        ]
+    },
+
+    // VISA AND DOCUMENTATION
+
+    {
+        id: "visa",
+
+        title: "Visa & Documentation",
+
+        icon: "fa-passport",
+
+        description:
+            "Find guidance for student visas, registration and essential documents.",
+
+        points: [
+            "Keep your passport and visa valid.",
+            "Maintain copies of your admission documents.",
+            "Keep university registration and accommodation records accessible.",
+            "FRRO registration requirements depend on your visa conditions.",
+            "Immigration requirements may change."
+        ],
+
+        steps: [
+            "Review the conditions mentioned on your student visa.",
+            "Contact the university's international student support office.",
+            "Check applicable registration requirements and deadlines.",
+            "Use official government portals for immigration services.",
+            "Keep copies of official acknowledgements."
+        ],
+
+        tip:
+            "Never share passport details, visa documents or identification numbers with unauthorized individuals.",
+
+        links: [
+            {
+                text: "Official e-FRRO Portal",
+                url: "https://indianfrro.gov.in/eservices/"
+            },
+            {
+                text: "Indian Visa Portal",
+                url: "https://indianvisaonline.gov.in/"
+            },
+            {
+                text: "Official LPU Website",
+                url: "https://www.lpu.in/"
+            }
+        ]
+    },
+
+    // CURRENCY AND PAYMENTS
+
+    {
+        id: "currency",
+
+        title: "Currency & Payments",
+
+        icon: "fa-wallet",
+
+        description:
+            "Understand Indian currency, payment methods and financial safety.",
+
+        points: [
+            "The official currency of India is the Indian Rupee (INR).",
+            "The Indian Rupee is represented by the symbol ₹.",
+            "Cash, cards and UPI are commonly used payment methods.",
+            "Banking eligibility and documentation requirements may vary.",
+            "Exchange rates and transaction charges may change."
+        ],
+
+        steps: [
+            "Familiarize yourself with Indian currency denominations.",
+            "Use authorized banks or currency exchange providers.",
+            "Confirm transaction charges before making payments.",
+            "Ask your bank about account eligibility and payment options.",
+            "Keep track of your everyday expenses."
+        ],
+
+        tip:
+            "Never share your banking password, OTP, card PIN or UPI PIN with anyone.",
+
+        links: [
+            {
+                text: "Banking Assistance",
+                url: "#banking"
+            },
+            {
+                text: "Reserve Bank of India",
+                url: "https://www.rbi.org.in/"
+            }
+        ]
+    },
+
+    // SIM AND INTERNET
+
+    {
+        id: "connectivity",
+
+        title: "SIM & Internet",
+
+        icon: "fa-mobile-screen-button",
+
+        description:
+            "Understand mobile connectivity, internet access and campus Wi-Fi assistance.",
+
+        points: [
+            "Mobile network coverage may vary by location.",
+            "SIM registration requires applicable identity verification.",
+            "International students may have additional documentation requirements.",
+            "Age eligibility and provider requirements must be confirmed.",
+            "University Wi-Fi access may require student credentials."
+        ],
+
+        steps: [
+            "Ask university support about campus internet access.",
+            "Contact an authorized mobile network provider.",
+            "Confirm identification and eligibility requirements.",
+            "Seek guardian or university assistance when necessary.",
+            "Contact technical support if campus Wi-Fi does not work."
+        ],
+
+        tip:
+            "Avoid accessing sensitive accounts through unknown public Wi-Fi networks.",
+
+        links: [
+            {
+                text: "Student Support",
+                url: "#support"
+            },
+            {
+                text: "UMS Help",
+                url: "#ums"
+            }
+        ]
+    },
+
+    // CAMPUS FACILITIES
+
+    {
+        id: "facilities",
+
+        title: "Essential Campus Facilities",
+
+        icon: "fa-map-location-dot",
+
+        description:
+            "Discover important facilities needed during your first days at university.",
+
+        points: [
+            "Academic blocks and classrooms",
+            "Hostels and residential services",
+            "Library and learning facilities",
+            "Medical and healthcare facilities",
+            "Food outlets and shopping facilities",
+            "Student support and administrative offices"
+        ],
+
+        steps: [
+            "Explore the University Map.",
+            "Identify your academic block and accommodation.",
+            "Locate nearby medical and student support facilities.",
+            "Explore essential food and shopping facilities.",
+            "Confirm locations with university staff when necessary."
+        ],
+
+        tip:
+            "Save important campus locations and ask university staff for assistance if you are unfamiliar with an area.",
+
+        links: [
+            {
+                text: "University Map",
+                url: "#map"
+            },
+            {
+                text: "Explore Campus",
+                url: "#explore"
+            },
+            {
+                text: "Find My Classroom",
+                url: "#classroom"
+            },
+            {
+                text: "Food & Dining",
+                url: "#food"
+            }
+        ]
+    },
+
+    // ADJUSTMENT AND WELLNESS
+
+    {
+        id: "wellness",
+
+        title: "Adjustment & Wellness",
+
+        icon: "fa-hand-holding-heart",
+
+        description:
+            "Find support for homesickness, cultural adjustment and student well-being.",
+
+        points: [
+            "Adjusting to a new environment can take time.",
+            "Maintaining regular contact with family may help.",
+            "Building friendships can improve your sense of belonging.",
+            "Regular meals, sufficient sleep and recreation support well-being.",
+            "Professional counselling can provide additional support."
+        ],
+
+        steps: [
+            "Create a comfortable daily routine.",
+            "Stay connected with family and trusted friends.",
+            "Participate in suitable university activities.",
+            "Talk to a trusted mentor or staff member about concerns.",
+            "Seek professional support when difficulties persist."
+        ],
+
+        tip:
+            "You do not have to manage every difficulty alone. Asking for assistance is a normal part of adjusting to university life.",
+
+        links: [
+            {
+                text: "Student Support",
+                url: "#support"
+            },
+            {
+                text: "First 15 Days",
+                url: "#onboarding"
+            },
+            {
+                text: "Explore Campus",
+                url: "#explore"
+            }
+        ]
+    },
+
+    // INTERNATIONAL STUDENT ASSISTANCE
+
+    {
+        id: "assistance",
+
+        title: "International Student Assistance",
+
+        icon: "fa-headset",
+
+        description:
+            "Find the appropriate university support for international student concerns.",
+
+        points: [
+            "Admission and registration assistance",
+            "Visa and documentation guidance",
+            "Academic and administrative concerns",
+            "Accommodation and campus adjustment",
+            "Language and communication assistance"
+        ],
+
+        steps: [
+            "Identify the type of assistance you require.",
+            "Contact the relevant university support department.",
+            "Explain your concern clearly.",
+            "Keep necessary documents available when requested through official channels.",
+            "Follow up through authorized university communication channels."
+        ],
+
+        tip:
+            "Confirm the current international student office location, contact details and working hours through official university sources.",
+
+        links: [
+            {
+                text: "Official LPU Website",
+                url: "https://www.lpu.in/"
+            },
+            {
+                text: "Student Support",
+                url: "#support"
+            },
+            {
+                text: "UMS Help",
+                url: "#ums"
+            }
+        ]
+    }
+
+];
+
+
+// =========================================
+// DISPLAY INTERNATIONAL RESOURCE CARDS
+// =========================================
+
+const internationalResourcesGrid =
+    document.getElementById("internationalResourcesGrid");
+
+const internationalResourceDetails =
+    document.getElementById("internationalResourceDetails");
+
+
+function displayInternationalResources() {
+
+    internationalResourcesGrid.innerHTML = "";
+
+    internationalResources.forEach(function (resource) {
+
+        const card = document.createElement("article");
+
+        card.className = "international-resource-card";
+
+        card.innerHTML = `
+
+            <div class="international-resource-icon">
+
+                <i class="fa-solid ${resource.icon}"></i>
+
+            </div>
+
+            <h3>${resource.title}</h3>
+
+            <p>${resource.description}</p>
+
+            <button type="button"
+                class="international-resource-button"
+                data-resource="${resource.id}">
+
+                Explore
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </button>
+
+        `;
+
+        internationalResourcesGrid.appendChild(card);
+
+    });
+
+}
+
+
+// =========================================
+// DISPLAY RESOURCE DETAILS
+// =========================================
+
+function showInternationalResourceDetails(resource) {
+
+    document.getElementById(
+        "internationalResourceTitle"
+    ).textContent = resource.title;
+
+    document.getElementById(
+        "internationalResourceDescription"
+    ).textContent = resource.description;
+
+    document.getElementById(
+        "internationalResourceTip"
+    ).textContent = resource.tip;
+
+
+    // RESOURCE INFORMATION
+
+    const pointsList = document.getElementById(
+        "internationalResourcePoints"
+    );
+
+    pointsList.innerHTML = "";
+
+    resource.points.forEach(function (point) {
+
+        const listItem = document.createElement("li");
+
+        listItem.textContent = point;
+
+        pointsList.appendChild(listItem);
+
+    });
+
+
+    // RESOURCE GUIDANCE
+
+    const stepsList = document.getElementById(
+        "internationalResourceSteps"
+    );
+
+    stepsList.innerHTML = "";
+
+    resource.steps.forEach(function (step) {
+
+        const listItem = document.createElement("li");
+
+        listItem.textContent = step;
+
+        stepsList.appendChild(listItem);
+
+    });
+
+
+    // RESOURCE LINKS
+
+    const linksContainer = document.getElementById(
+        "internationalResourceLinks"
+    );
+
+    linksContainer.innerHTML = "";
+
+    resource.links.forEach(function (resourceLink) {
+
+        const link = document.createElement("a");
+
+        link.href = resourceLink.url;
+
+        link.className = "primary-button";
+
+        link.textContent = resourceLink.text;
+
+        if (resourceLink.url.startsWith("https://")) {
+
+            link.target = "_blank";
+
+            link.rel = "noopener noreferrer";
+
+        }
+
+        const icon = document.createElement("i");
+
+        icon.className =
+            resourceLink.url.startsWith("https://")
+                ? "fa-solid fa-arrow-up-right-from-square"
+                : "fa-solid fa-arrow-right";
+
+        icon.setAttribute("aria-hidden", "true");
+
+        link.appendChild(icon);
+
+        linksContainer.appendChild(link);
+
+    });
+
+
+    // SHOW DETAILS PANEL
+
+    internationalResourceDetails.hidden = false;
+
+    internationalResourceDetails.scrollIntoView({
+
+        behavior: "auto",
+
+        block: "start"
+
+    });
+
+}
+
+
+// RESOURCE CARD CLICK EVENT
+
+internationalResourcesGrid.addEventListener(
+    "click",
+    function (event) {
+
+        const button = event.target.closest(
+            ".international-resource-button"
+        );
+
+        if (!button) {
+            return;
+        }
+
+        const resource = internationalResources.find(
+            function (item) {
+
+                return item.id === button.dataset.resource;
+
+            }
+        );
+
+        if (resource) {
+
+            showInternationalResourceDetails(resource);
+
+        }
+
+    }
+);
+
+
+// CLOSE RESOURCE DETAILS
+
+document.getElementById(
+    "closeInternationalResource"
+).addEventListener("click", function () {
+
+    internationalResourceDetails.hidden = true;
+
+});
+
+
+// INITIALIZE INTERNATIONAL STUDENT RESOURCES
+
+displayInternationalResources();
