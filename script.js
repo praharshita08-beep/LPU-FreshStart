@@ -4258,3 +4258,307 @@ document.getElementById("resetExploreFilters")
 updateExploreProgress();
 
 filterExploreFacilities();
+
+
+// =========================================
+// UMS HELP SECTION
+// =========================================
+
+const umsTopics = [
+
+    {
+        id: "attendance",
+        title: "Attendance",
+        icon: "fa-clipboard-check",
+        description: "Learn how to check your academic attendance.",
+        keywords: "attendance percentage absent present classes",
+        steps: [
+            "Log in to the official UMS portal.",
+            "Locate the academic attendance section.",
+            "Select the relevant subject or semester, if required.",
+            "Review your attendance records.",
+            "Contact your faculty if you notice an incorrect entry."
+        ],
+        tip: "Check your attendance regularly and follow the university's current attendance requirements."
+    },
+
+    {
+        id: "timetable",
+        title: "Class Timetable",
+        icon: "fa-calendar-days",
+        description: "Find your class schedule and classroom information.",
+        keywords: "schedule timetable classroom lecture room",
+        steps: [
+            "Log in to UMS.",
+            "Locate your academic timetable.",
+            "Check the date, subject and class timings.",
+            "Note the classroom and block number.",
+            "Check for any changes before attending classes."
+        ],
+        tip: "Use Find My Classroom in LPU FreshStart for additional classroom assistance."
+    },
+
+    {
+        id: "assignments",
+        title: "Assignments",
+        icon: "fa-book-open",
+        description: "Find academic assignments and submission information.",
+        keywords: "assignment homework submission coursework ca",
+        steps: [
+            "Log in to the university's academic platform.",
+            "Locate your course and assignment information.",
+            "Read the instructions and submission deadline.",
+            "Prepare your assignment in the required format.",
+            "Submit through the platform specified by your faculty.",
+            "Check whether your submission was successful."
+        ],
+        tip: "Keep a copy of your submitted assignment."
+    },
+
+    {
+        id: "announcements",
+        title: "Announcements",
+        icon: "fa-bullhorn",
+        description: "Stay informed about important university updates.",
+        keywords: "notice announcements news events updates",
+        steps: [
+            "Log in to UMS.",
+            "Look for university announcements and notices.",
+            "Read relevant academic and administrative updates.",
+            "Note important dates and deadlines.",
+            "Follow the instructions provided by the university."
+        ],
+        tip: "Check official announcements regularly."
+    },
+
+    {
+        id: "results",
+        title: "Examination and Results",
+        icon: "fa-graduation-cap",
+        description: "Access examination information and academic results.",
+        keywords: "exam marks grades result cgpa examination",
+        steps: [
+            "Log in to UMS.",
+            "Locate examination or result-related services.",
+            "Check the relevant semester or examination.",
+            "Review available examination schedules or results.",
+            "Contact the examination department for discrepancies."
+        ],
+        tip: "Always refer to official examination notices for confirmed dates."
+    },
+
+    {
+        id: "fees",
+        title: "Fee Details",
+        icon: "fa-wallet",
+        description: "Understand how to check university fee information.",
+        keywords: "fees payment receipt dues scholarship finance",
+        steps: [
+            "Log in to the official UMS portal.",
+            "Locate fee or financial information.",
+            "Review outstanding dues and payment deadlines.",
+            "Follow the university's official payment instructions.",
+            "Keep your payment acknowledgement or receipt."
+        ],
+        tip: "Never make university payments through unverified links or personal accounts."
+    },
+
+    {
+        id: "requests",
+        title: "Leave and Requests",
+        icon: "fa-file-lines",
+        description: "Understand how to submit university-related requests.",
+        keywords: "leave request application permission grievance",
+        steps: [
+            "Log in to UMS.",
+            "Locate the appropriate request or support service.",
+            "Choose the relevant request category.",
+            "Provide the required information.",
+            "Submit through the official process.",
+            "Check the status of your request."
+        ],
+        tip: "Submitting a request does not automatically mean it has been approved."
+    },
+
+    {
+        id: "login",
+        title: "Login Assistance",
+        icon: "fa-key",
+        description: "Get help with common login and password issues.",
+        keywords: "login password forgot account registration otp",
+        steps: [
+            "Open the official UMS portal.",
+            "Check your university-issued login credentials.",
+            "Ensure that your internet connection is working.",
+            "Use the official password recovery option, if available.",
+            "Contact university technical support if the issue continues."
+        ],
+        tip: "Never share your password or OTP with anyone."
+    },
+
+    {
+        id: "technical",
+        title: "Technical Support",
+        icon: "fa-headset",
+        description: "Troubleshoot common problems while accessing UMS.",
+        keywords: "technical error loading website support problem",
+        steps: [
+            "Check your internet connection.",
+            "Refresh the UMS page.",
+            "Try another supported browser.",
+            "Note the error message if the problem continues.",
+            "Contact official university technical support."
+        ],
+        tip: "Hide personal information before sharing screenshots of technical errors."
+    }
+
+];
+
+// DISPLAY UMS HELP TOPICS
+
+function displayUmsTopics(topics) {
+
+    const grid = document.getElementById("umsTopicsGrid");
+
+    grid.innerHTML = "";
+
+    document.getElementById(
+        "umsSearchMessage"
+    ).hidden = topics.length !== 0;
+
+    topics.forEach(function(topic) {
+
+        const card = document.createElement("button");
+
+        card.type = "button";
+
+        card.className = "ums-topic-card";
+
+        card.innerHTML = `
+
+            <span class="ums-topic-icon">
+                <i class="fa-solid ${topic.icon}"></i>
+            </span>
+
+            <h3>${topic.title}</h3>
+
+            <p>${topic.description}</p>
+
+        `;
+
+        card.addEventListener("click", function() {
+
+            showUmsTopicDetails(topic);
+
+        });
+
+        grid.appendChild(card);
+
+    });
+
+}
+
+// DISPLAY SELECTED TOPIC DETAILS
+
+function showUmsTopicDetails(topic) {
+
+    document.getElementById(
+        "umsDetailTitle"
+    ).textContent = topic.title;
+
+    document.getElementById(
+        "umsDetailDescription"
+    ).textContent = topic.description;
+
+    document.getElementById(
+        "umsDetailTip"
+    ).textContent = topic.tip;
+
+    const stepsList = document.getElementById(
+        "umsDetailSteps"
+    );
+
+    stepsList.innerHTML = "";
+
+    topic.steps.forEach(function(step) {
+
+        const item = document.createElement("li");
+
+        item.textContent = step;
+
+        stepsList.appendChild(item);
+
+    });
+
+    const details = document.getElementById(
+        "umsTopicDetails"
+    );
+
+    details.hidden = false;
+
+    details.scrollIntoView({
+
+        behavior: "smooth",
+
+        block: "start"
+
+    });
+
+}
+
+// CLOSE TOPIC DETAILS
+
+document.getElementById("closeUmsDetails")
+    .addEventListener("click", function() {
+
+        document.getElementById(
+            "umsTopicDetails"
+        ).hidden = true;
+
+    });
+
+// SEARCH UMS HELP TOPICS
+
+function searchUmsTopics() {
+
+    const query = document.getElementById(
+        "umsSearchInput"
+    ).value.trim().toLowerCase();
+
+    const results = umsTopics.filter(function(topic) {
+
+        const searchableText = (
+
+            topic.title + " " +
+            topic.description + " " +
+            topic.keywords
+
+        ).toLowerCase();
+
+        return searchableText.includes(query);
+
+    });
+
+    document.getElementById(
+        "umsTopicDetails"
+    ).hidden = true;
+
+    displayUmsTopics(results);
+
+}
+
+document.getElementById("umsSearchInput")
+    .addEventListener("input", searchUmsTopics);
+
+document.getElementById("umsSearchForm")
+    .addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+        searchUmsTopics();
+
+    });
+
+// INITIALIZE UMS HELP
+
+displayUmsTopics(umsTopics);
