@@ -7718,3 +7718,387 @@ document.getElementById(
 // INITIALIZE INTERNATIONAL STUDENT RESOURCES
 
 displayInternationalResources();
+
+
+// =========================================
+// HOSTEL AND UNIVERSITY RULES DATABASE
+// =========================================
+
+const universityRules = [
+
+    // HOSTEL RULES
+
+    {
+        id: "hostel-rules",
+
+        title: "Hostel Rules",
+
+        category: "hostel",
+
+        categoryName: "Hostel",
+
+        icon: "fa-bed",
+
+        description:
+            "Guidelines for comfortable and responsible hostel living.",
+
+        keywords:
+            "hostel room roommate cleanliness electricity maintenance noise residential warden accommodation",
+
+        guidelines: [
+            "Maintain cleanliness in your room and shared facilities.",
+            "Respect the privacy and belongings of your roommates.",
+            "Avoid excessive noise that may disturb other residents.",
+            "Use electrical appliances permitted by hostel administration.",
+            "Report maintenance issues to authorized hostel personnel.",
+            "Follow applicable room allocation and accommodation policies.",
+            "Keep hostel property in good condition.",
+            "Follow instructions issued by residential services."
+        ],
+
+        tip:
+            "Save the official contact details of your hostel warden for assistance.",
+
+        link: "#support",
+
+        linkText: "Hostel Support"
+    },
+
+    // ENTRY AND EXIT
+
+    {
+        id: "entry-exit",
+
+        title: "Entry & Exit",
+
+        category: "hostel",
+
+        categoryName: "Hostel",
+
+        icon: "fa-door-open",
+
+        description:
+            "Understand campus access and hostel entry procedures.",
+
+        keywords:
+            "entry exit gate timing curfew late arrival identity id card security permission",
+
+        guidelines: [
+            "Carry your valid university identification card.",
+            "Use authorized university entry and exit points.",
+            "Follow applicable hostel entry and exit timings.",
+            "Complete required security verification procedures.",
+            "Inform authorized hostel personnel about unexpected delays.",
+            "Do not lend your student ID to another person.",
+            "Follow applicable campus access restrictions."
+        ],
+
+        tip:
+            "Confirm current entry and exit timings with your hostel administration.",
+
+        link: "#support",
+
+        linkText: "Contact Student Support"
+    },
+
+    // LEAVE AND OUTPASS
+
+    {
+        id: "leave-outpass",
+
+        title: "Leave & Outpass",
+
+        category: "hostel",
+
+        categoryName: "Hostel",
+
+        icon: "fa-clipboard-check",
+
+        description:
+            "Understand leave applications and permission requirements.",
+
+        keywords:
+            "leave outpass holiday vacation home permission approval application ums guardian parent",
+
+        guidelines: [
+            "Check the applicable leave and outpass procedure.",
+            "Submit leave requests through authorized university channels.",
+            "Provide accurate information in your application.",
+            "Obtain required approvals before leaving campus.",
+            "Follow applicable guardian consent requirements.",
+            "Return according to your approved leave arrangements.",
+            "Contact hostel administration if your plans change."
+        ],
+
+        tip:
+            "Submitting a leave request does not necessarily mean it has been approved. Confirm its status before departure.",
+
+        link: "#ums",
+
+        linkText: "Visit UMS Help"
+    },
+
+    // VISITOR POLICY
+
+    {
+        id: "visitor-policy",
+
+        title: "Visitor Policy",
+
+        category: "hostel",
+
+        categoryName: "Hostel",
+
+        icon: "fa-users",
+
+        description:
+            "Understand visitor registration and access requirements.",
+
+        keywords:
+            "visitor guest family parents friends visiting registration reception identification permission",
+
+        guidelines: [
+            "Visitors should follow applicable registration procedures.",
+            "Provide required identification through authorized channels.",
+            "Obtain necessary permissions before entering restricted areas.",
+            "Follow designated visiting hours and locations.",
+            "Respect the privacy of other hostel residents.",
+            "Follow instructions from university security and hostel personnel."
+        ],
+
+        tip:
+            "Confirm the current visitor policy before inviting family members or guests to campus.",
+
+        link: "#support",
+
+        linkText: "Visit Student Support"
+    },
+
+    // ACADEMIC RULES
+
+    {
+        id: "academic-rules",
+
+        title: "Academic Rules",
+
+        category: "academic",
+
+        categoryName: "Academic",
+
+        icon: "fa-graduation-cap",
+
+        description:
+            "Understand attendance, punctuality and classroom responsibilities.",
+
+        keywords:
+            "attendance percentage lecture class faculty assignment punctuality academic timetable marks",
+
+        guidelines: [
+            "Attend scheduled lectures, tutorials and practical sessions.",
+            "Follow the applicable attendance requirements.",
+            "Arrive on time for academic activities.",
+            "Submit assignments within the specified deadlines.",
+            "Maintain respectful classroom behaviour.",
+            "Follow laboratory and classroom instructions.",
+            "Check UMS regularly for academic announcements.",
+            "Contact your faculty or academic mentor when you need assistance."
+        ],
+
+        tip:
+            "Monitor your attendance through official university systems and clarify any discrepancies promptly.",
+
+        link: "#ums",
+
+        linkText: "Visit UMS Help"
+    },
+
+    // EXAMINATION RULES
+
+    {
+        id: "examination-rules",
+
+        title: "Examination Rules",
+
+        category: "academic",
+
+        categoryName: "Academic",
+
+        icon: "fa-file-pen",
+
+        description:
+            "Understand examination conduct and academic integrity.",
+
+        keywords:
+            "exam examination test assessment admit card cheating plagiarism unfair means hall ticket",
+
+        guidelines: [
+            "Check official examination dates and reporting instructions.",
+            "Carry the identification and documents required for your examination.",
+            "Follow examination hall instructions.",
+            "Bring only materials authorized for the examination.",
+            "Maintain academic integrity throughout assessments.",
+            "Avoid plagiarism and unauthorized collaboration.",
+            "Follow instructions issued by examination personnel.",
+            "Report examination-related concerns through official channels."
+        ],
+
+        tip:
+            "Review the official examination instructions before every assessment because requirements may differ.",
+
+        link: "#ums",
+
+        linkText: "Check Academic Information"
+    },
+
+    // CAMPUS CONDUCT
+
+    {
+        id: "campus-conduct",
+
+        title: "Campus Conduct",
+
+        category: "campus",
+
+        categoryName: "Campus",
+
+        icon: "fa-handshake",
+
+        description:
+            "Promote respectful behaviour and responsible campus citizenship.",
+
+        keywords:
+            "behaviour conduct discipline respect property cleanliness dress culture environment discrimination",
+
+        guidelines: [
+            "Treat students, faculty and university staff respectfully.",
+            "Respect cultural, religious and personal differences.",
+            "Maintain cleanliness throughout campus.",
+            "Use university facilities responsibly.",
+            "Avoid damaging university property.",
+            "Respect the privacy and personal boundaries of others.",
+            "Follow applicable university dress and conduct guidelines.",
+            "Resolve disagreements peacefully or seek appropriate assistance."
+        ],
+
+        tip:
+            "A respectful and inclusive campus environment benefits everyone.",
+
+        link: "#explore",
+
+        linkText: "Explore Campus"
+    },
+
+    // ANTI-RAGGING
+
+    {
+        id: "anti-ragging",
+
+        title: "Anti-Ragging",
+
+        category: "safety",
+
+        categoryName: "Safety",
+
+        icon: "fa-hand",
+
+        description:
+            "Understand ragging prevention, reporting and student protection.",
+
+        keywords:
+            "ragging bullying harassment intimidation abuse discrimination complaint reporting protection",
+
+        guidelines: [
+            "Treat every student with dignity and respect.",
+            "Do not participate in ragging, bullying or harassment.",
+            "Do not pressure others into unwanted activities.",
+            "Report incidents to authorized university personnel.",
+            "Seek help from a trusted adult or staff member if you feel unsafe.",
+            "Use official anti-ragging reporting channels.",
+            "Prioritize your immediate safety and avoid confronting someone who threatens you."
+        ],
+
+        tip:
+            "If you experience or witness ragging, seek assistance promptly. You do not have to handle the situation alone.",
+
+        link: "https://www.antiragging.in/",
+
+        linkText: "National Anti-Ragging Portal"
+    },
+
+    // SAFETY AND SECURITY
+
+    {
+        id: "safety-security",
+
+        title: "Safety & Security",
+
+        category: "safety",
+
+        categoryName: "Safety",
+
+        icon: "fa-user-shield",
+
+        description:
+            "Understand essential campus safety and emergency procedures.",
+
+        keywords:
+            "safety security emergency medical fire hospital police lost accident assistance evacuation",
+
+        guidelines: [
+            "Keep important university support contacts accessible.",
+            "Follow instructions issued by authorized security personnel.",
+            "Familiarize yourself with designated emergency exits.",
+            "Report suspicious activity or safety concerns to university staff.",
+            "Seek medical assistance when required.",
+            "Follow official emergency and evacuation instructions.",
+            "Protect your personal belongings and identification documents.",
+            "Call 112 for immediate police, fire or medical emergencies in India."
+        ],
+
+        tip:
+            "Familiarize yourself with nearby medical facilities and authorized campus support services.",
+
+        link: "#support",
+
+        linkText: "Find Safety Assistance"
+    },
+
+    // PROHIBITED ACTIVITIES
+
+    {
+        id: "prohibited-activities",
+
+        title: "Prohibited Activities",
+
+        category: "campus",
+
+        categoryName: "Campus",
+
+        icon: "fa-ban",
+
+        description:
+            "Understand common restrictions and responsible student behaviour.",
+
+        keywords:
+            "prohibited restricted smoking alcohol drugs gambling violence vandalism unauthorized activities",
+
+        guidelines: [
+            "Do not engage in violence, threats or harassment.",
+            "Avoid damaging or misusing university property.",
+            "Follow applicable restrictions on tobacco, alcohol and other substances.",
+            "Do not bring prohibited or dangerous items onto campus.",
+            "Do not engage in unauthorized access to restricted facilities.",
+            "Respect university information technology and internet usage policies.",
+            "Do not misuse another person's identification or credentials.",
+            "Consult official university regulations for the complete list of prohibited activities."
+        ],
+
+        tip:
+            "If you are unsure whether an item or activity is permitted, ask authorized university personnel beforehand.",
+
+        link: "#support",
+
+        linkText: "Seek University Guidance"
+    }
+
+];
