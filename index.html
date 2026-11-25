@@ -4690,10 +4690,843 @@
 </section>
 
 
-        <section id="timetable" class="page-section" hidden>
-            <h1>First 15 Days Timetable</h1>
-            <p>View orientation and induction schedules.</p>
-        </section>
+       
+<!-- FIRST 15 DAYS TIMETABLE -->
+
+<section id="timetable" class="page-section" hidden>
+
+    <div class="timetable-heading">
+
+        <h1>First 15 Days Timetable</h1>
+
+        <p>
+            Plan your university journey,
+            one day at a time.
+        </p>
+
+    </div>
+
+    <!-- WELCOME BANNER -->
+
+    <div class="timetable-banner">
+
+        <div>
+
+            <span class="timetable-banner-label">
+                Your Onboarding Journey
+            </span>
+
+            <h2>Stay Organized. Start Strong.</h2>
+
+            <p>
+                Keep track of orientation sessions,
+                important activities and personal events
+                during your first 15 days at LPU.
+            </p>
+
+        </div>
+
+        <i class="fa-solid fa-calendar-days
+            timetable-banner-icon"></i>
+
+    </div>
+
+    <!-- SAMPLE SCHEDULE NOTICE -->
+
+    <div class="timetable-notice">
+
+        <i class="fa-solid fa-circle-info"></i>
+
+        <div>
+
+            <h3>Suggested Orientation Schedule</h3>
+
+            <p>
+                This timetable contains sample activities,
+                timings and venues for onboarding assistance.
+                It is not the official LPU orientation schedule.
+                Confirm actual events through university
+                announcements and UMS.
+            </p>
+
+            <a href="https://ums.lpu.in/"
+                target="_blank"
+                rel="noopener noreferrer">
+
+                Check Official UMS
+
+                <i class="fa-solid
+                    fa-arrow-up-right-from-square"></i>
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- JOINING DATE -->
+
+    <div class="timetable-date-card">
+
+        <div class="timetable-section-heading">
+
+            <h2>
+
+                <i class="fa-solid fa-calendar-check"></i>
+
+                Your Joining Date
+
+            </h2>
+
+            <p>
+                Select your joining date to personalize
+                your 15-day schedule.
+            </p>
+
+        </div>
+
+        <form id="timetableDateForm"
+            class="timetable-date-form">
+
+            <div class="timetable-form-group">
+
+                <label for="timetableJoiningDate">
+                    Joining Date
+                </label>
+
+                <input type="date"
+                    id="timetableJoiningDate"
+                    required>
+
+            </div>
+
+            <button type="submit" class="primary-button">
+
+                <i class="fa-solid fa-floppy-disk"></i>
+
+                Save Date
+
+            </button>
+
+            <button type="button"
+                id="resetTimetableDate"
+                class="timetable-secondary-button">
+
+                Reset Date
+
+            </button>
+
+        </form>
+
+        <p id="timetableDateMessage"
+            class="timetable-message"
+            role="status"
+            hidden>
+        </p>
+
+        <div id="timetableDateSummary"
+            class="timetable-date-summary"
+            hidden>
+
+            <p>
+
+                <strong>Onboarding Period:</strong>
+
+                <span id="timetableDateRange"></span>
+
+            </p>
+
+            <p>
+
+                <strong>Current Status:</strong>
+
+                <span id="timetableCurrentStatus"></span>
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- TIMETABLE STATISTICS -->
+
+    <div class="timetable-stats">
+
+        <article class="timetable-stat-card">
+
+            <div class="timetable-stat-icon">
+
+                <i class="fa-solid fa-calendar-days"></i>
+
+            </div>
+
+            <div>
+
+                <h3>15</h3>
+
+                <p>Onboarding Days</p>
+
+            </div>
+
+        </article>
+
+        <article class="timetable-stat-card">
+
+            <div class="timetable-stat-icon">
+
+                <i class="fa-solid fa-list-check"></i>
+
+            </div>
+
+            <div>
+
+                <h3 id="timetableActivityCount">0</h3>
+
+                <p>Sample Activities</p>
+
+            </div>
+
+        </article>
+
+        <article class="timetable-stat-card">
+
+            <div class="timetable-stat-icon">
+
+                <i class="fa-solid fa-calendar-plus"></i>
+
+            </div>
+
+            <div>
+
+                <h3 id="timetablePersonalCount">0</h3>
+
+                <p>Personal Events</p>
+
+            </div>
+
+        </article>
+
+        <article class="timetable-stat-card">
+
+            <div class="timetable-stat-icon">
+
+                <i class="fa-solid fa-bell"></i>
+
+            </div>
+
+            <div>
+
+                <h3 id="timetableReminderCount">0</h3>
+
+                <p>Saved Reminders</p>
+
+            </div>
+
+        </article>
+
+    </div>
+
+    <!-- DAY SELECTION -->
+
+    <div class="timetable-day-section">
+
+        <div class="timetable-section-heading">
+
+            <h2>Select Your Day</h2>
+
+            <p>
+                Explore scheduled activities for
+                any of your first 15 days.
+            </p>
+
+        </div>
+
+        <div class="timetable-navigation">
+
+            <button type="button"
+                id="previousTimetableDay"
+                class="timetable-secondary-button">
+
+                <i class="fa-solid fa-chevron-left"></i>
+
+                Previous
+
+            </button>
+
+            <button type="button"
+                id="todayTimetableDay"
+                class="primary-button">
+
+                <i class="fa-solid fa-calendar-day"></i>
+
+                Today
+
+            </button>
+
+            <button type="button"
+                id="nextTimetableDay"
+                class="timetable-secondary-button">
+
+                Next
+
+                <i class="fa-solid fa-chevron-right"></i>
+
+            </button>
+
+        </div>
+
+        <div id="timetableDayButtons"
+            class="timetable-day-grid">
+
+            <!-- Day buttons generated using JavaScript -->
+
+        </div>
+
+    </div>
+
+    <!-- EVENT SEARCH AND FILTERS -->
+
+    <div class="timetable-search-section">
+
+        <div class="timetable-section-heading">
+
+            <h2>Find Activities</h2>
+
+            <p>
+                Search events by name, venue or category.
+            </p>
+
+        </div>
+
+        <form id="timetableSearchForm"
+            class="timetable-search-form">
+
+            <div class="timetable-search-input">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input type="search"
+                    id="timetableSearchInput"
+                    placeholder="Search activities or venues..."
+                    aria-label="Search timetable activities"
+                    autocomplete="off">
+
+            </div>
+
+            <button type="submit" class="primary-button">
+
+                Search
+
+            </button>
+
+        </form>
+
+        <div class="timetable-filters">
+
+            <button type="button"
+                class="timetable-filter active"
+                data-category="all"
+                aria-pressed="true">
+
+                All Events
+
+            </button>
+
+            <button type="button"
+                class="timetable-filter"
+                data-category="orientation"
+                aria-pressed="false">
+
+                Orientation
+
+            </button>
+
+            <button type="button"
+                class="timetable-filter"
+                data-category="academic"
+                aria-pressed="false">
+
+                Academic
+
+            </button>
+
+            <button type="button"
+                class="timetable-filter"
+                data-category="administrative"
+                aria-pressed="false">
+
+                Administrative
+
+            </button>
+
+            <button type="button"
+                class="timetable-filter"
+                data-category="campus"
+                aria-pressed="false">
+
+                Campus
+
+            </button>
+
+            <button type="button"
+                class="timetable-filter"
+                data-category="recreation"
+                aria-pressed="false">
+
+                Recreation
+
+            </button>
+
+            <button type="button"
+                class="timetable-filter"
+                data-category="personal"
+                aria-pressed="false">
+
+                Personal
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- DAILY SCHEDULE -->
+
+    <div class="timetable-schedule-section">
+
+        <div class="timetable-schedule-heading">
+
+            <div>
+
+                <span id="timetableSelectedDay"
+                    class="timetable-day-label">
+
+                    Day 1
+
+                </span>
+
+                <h2 id="timetableDayTitle">
+                    Arrival and Registration
+                </h2>
+
+                <p id="timetableSelectedDate">
+                    Set your joining date to view the date.
+                </p>
+
+            </div>
+
+            <button type="button"
+                id="addTimetableEvent"
+                class="primary-button">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Add Event
+
+            </button>
+
+        </div>
+
+        <p id="timetableResultCount"
+            class="timetable-result-count"
+            role="status">
+
+            0 activities
+
+        </p>
+
+        <div id="timetableEventsList"
+            class="timetable-events-list">
+
+            <!-- Schedule generated using JavaScript -->
+
+        </div>
+
+        <div id="timetableEmptyState"
+            class="timetable-empty-state"
+            hidden>
+
+            <i class="fa-solid fa-calendar-xmark"></i>
+
+            <h3>No matching events found</h3>
+
+            <p>
+                Try another keyword or change your filters.
+            </p>
+
+            <button type="button"
+                id="resetTimetableFilters"
+                class="primary-button">
+
+                View All Events
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- ADD OR EDIT PERSONAL EVENT -->
+
+    <div id="timetableEventFormPanel"
+        class="timetable-event-form-panel"
+        hidden>
+
+        <div class="timetable-panel-heading">
+
+            <h2 id="timetableEventFormTitle">
+
+                Add Personal Event
+
+            </h2>
+
+            <button type="button"
+                id="closeTimetableEventForm"
+                class="timetable-icon-button"
+                aria-label="Close event form">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+        <p>
+            Add actual meetings, classes, orientation
+            sessions or personal activities.
+        </p>
+
+        <form id="timetableEventForm">
+
+            <input type="hidden"
+                id="timetableEditingEventId">
+
+            <div class="timetable-form-grid">
+
+                <div class="timetable-form-group">
+
+                    <label for="timetableEventName">
+                        Event Name *
+                    </label>
+
+                    <input type="text"
+                        id="timetableEventName"
+                        placeholder="Enter event name"
+                        maxlength="100"
+                        required>
+
+                </div>
+
+                <div class="timetable-form-group">
+
+                    <label for="timetableEventDay">
+                        Onboarding Day *
+                    </label>
+
+                    <select id="timetableEventDay"
+                        required>
+
+                        <option value="1">Day 1</option>
+                        <option value="2">Day 2</option>
+                        <option value="3">Day 3</option>
+                        <option value="4">Day 4</option>
+                        <option value="5">Day 5</option>
+                        <option value="6">Day 6</option>
+                        <option value="7">Day 7</option>
+                        <option value="8">Day 8</option>
+                        <option value="9">Day 9</option>
+                        <option value="10">Day 10</option>
+                        <option value="11">Day 11</option>
+                        <option value="12">Day 12</option>
+                        <option value="13">Day 13</option>
+                        <option value="14">Day 14</option>
+                        <option value="15">Day 15</option>
+
+                    </select>
+
+                </div>
+
+                <div class="timetable-form-group">
+
+                    <label for="timetableEventStart">
+                        Start Time *
+                    </label>
+
+                    <input type="time"
+                        id="timetableEventStart"
+                        required>
+
+                </div>
+
+                <div class="timetable-form-group">
+
+                    <label for="timetableEventEnd">
+                        End Time *
+                    </label>
+
+                    <input type="time"
+                        id="timetableEventEnd"
+                        required>
+
+                </div>
+
+                <div class="timetable-form-group">
+
+                    <label for="timetableEventVenue">
+                        Venue *
+                    </label>
+
+                    <input type="text"
+                        id="timetableEventVenue"
+                        placeholder="Enter event location"
+                        maxlength="100"
+                        required>
+
+                </div>
+
+                <div class="timetable-form-group">
+
+                    <label for="timetableEventCategory">
+                        Event Category *
+                    </label>
+
+                    <select id="timetableEventCategory"
+                        required>
+
+                        <option value="personal">
+                            Personal
+                        </option>
+
+                        <option value="orientation">
+                            Orientation
+                        </option>
+
+                        <option value="academic">
+                            Academic
+                        </option>
+
+                        <option value="administrative">
+                            Administrative
+                        </option>
+
+                        <option value="campus">
+                            Campus
+                        </option>
+
+                        <option value="recreation">
+                            Recreation
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="timetable-form-group
+                    timetable-full-width">
+
+                    <label for="timetableEventNotes">
+                        Additional Notes
+                    </label>
+
+                    <textarea id="timetableEventNotes"
+                        rows="4"
+                        maxlength="500"
+                        placeholder="Add useful event details..."></textarea>
+
+                </div>
+
+            </div>
+
+            <label class="timetable-reminder-checkbox">
+
+                <input type="checkbox"
+                    id="timetableEventReminder">
+
+                Save this event to my reminders
+
+            </label>
+
+            <p id="timetableEventMessage"
+                class="timetable-message"
+                role="status"
+                hidden>
+            </p>
+
+            <div class="timetable-form-actions">
+
+                <button type="submit"
+                    id="saveTimetableEvent"
+                    class="primary-button">
+
+                    <i class="fa-solid fa-floppy-disk"></i>
+
+                    Save Event
+
+                </button>
+
+                <button type="button"
+                    id="cancelTimetableEvent"
+                    class="timetable-secondary-button">
+
+                    Cancel
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <!-- SAVED REMINDERS -->
+
+    <div class="timetable-reminders-section">
+
+        <div class="timetable-section-heading">
+
+            <h2>
+
+                <i class="fa-solid fa-bell"></i>
+
+                My Reminders
+
+            </h2>
+
+            <p>
+                Keep important activities in one place.
+            </p>
+
+        </div>
+
+        <div id="timetableRemindersList"
+            class="timetable-reminders-list">
+
+            <!-- Saved reminders generated using JavaScript -->
+
+        </div>
+
+        <div id="timetableRemindersEmpty"
+            class="timetable-reminders-empty">
+
+            <i class="fa-regular fa-bell"></i>
+
+            <h3>No saved reminders yet</h3>
+
+            <p>
+                Save important events from your timetable
+                to access them here.
+            </p>
+
+        </div>
+
+        <p class="timetable-reminder-note">
+
+            Reminders are saved within this website.
+            Background notifications are not available
+            in this prototype.
+
+        </p>
+
+    </div>
+
+    <!-- RELATED RESOURCES -->
+
+    <div class="timetable-resources-section">
+
+        <h2>Useful Resources</h2>
+
+        <div class="timetable-resources-grid">
+
+            <a href="#onboarding"
+                class="timetable-resource-card">
+
+                <i class="fa-solid fa-list-check"></i>
+
+                <div>
+
+                    <h3>First 15 Days</h3>
+
+                    <p>Track your onboarding tasks.</p>
+
+                </div>
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </a>
+
+            <a href="#map"
+                class="timetable-resource-card">
+
+                <i class="fa-solid fa-map-location-dot"></i>
+
+                <div>
+
+                    <h3>University Map</h3>
+
+                    <p>Explore campus locations.</p>
+
+                </div>
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </a>
+
+            <a href="#classroom"
+                class="timetable-resource-card">
+
+                <i class="fa-solid fa-chalkboard-user"></i>
+
+                <div>
+
+                    <h3>Find My Classroom</h3>
+
+                    <p>Find classroom information.</p>
+
+                </div>
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </a>
+
+            <a href="#ums"
+                class="timetable-resource-card">
+
+                <i class="fa-solid fa-laptop"></i>
+
+                <div>
+
+                    <h3>UMS Help</h3>
+
+                    <p>Check official academic updates.</p>
+
+                </div>
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- STORAGE AND PRIVACY NOTICE -->
+
+    <div class="timetable-storage-notice">
+
+        <i class="fa-solid fa-circle-info"></i>
+
+        <p>
+            Your joining date, personal events and reminders
+            will be stored locally in this browser.
+            Avoid including passwords, identification numbers
+            or confidential information in event notes.
+            Clearing browser data may remove your saved information.
+        </p>
+
+    </div>
+
+</section>
+
 
         <section id="banking" class="page-section" hidden>
             <h1>Banking Assistance</h1>
