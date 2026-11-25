@@ -8371,3 +8371,652 @@ document.getElementById(
 // INITIALIZE UNIVERSITY RULES
 
 displayUniversityRules(universityRules);
+
+
+// =========================================
+// FIRST 15 DAYS TIMETABLE DATABASE
+// =========================================
+
+const timetableDayTitles = [
+
+    "Arrival and Registration",
+    "Document Verification and Student ID",
+    "Accommodation and Essential Facilities",
+    "Campus Exploration",
+    "UMS and Digital Services",
+    "Department and Faculty Introduction",
+    "Classroom and Timetable Familiarization",
+    "Library and Learning Resources",
+    "Banking and Financial Services",
+    "Food and Dining Facilities",
+    "University Rules and Safety",
+    "Clubs and Extracurricular Activities",
+    "Student Support and Wellness",
+    "Academic Preparation",
+    "Final Onboarding Review"
+
+];
+
+
+// CREATE SAMPLE TIMETABLE EVENTS
+
+function createTimetableEvent(
+    day,
+    number,
+    name,
+    start,
+    end,
+    venue,
+    category,
+    description,
+    link,
+    linkText
+) {
+
+    return {
+
+        id: "sample-" + day + "-" + number,
+        day: day,
+        name: name,
+        start: start,
+        end: end,
+        venue: venue,
+        category: category,
+        description: description,
+        link: link,
+        linkText: linkText,
+        isPersonal: false
+
+    };
+
+}
+
+
+// SAMPLE ACTIVITIES DATABASE
+
+const timetableSampleEvents = [
+
+    // =====================================
+    // DAY 1 - ARRIVAL AND REGISTRATION
+    // =====================================
+
+    createTimetableEvent(
+        1, 1,
+        "Arrival and Welcome",
+        "09:00", "10:30",
+        "Designated registration area",
+        "orientation",
+        "Arrive on campus and seek initial guidance from university representatives.",
+        "#map",
+        "University Map"
+    ),
+
+    createTimetableEvent(
+        1, 2,
+        "Student Registration",
+        "11:00", "12:30",
+        "Designated registration desk",
+        "administrative",
+        "Complete applicable registration formalities and confirm your admission information.",
+        "#support",
+        "Student Support"
+    ),
+
+    createTimetableEvent(
+        1, 3,
+        "Accommodation Assistance",
+        "14:00", "15:30",
+        "Residential services office",
+        "campus",
+        "Confirm accommodation arrangements and understand the next steps.",
+        "#rules",
+        "Hostel Rules"
+    ),
+
+
+    // =====================================
+    // DAY 2 - DOCUMENT VERIFICATION
+    // =====================================
+
+    createTimetableEvent(
+        2, 1,
+        "Document Verification",
+        "09:00", "10:30",
+        "Designated verification centre",
+        "administrative",
+        "Check required documents and complete applicable verification procedures.",
+        "#support",
+        "Student Support"
+    ),
+
+    createTimetableEvent(
+        2, 2,
+        "Student ID Assistance",
+        "11:00", "12:00",
+        "Designated student services desk",
+        "administrative",
+        "Understand the procedure for receiving your university identification card.",
+        "#support",
+        "Student Support"
+    ),
+
+    createTimetableEvent(
+        2, 3,
+        "Student Profile Setup",
+        "14:00", "15:00",
+        "Personal workspace",
+        "orientation",
+        "Organize your programme, section and accommodation information.",
+        "#profile",
+        "My Profile"
+    ),
+
+
+    // =====================================
+    // DAY 3 - ACCOMMODATION
+    // =====================================
+
+    createTimetableEvent(
+        3, 1,
+        "Hostel and Accommodation Orientation",
+        "09:00", "10:30",
+        "Assigned hostel or accommodation",
+        "orientation",
+        "Become familiar with your accommodation and residential support services.",
+        "#rules",
+        "Hostel Rules"
+    ),
+
+    createTimetableEvent(
+        3, 2,
+        "Essential Facilities Tour",
+        "11:00", "12:30",
+        "Nearby campus facilities",
+        "campus",
+        "Locate laundry, shopping, drinking water and other essential facilities.",
+        "#explore",
+        "Explore Campus"
+    ),
+
+    createTimetableEvent(
+        3, 3,
+        "Room Setup and Personal Organization",
+        "14:00", "15:30",
+        "Assigned accommodation",
+        "personal",
+        "Organize your belongings and identify any accommodation concerns.",
+        "#support",
+        "Student Support"
+    ),
+
+
+    // =====================================
+    // DAY 4 - CAMPUS EXPLORATION
+    // =====================================
+
+    createTimetableEvent(
+        4, 1,
+        "Campus Orientation Tour",
+        "09:00", "10:30",
+        "University campus",
+        "orientation",
+        "Explore major academic buildings and important campus landmarks.",
+        "#map",
+        "University Map"
+    ),
+
+    createTimetableEvent(
+        4, 2,
+        "Campus Facilities Exploration",
+        "11:00", "12:30",
+        "Campus facilities",
+        "campus",
+        "Locate essential student services, shopping areas and recreational spaces.",
+        "#explore",
+        "Explore Campus"
+    ),
+
+    createTimetableEvent(
+        4, 3,
+        "Independent Campus Familiarization",
+        "14:00", "15:00",
+        "University campus",
+        "campus",
+        "Review familiar routes and identify important locations.",
+        "#map",
+        "University Map"
+    ),
+
+
+    // =====================================
+    // DAY 5 - UMS AND DIGITAL SERVICES
+    // =====================================
+
+    createTimetableEvent(
+        5, 1,
+        "UMS Introduction",
+        "09:00", "10:30",
+        "Personal workspace",
+        "orientation",
+        "Become familiar with the University Management System.",
+        "#ums",
+        "UMS Help"
+    ),
+
+    createTimetableEvent(
+        5, 2,
+        "Digital Academic Services",
+        "11:00", "12:30",
+        "Personal workspace",
+        "academic",
+        "Explore attendance, timetable, assignments and academic announcements.",
+        "#ums",
+        "UMS Help"
+    ),
+
+    createTimetableEvent(
+        5, 3,
+        "Internet and Technical Assistance",
+        "14:00", "15:00",
+        "Designated technical support area",
+        "campus",
+        "Understand campus connectivity and available technical support.",
+        "#support",
+        "Technical Support"
+    ),
+
+
+    // =====================================
+    // DAY 6 - DEPARTMENT INTRODUCTION
+    // =====================================
+
+    createTimetableEvent(
+        6, 1,
+        "Department Orientation",
+        "09:00", "10:30",
+        "Assigned academic department",
+        "orientation",
+        "Become familiar with your department and programme structure.",
+        "#explore",
+        "Explore Campus"
+    ),
+
+    createTimetableEvent(
+        6, 2,
+        "Faculty and Mentor Introduction",
+        "11:00", "12:30",
+        "Assigned academic department",
+        "academic",
+        "Identify faculty members and academic support contacts.",
+        "#support",
+        "Academic Support"
+    ),
+
+    createTimetableEvent(
+        6, 3,
+        "Programme Information Review",
+        "14:00", "15:00",
+        "Personal workspace",
+        "academic",
+        "Review your subjects, academic expectations and programme information.",
+        "#ums",
+        "UMS Help"
+    ),
+
+
+    // =====================================
+    // DAY 7 - CLASSROOM FAMILIARIZATION
+    // =====================================
+
+    createTimetableEvent(
+        7, 1,
+        "Academic Timetable Review",
+        "09:00", "10:00",
+        "Personal workspace",
+        "academic",
+        "Check your official class schedule and section information.",
+        "#ums",
+        "UMS Help"
+    ),
+
+    createTimetableEvent(
+        7, 2,
+        "Classroom Location Practice",
+        "10:30", "12:00",
+        "Assigned academic blocks",
+        "campus",
+        "Identify classrooms and familiarize yourself with academic buildings.",
+        "#classroom",
+        "Find My Classroom"
+    ),
+
+    createTimetableEvent(
+        7, 3,
+        "Campus Route Planning",
+        "14:00", "15:00",
+        "University campus",
+        "campus",
+        "Plan convenient routes between accommodation and academic buildings.",
+        "#map",
+        "University Map"
+    ),
+
+
+    // =====================================
+    // DAY 8 - LIBRARY AND RESOURCES
+    // =====================================
+
+    createTimetableEvent(
+        8, 1,
+        "Library Familiarization",
+        "09:00", "10:30",
+        "University library",
+        "orientation",
+        "Explore available library facilities and student learning spaces.",
+        "#explore",
+        "Explore Campus"
+    ),
+
+    createTimetableEvent(
+        8, 2,
+        "Learning Resources Introduction",
+        "11:00", "12:00",
+        "Library or personal workspace",
+        "academic",
+        "Identify textbooks, digital resources and academic reference materials.",
+        "#ums",
+        "UMS Help"
+    ),
+
+    createTimetableEvent(
+        8, 3,
+        "Independent Study Planning",
+        "14:00", "15:00",
+        "Designated study area",
+        "academic",
+        "Create a manageable study routine and organize learning materials.",
+        "#onboarding",
+        "Onboarding Checklist"
+    ),
+
+
+    // =====================================
+    // DAY 9 - BANKING AND FINANCE
+    // =====================================
+
+    createTimetableEvent(
+        9, 1,
+        "Banking Services Familiarization",
+        "09:00", "10:30",
+        "Authorized banking service area",
+        "campus",
+        "Identify available banking services and understand account assistance options.",
+        "#banking",
+        "Banking Assistance"
+    ),
+
+    createTimetableEvent(
+        9, 2,
+        "Digital Payment Safety",
+        "11:00", "12:00",
+        "Personal workspace",
+        "orientation",
+        "Learn about secure digital payments and protecting financial information.",
+        "#banking",
+        "Banking Assistance"
+    ),
+
+    createTimetableEvent(
+        9, 3,
+        "Personal Expense Planning",
+        "14:00", "15:00",
+        "Personal workspace",
+        "personal",
+        "Plan routine expenses for food, transport and academic essentials.",
+        "#banking",
+        "Banking Assistance"
+    ),
+
+
+    // =====================================
+    // DAY 10 - FOOD AND DINING
+    // =====================================
+
+    createTimetableEvent(
+        10, 1,
+        "Mess and Dining Familiarization",
+        "09:00", "10:00",
+        "Assigned dining facility",
+        "campus",
+        "Confirm dining arrangements, meal availability and applicable mess timings.",
+        "#food",
+        "Food and Dining"
+    ),
+
+    createTimetableEvent(
+        10, 2,
+        "Campus Food Outlet Exploration",
+        "11:30", "12:30",
+        "Campus dining areas",
+        "campus",
+        "Explore available food outlets and suitable meal options.",
+        "#food",
+        "Food and Dining"
+    ),
+
+    createTimetableEvent(
+        10, 3,
+        "Dietary Requirements and Meal Planning",
+        "14:00", "15:00",
+        "Personal workspace",
+        "personal",
+        "Identify suitable meals and communicate any food allergies to dining staff.",
+        "#food",
+        "Food and Dining"
+    ),
+
+
+    // =====================================
+    // DAY 11 - RULES AND SAFETY
+    // =====================================
+
+    createTimetableEvent(
+        11, 1,
+        "University Rules Review",
+        "09:00", "10:30",
+        "Personal workspace",
+        "orientation",
+        "Review applicable university, academic and residential guidelines.",
+        "#rules",
+        "Hostel and University Rules"
+    ),
+
+    createTimetableEvent(
+        11, 2,
+        "Campus Safety Awareness",
+        "11:00", "12:00",
+        "Designated orientation area",
+        "orientation",
+        "Understand emergency assistance, anti-ragging resources and safety procedures.",
+        "#support",
+        "Student Support"
+    ),
+
+    createTimetableEvent(
+        11, 3,
+        "Important Contacts Review",
+        "14:00", "15:00",
+        "Personal workspace",
+        "personal",
+        "Organize verified university support and emergency contact information.",
+        "#support",
+        "Student Support"
+    ),
+
+
+    // =====================================
+    // DAY 12 - CLUBS AND ACTIVITIES
+    // =====================================
+
+    createTimetableEvent(
+        12, 1,
+        "Student Clubs Exploration",
+        "09:00", "10:30",
+        "Student activity areas",
+        "recreation",
+        "Explore available student clubs and extracurricular opportunities.",
+        "#explore",
+        "Explore Campus"
+    ),
+
+    createTimetableEvent(
+        12, 2,
+        "Sports and Recreation Familiarization",
+        "11:00", "12:30",
+        "Campus recreational facilities",
+        "recreation",
+        "Identify available sports and recreational activities.",
+        "#explore",
+        "Explore Campus"
+    ),
+
+    createTimetableEvent(
+        12, 3,
+        "Social and Cultural Interaction",
+        "14:00", "15:30",
+        "Designated student activity area",
+        "recreation",
+        "Meet fellow students and explore cultural and social opportunities.",
+        "#international",
+        "International Students Help Desk"
+    ),
+
+
+    // =====================================
+    // DAY 13 - SUPPORT AND WELLNESS
+    // =====================================
+
+    createTimetableEvent(
+        13, 1,
+        "Student Support Services Introduction",
+        "09:00", "10:30",
+        "Designated student support area",
+        "orientation",
+        "Understand available academic, administrative and personal support services.",
+        "#support",
+        "Student Support"
+    ),
+
+    createTimetableEvent(
+        13, 2,
+        "Healthcare and Wellness Awareness",
+        "11:00", "12:00",
+        "Campus healthcare facilities",
+        "campus",
+        "Identify healthcare facilities and available wellness support.",
+        "#support",
+        "Healthcare Assistance"
+    ),
+
+    createTimetableEvent(
+        13, 3,
+        "Personal Adjustment and Rest",
+        "14:00", "15:00",
+        "Personal space",
+        "personal",
+        "Take time to rest, connect with family and adjust to university life.",
+        "#support",
+        "Wellness Support"
+    ),
+
+
+    // =====================================
+    // DAY 14 - ACADEMIC PREPARATION
+    // =====================================
+
+    createTimetableEvent(
+        14, 1,
+        "Academic Materials Preparation",
+        "09:00", "10:30",
+        "Personal workspace",
+        "academic",
+        "Organize notebooks, learning resources and required academic materials.",
+        "#ums",
+        "UMS Help"
+    ),
+
+    createTimetableEvent(
+        14, 2,
+        "Class Schedule Confirmation",
+        "11:00", "12:00",
+        "Personal workspace",
+        "academic",
+        "Review the latest official timetable and confirm classroom information.",
+        "#classroom",
+        "Find My Classroom"
+    ),
+
+    createTimetableEvent(
+        14, 3,
+        "Study Routine Planning",
+        "14:00", "15:00",
+        "Personal workspace",
+        "academic",
+        "Prepare a balanced routine for classes, assignments, rest and recreation.",
+        "#onboarding",
+        "Onboarding Checklist"
+    ),
+
+
+    // =====================================
+    // DAY 15 - FINAL ONBOARDING REVIEW
+    // =====================================
+
+    createTimetableEvent(
+        15, 1,
+        "Onboarding Progress Review",
+        "09:00", "10:30",
+        "Personal workspace",
+        "orientation",
+        "Review completed onboarding tasks and identify pending activities.",
+        "#onboarding",
+        "Onboarding Checklist"
+    ),
+
+    createTimetableEvent(
+        15, 2,
+        "Pending Concerns and Assistance",
+        "11:00", "12:00",
+        "Relevant university support office",
+        "administrative",
+        "Seek assistance with unresolved academic, residential or administrative concerns.",
+        "#support",
+        "Student Support"
+    ),
+
+    createTimetableEvent(
+        15, 3,
+        "Transition to Regular University Life",
+        "14:00", "15:00",
+        "Personal workspace",
+        "orientation",
+        "Review your academic schedule, personal goals and preparation for regular university activities.",
+        "#dashboard",
+        "Go to Dashboard"
+    )
+
+];
+
+
+// TIMETABLE CATEGORY NAMES
+
+const timetableCategoryNames = {
+
+    orientation: "Orientation",
+    academic: "Academic",
+    administrative: "Administrative",
+    campus: "Campus",
+    recreation: "Recreation",
+    personal: "Personal"
+
+};
