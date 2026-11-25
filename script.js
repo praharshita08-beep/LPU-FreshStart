@@ -3929,3 +3929,332 @@ document.getElementById("exploreViewOnMap")
         highlightFacility(0);
 
     });
+
+
+// EXPLORE CAMPUS FAVOURITES AND PROGRESS
+
+const EXPLORE_FAVOURITES_KEY =
+    "freshstart_explore_favourites";
+
+const EXPLORE_VISITED_KEY =
+    "freshstart_explore_visited";
+
+function getExploreSavedItems(key) {
+
+    try {
+
+        const items = JSON.parse(
+            localStorage.getItem(key) || "[]"
+        );
+
+        return Array.isArray(items) ? items : [];
+
+    } catch (error) {
+
+        return [];
+
+    }
+
+}
+
+let exploreFavourites = getExploreSavedItems(
+    EXPLORE_FAVOURITES_KEY
+);
+
+let exploreVisited = getExploreSavedItems(
+    EXPLORE_VISITED_KEY
+);
+
+let exploreActiveView = "all";
+
+// UPDATE EXPLORATION PROGRESS
+
+function updateExploreProgress() {
+
+    const total = exploreFacilities.length;
+
+    const visited = exploreFacilities.filter(
+        function(facility) {
+
+            return exploreVisited.includes(facility.id);
+
+        }
+    ).length;
+
+    const percentage = total === 0
+        ? 0
+        : Math.round((visited / total) * 100);
+
+    document.getElementById(
+        "exploreProgressText"
+    ).textContent =
+        visited + " of " + total + " facilities explored";
+
+    document.getElementById(
+        "exploreProgressPercentage"
+    ).textContent = percentage + "%";
+
+    document.getElementById(
+        "exploreProgressFill"
+    ).style.width = percentage + "%";
+
+    document.getElementById(
+        "exploreProgressTrack"
+    ).setAttribute("aria-valuenow", percentage);
+
+    document.getElementById(
+        "exploreFavouriteCount"
+    ).textContent = exploreFavourites.length;
+
+    document.getElementById(
+        "exploreVisitedCount"
+    ).textContent = visited;
+
+}
+
+// UPDATE FAVOURITE AND VISITED BUTTONS
+
+function updateExploreButtons() {
+
+    document.querySelectorAll(
+        ".explore-card-favourite"
+    ).forEach(function(button) {
+
+        const saved = exploreFavourites.includes(
+            button.dataset.id
+        );
+
+        button.classList.toggle("active", saved);
+
+        button.setAttribute("aria-pressed", saved);
+
+        button.innerHTML = saved
+            ? '<i class="fa-solid fa-heart"></i>'
+            : '<i class="fa-regular fa-heart"></i>';
+
+    });
+
+    if (activeExploreFacility) {
+
+        const id = activeExploreFacility.id;
+
+        document.getElementById(
+            "exploreFavouriteButton"
+        ).textContent = exploreFavourites.includes(id)
+            ? "Remove from Favourites"
+            : "Add to Favourites";
+
+        document.getElementById(
+            "exploreVisitedButton"
+        ).textContent = exploreVisited.includes(id)
+            ? "Mark as Unexplored"
+            : "Mark as Explored";
+
+    }
+
+}
+
+// UPDATE FACILITY DISPLAY
+
+const originalExploreDisplay = displayExploreFacilities;
+
+displayExploreFacilities = function(facilities) {
+
+    let results = facilities;
+
+    if (exploreActiveView === "favourites") {
+
+        results = facilities.filter(function(facility) {
+
+            return exploreFavourites.includes(facility.id);
+
+        });
+
+    }
+
+    if (exploreActiveView === "explored") {
+
+        results = facilities.filter(function(facility) {
+
+            return exploreVisited.includes(facility.id);
+
+        });
+
+    }
+
+    originalExploreDisplay(results);
+
+    updateExploreButtons();
+
+};
+
+// SAVE OR REMOVE FAVOURITE
+
+function toggleExploreFavourite(id) {
+
+    if (exploreFavourites.includes(id)) {
+
+        exploreFavourites = exploreFavourites.filter(
+            function(item) {
+
+                return item !== id;
+
+            }
+        );
+
+    } else {
+
+        exploreFavourites.push(id);
+
+    }
+
+    localStorage.setItem(
+        EXPLORE_FAVOURITES_KEY,
+        JSON.stringify(exploreFavourites)
+    );
+
+    updateExploreProgress();
+
+    filterExploreFacilities();
+
+}
+
+// FAVOURITE BUTTON ON FACILITY CARDS
+
+document.getElementById("exploreFacilitiesGrid")
+    .addEventListener("click", function(event) {
+
+        const button = event.target.closest(
+            ".explore-card-favourite"
+        );
+
+        if (button) {
+
+            toggleExploreFavourite(button.dataset.id);
+
+        }
+
+    });
+
+// FAVOURITE BUTTON IN DETAILS PANEL
+
+document.getElementById("exploreFavouriteButton")
+    .addEventListener("click", function() {
+
+        if (activeExploreFacility) {
+
+            toggleExploreFavourite(
+                activeExploreFacility.id
+            );
+
+        }
+
+    });
+
+// MARK FACILITY AS EXPLORED
+
+document.getElementById("exploreVisitedButton")
+    .addEventListener("click", function() {
+
+        if (!activeExploreFacility) {
+            return;
+        }
+
+        const id = activeExploreFacility.id;
+
+        if (exploreVisited.includes(id)) {
+
+            exploreVisited = exploreVisited.filter(
+                function(item) {
+
+                    return item !== id;
+
+                }
+            );
+
+        } else {
+
+            exploreVisited.push(id);
+
+        }
+
+        localStorage.setItem(
+            EXPLORE_VISITED_KEY,
+            JSON.stringify(exploreVisited)
+        );
+
+        updateExploreProgress();
+
+        filterExploreFacilities();
+
+    });
+
+// ALL, FAVOURITES AND EXPLORED TABS
+
+document.querySelectorAll(".explore-view-tab")
+    .forEach(function(button) {
+
+        button.addEventListener("click", function() {
+
+            exploreActiveView = button.dataset.view;
+
+            document.querySelectorAll(".explore-view-tab")
+                .forEach(function(tab) {
+
+                    tab.classList.remove("active");
+
+                    tab.setAttribute(
+                        "aria-pressed", "false"
+                    );
+
+                });
+
+            button.classList.add("active");
+
+            button.setAttribute("aria-pressed", "true");
+
+            filterExploreFacilities();
+
+        });
+
+    });
+
+// UPDATE BUTTONS WHEN DETAILS ARE OPENED
+
+const originalExploreDetails = showExploreFacilityDetails;
+
+showExploreFacilityDetails = function(facility) {
+
+    originalExploreDetails(facility);
+
+    updateExploreButtons();
+
+};
+
+// RESET EXPLORE VIEW
+
+document.getElementById("resetExploreFilters")
+    .addEventListener("click", function() {
+
+        exploreActiveView = "all";
+
+        document.querySelectorAll(".explore-view-tab")
+            .forEach(function(tab) {
+
+                const active = tab.dataset.view === "all";
+
+                tab.classList.toggle("active", active);
+
+                tab.setAttribute("aria-pressed", active);
+
+            });
+
+        filterExploreFacilities();
+
+    });
+
+// INITIALIZE EXPLORE CAMPUS
+
+updateExploreProgress();
+
+filterExploreFacilities();
