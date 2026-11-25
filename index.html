@@ -2601,10 +2601,309 @@
 </section>
 
 
-        <section id="onboarding" class="page-section" hidden>
-            <h1>First 15 Days</h1>
-            <p>Track your onboarding journey.</p>
-        </section>
+        
+<!-- FIRST 15 DAYS ONBOARDING SECTION -->
+
+<section id="onboarding" class="page-section" hidden>
+
+    <div class="onboarding-heading">
+
+        <h1>First 15 Days</h1>
+
+        <p>
+            Track your onboarding journey and complete
+            essential activities during your first 15 days.
+        </p>
+
+    </div>
+
+    <!-- OVERALL PROGRESS -->
+
+    <div class="onboarding-banner">
+
+        <h2>Your First 15 Days at LPU</h2>
+
+        <p>
+            Complete your daily checklist to make your
+            transition to university life easier.
+        </p>
+
+        <div class="onboarding-progress-header">
+
+            <h3>Onboarding Progress</h3>
+
+            <span id="onboardingPercentage">0%</span>
+
+        </div>
+
+        <div class="onboarding-progress-track"
+            id="onboardingProgressTrack"
+            role="progressbar"
+            aria-label="Overall onboarding progress"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="0">
+
+            <div id="onboardingProgressFill"
+                class="onboarding-progress-fill"
+                style="width: 0%">
+
+            </div>
+
+        </div>
+
+        <p id="onboardingProgressText">
+
+            0 of 15 days completed
+
+        </p>
+
+    </div>
+
+    <!-- PROGRESS STATISTICS -->
+
+    <div class="onboarding-stats">
+
+        <div class="onboarding-stat-card">
+
+            <div class="onboarding-stat-icon">
+
+                <i class="fa-solid fa-calendar-days"></i>
+
+            </div>
+
+            <div>
+
+                <h3>15</h3>
+
+                <p>Total Days</p>
+
+            </div>
+
+        </div>
+
+        <div class="onboarding-stat-card">
+
+            <div class="onboarding-stat-icon completed">
+
+                <i class="fa-solid fa-circle-check"></i>
+
+            </div>
+
+            <div>
+
+                <h3 id="onboardingCompletedDays">0</h3>
+
+                <p>Completed Days</p>
+
+            </div>
+
+        </div>
+
+        <div class="onboarding-stat-card">
+
+            <div class="onboarding-stat-icon pending">
+
+                <i class="fa-solid fa-clock"></i>
+
+            </div>
+
+            <div>
+
+                <h3 id="onboardingRemainingDays">15</h3>
+
+                <p>Remaining Days</p>
+
+            </div>
+
+        </div>
+
+        <div class="onboarding-stat-card">
+
+            <div class="onboarding-stat-icon">
+
+                <i class="fa-solid fa-list-check"></i>
+
+            </div>
+
+            <div>
+
+                <h3 id="onboardingTaskCount">0 / 60</h3>
+
+                <p>Tasks Completed</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- DAILY CHECKLIST HEADING -->
+
+    <div class="onboarding-checklist-heading">
+
+        <div>
+
+            <h2>Daily Onboarding Checklist</h2>
+
+            <p>
+                Expand each day and mark your completed tasks.
+            </p>
+
+        </div>
+
+        <button type="button"
+            id="resetOnboardingProgress"
+            class="onboarding-reset-button">
+
+            <i class="fa-solid fa-rotate-left"></i>
+
+            Reset Progress
+
+        </button>
+
+    </div>
+
+    <!-- CHECKLIST FILTERS -->
+
+    <div class="onboarding-filters">
+
+        <button type="button"
+            class="onboarding-filter active"
+            data-filter="all"
+            aria-pressed="true">
+
+            All Days
+
+        </button>
+
+        <button type="button"
+            class="onboarding-filter"
+            data-filter="pending"
+            aria-pressed="false">
+
+            Pending
+
+        </button>
+
+        <button type="button"
+            class="onboarding-filter"
+            data-filter="completed"
+            aria-pressed="false">
+
+            Completed
+
+        </button>
+
+    </div>
+
+    <!-- DAILY CHECKLIST CARDS -->
+
+    <div id="onboardingDaysList"
+        class="onboarding-days-list">
+
+        <!-- Daily cards generated using JavaScript -->
+
+    </div>
+
+    <!-- EMPTY STATE -->
+
+    <div id="onboardingEmptyState"
+        class="onboarding-empty-state"
+        hidden>
+
+        <i class="fa-solid fa-clipboard-list"></i>
+
+        <h3 id="onboardingEmptyTitle"></h3>
+
+        <p id="onboardingEmptyDescription"></p>
+
+        <button type="button"
+            id="showAllOnboardingDays"
+            class="primary-button">
+
+            View All Days
+
+        </button>
+
+    </div>
+
+    <!-- COMPLETION BANNER -->
+
+    <div id="onboardingCompletionBanner"
+        class="onboarding-completion-banner"
+        role="status"
+        hidden>
+
+        <i class="fa-solid fa-trophy"></i>
+
+        <div>
+
+            <h2>Congratulations!</h2>
+
+            <p>
+                You have successfully completed your
+                15-day onboarding checklist.
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- TIMETABLE CONNECTION -->
+
+    <div class="onboarding-timetable-banner">
+
+        <i class="fa-solid fa-calendar-check"></i>
+
+        <div>
+
+            <h2>Check Your Orientation Schedule</h2>
+
+            <p>
+                Explore the timetable for your first
+                15 days at the university.
+            </p>
+
+        </div>
+
+        <a href="#timetable" class="primary-button">
+
+            View Timetable
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+        </a>
+
+    </div>
+
+    <!-- IMPORTANT INFORMATION -->
+
+    <div class="onboarding-notice">
+
+        <i class="fa-solid fa-circle-info"></i>
+
+        <div>
+
+            <h3>Important Information</h3>
+
+            <p>
+                This checklist provides suggested onboarding
+                activities and is not an official LPU schedule.
+                Follow the instructions provided by the university.
+            </p>
+
+            <p>
+                Your checklist progress is saved locally
+                in your browser.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
 
         
 <!-- STUDENT SUPPORT SECTION -->
