@@ -8549,3 +8549,399 @@ body.sidebar-collapsed .main-content {
 }
 
 #bank
+
+
+#bankingDetailDescription {
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+.banking-detail-content {
+    margin-bottom: 22px;
+}
+
+.banking-detail-content h3 {
+    color: #14243b;
+    font-size: 18px;
+    margin-bottom: 12px;
+}
+
+.banking-detail-content ul,
+.banking-detail-content ol {
+    padding-left: 24px;
+    color: #64748b;
+    line-height: 1.8;
+}
+
+.banking-detail-content li {
+    margin-bottom: 8px;
+}
+
+.banking-detail-tip {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 18px;
+    background: #fff5eb;
+    border-left: 4px solid #e97826;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.banking-detail-tip i {
+    color: #e97826;
+    font-size: 22px;
+}
+
+.banking-detail-tip strong {
+    color: #14243b;
+}
+
+.banking-detail-tip p {
+    margin-top: 6px;
+    line-height: 1.7;
+}
+
+.banking-detail-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+/* DOCUMENT CHECKLIST */
+
+.banking-progress-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.banking-progress-header h3 {
+    color: #14243b;
+    font-size: 16px;
+}
+
+#bankingChecklistPercentage {
+    color: #c65d16;
+    font-weight: 600;
+}
+
+.banking-progress-track {
+    height: 10px;
+    background: #e2e8f0;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.banking-progress-fill {
+    width: 0;
+    height: 100%;
+    background: #e97826;
+    border-radius: 20px;
+    transition: width 0.3s ease;
+}
+
+#bankingChecklistCount {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.banking-checklist {
+    display: grid;
+    gap: 12px;
+    margin: 22px 0;
+}
+
+.banking-checklist-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: #f5f7fb;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    color: #14243b;
+    cursor: pointer;
+}
+
+.banking-checklist-item input {
+    width: 19px;
+    height: 19px;
+    flex-shrink: 0;
+    accent-color: #e97826;
+}
+
+.banking-checklist-item:has(input:checked) {
+    background: #ecfdf5;
+    border-color: #86efac;
+}
+
+.banking-checklist-item input:checked + span {
+    color: #047857;
+    text-decoration: line-through;
+}
+
+.banking-checklist-complete {
+    padding: 15px;
+    background: #ecfdf5;
+    color: #047857 !important;
+    border-radius: 8px;
+    margin-bottom: 18px;
+}
+
+.banking-reset-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 16px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    color: #14243b;
+    font: inherit;
+    cursor: pointer;
+}
+
+.banking-reset-button:hover {
+    color: #c65d16;
+    border-color: #e97826;
+}
+
+.banking-checklist-note {
+    font-size: 13px;
+    line-height: 1.7;
+    margin-top: 18px;
+}
+
+/* SAFE BANKING PRACTICES */
+
+.banking-safety-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.banking-safety-card {
+    padding: 20px;
+    background: #f5f7fb;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+}
+
+.banking-safety-card i {
+    color: #e97826;
+    font-size: 26px;
+    margin-bottom: 14px;
+}
+
+.banking-safety-card h3 {
+    color: #14243b;
+    font-size: 17px;
+    margin-bottom: 10px;
+}
+
+.banking-safety-card p {
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* URGENT FINANCIAL ASSISTANCE */
+
+.banking-emergency-section {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.banking-emergency-heading {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.banking-emergency-heading > i {
+    color: #dc2626;
+    font-size: 28px;
+}
+
+.banking-emergency-heading h2 {
+    color: #991b1b;
+    font-size: 23px;
+    margin-bottom: 8px;
+}
+
+.banking-emergency-heading p {
+    color: #991b1b;
+    line-height: 1.6;
+}
+
+.banking-emergency-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.banking-emergency-card {
+    padding: 20px;
+    background: #ffffff;
+    border: 1px solid #fecaca;
+    border-radius: 9px;
+}
+
+.banking-emergency-card h3 {
+    color: #991b1b;
+    font-size: 17px;
+    margin-bottom: 12px;
+}
+
+.banking-emergency-card p {
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.banking-emergency-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: #b91c1c;
+    color: #ffffff;
+    border-radius: 8px;
+    text-decoration: none;
+    margin-top: 16px;
+}
+
+.banking-emergency-button:hover {
+    background: #991b1b;
+}
+
+.banking-emergency-link {
+    display: block;
+    color: #b91c1c;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: 12px;
+}
+
+.banking-emergency-link:hover {
+    text-decoration: underline;
+}
+
+/* FREQUENTLY ASKED QUESTIONS */
+
+.banking-faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.banking-faq-item {
+    background: #f5f7fb;
+    border: 1px solid #e2e8f0;
+    border-radius: 9px;
+    overflow: hidden;
+}
+
+.banking-faq-item summary {
+    padding: 17px;
+    color: #14243b;
+    font-weight: 600;
+    line-height: 1.6;
+    cursor: pointer;
+}
+
+.banking-faq-item[open] {
+    border-color: #e97826;
+}
+
+.banking-faq-item[open] summary {
+    color: #c65d16;
+}
+
+.banking-faq-item p {
+    padding: 0 18px 18px;
+    line-height: 1.8;
+    font-size: 14px;
+}
+
+/* RESPONSIVE DESIGN */
+
+@media (max-width: 1200px) {
+    .banking-services-grid,
+    .banking-safety-grid,
+    .banking-emergency-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .banking-banner {
+        padding: 22px;
+    }
+
+    .banking-banner h2 {
+        font-size: 23px;
+    }
+
+    .banking-banner-icon {
+        display: none;
+    }
+
+    .banking-quick-section,
+    .banking-search-section,
+    .banking-service-details,
+    .banking-checklist-section,
+    .banking-safety-section,
+    .banking-emergency-section,
+    .banking-faq-section,
+    .banking-resources-section,
+    .banking-related-section {
+        padding: 18px;
+    }
+
+    .banking-quick-grid,
+    .banking-services-grid,
+    .banking-safety-grid,
+    .banking-emergency-grid,
+    .banking-resources-grid,
+    .banking-related-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .banking-search-form {
+        flex-direction: column;
+    }
+
+    .banking-search-form button {
+        justify-content: center;
+    }
+
+    .banking-filter {
+        padding: 9px 12px;
+        font-size: 13px;
+    }
+
+    .banking-checklist-item {
+        padding: 12px;
+    }
+
+    .banking-details-heading h2 {
+        font-size: 21px;
+    }
+
+    .banking-detail-links {
+        flex-direction: column;
+    }
+
+    .banking-safety-alert,
+    .banking-notice {
+        padding: 16px;
+    }
+}
+
+/* END OF BANKING ASSISTANCE CSS */
