@@ -3762,3 +3762,170 @@ document.getElementById("startExploring")
             });
 
     });
+
+
+// EXPLORE CAMPUS FACILITY DETAILS
+
+let activeExploreFacility = null;
+
+function showExploreFacilityDetails(facility) {
+
+    activeExploreFacility = facility;
+
+    document.getElementById(
+        "exploreDetailName"
+    ).textContent = facility.name;
+
+    document.getElementById(
+        "exploreDetailCategory"
+    ).textContent = facility.categoryName;
+
+    document.getElementById(
+        "exploreDetailDescription"
+    ).textContent = facility.description;
+
+    document.getElementById(
+        "exploreDetailLocation"
+    ).textContent = facility.location;
+
+    document.getElementById(
+        "exploreDetailHours"
+    ).textContent = facility.hours;
+
+    document.getElementById(
+        "exploreDetailImage"
+    ).hidden = true;
+
+    const amenitiesList = document.getElementById(
+        "exploreDetailAmenities"
+    );
+
+    amenitiesList.innerHTML = "";
+
+    const item = document.createElement("li");
+
+    item.textContent =
+        "Contact the university for facility information.";
+
+    amenitiesList.appendChild(item);
+
+    const detailsPanel = document.getElementById(
+        "exploreFacilityDetails"
+    );
+
+    detailsPanel.hidden = false;
+
+    detailsPanel.scrollIntoView({
+
+        behavior: "smooth",
+
+        block: "start"
+
+    });
+
+}
+
+// VIEW DETAILS BUTTON
+
+document.getElementById("exploreFacilitiesGrid")
+    .addEventListener("click", function(event) {
+
+        const button = event.target.closest(
+            ".explore-card-button"
+        );
+
+        if (!button) {
+            return;
+        }
+
+        const facility = exploreFacilities.find(
+            function(item) {
+
+                return item.id === button.dataset.id;
+
+            }
+        );
+
+        if (facility) {
+
+            showExploreFacilityDetails(facility);
+
+        }
+
+    });
+
+// CLOSE FACILITY DETAILS
+
+document.getElementById("closeExploreDetails")
+    .addEventListener("click", function() {
+
+        document.getElementById(
+            "exploreFacilityDetails"
+        ).hidden = true;
+
+        activeExploreFacility = null;
+
+    });
+
+// VIEW FACILITY ON UNIVERSITY MAP
+
+document.getElementById("exploreViewOnMap")
+    .addEventListener("click", function(event) {
+
+        event.preventDefault();
+
+        if (!activeExploreFacility) {
+            return;
+        }
+
+        const location = campusLocations.find(
+            function(item) {
+
+                return item.id ===
+                    activeExploreFacility.mapId;
+
+            }
+        );
+
+        if (!location) {
+            return;
+        }
+
+        window.location.hash = "map";
+
+        function highlightFacility(attempt) {
+
+            if (window.location.hash !== "#map") {
+                return;
+            }
+
+            if (
+                !document.getElementById("map").hidden &&
+                lpuCampusMap &&
+                lpuCampusImageBounds
+            ) {
+
+                selectCampusLocation(location, true);
+
+            } else if (attempt < 30) {
+
+                setTimeout(function() {
+
+                    highlightFacility(attempt + 1);
+
+                }, 200);
+
+            } else {
+
+                showCampusMapMessage(
+                    "Map could not load. Please try again.",
+                    true
+                );
+
+            }
+
+        }
+
+        highlightFacility(0);
+
+    });
