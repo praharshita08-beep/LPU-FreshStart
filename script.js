@@ -11399,3 +11399,175 @@ document.getElementById(
 displayBankingServices(bankingServices);
 
 /* END OF BANKING ASSISTANCE FUNCTIONALITY */
+
+
+// =========================================
+// BANKING DOCUMENT CHECKLIST
+// =========================================
+
+const BANKING_CHECKLIST_KEY =
+    "freshstart_banking_checklist";
+
+const bankingDocumentCheckboxes =
+    document.querySelectorAll(".banking-document-checkbox");
+
+
+// LOAD SAVED CHECKLIST
+
+function getSavedBankingChecklist() {
+
+    try {
+
+        const saved = JSON.parse(
+            localStorage.getItem(BANKING_CHECKLIST_KEY)
+        );
+
+        return Array.isArray(saved) ? saved : [];
+
+    } catch (error) {
+
+        return [];
+
+    }
+
+}
+
+
+// UPDATE CHECKLIST PROGRESS
+
+function updateBankingChecklistProgress() {
+
+    const total = bankingDocumentCheckboxes.length;
+
+    let completed = 0;
+
+    bankingDocumentCheckboxes.forEach(function (checkbox) {
+
+        if (checkbox.checked) {
+            completed++;
+        }
+
+    });
+
+    const percentage = total === 0
+        ? 0
+        : Math.round((completed / total) * 100);
+
+    document.getElementById(
+        "bankingChecklistPercentage"
+    ).textContent = percentage + "%";
+
+    document.getElementById(
+        "bankingProgressFill"
+    ).style.width = percentage + "%";
+
+    document.getElementById(
+        "bankingProgressTrack"
+    ).setAttribute("aria-valuenow", percentage);
+
+    document.getElementById(
+        "bankingChecklistCount"
+    ).textContent = completed + " of " + total +
+        " documents prepared";
+
+    document.getElementById(
+        "bankingChecklistComplete"
+    ).hidden = total === 0 || completed !== total;
+
+}
+
+
+// SAVE CHECKLIST PROGRESS
+
+function saveBankingChecklist() {
+
+    const completedDocuments = [];
+
+    bankingDocumentCheckboxes.forEach(function (checkbox) {
+
+        if (checkbox.checked) {
+
+            completedDocuments.push(checkbox.value);
+
+        }
+
+    });
+
+    try {
+
+        localStorage.setItem(
+            BANKING_CHECKLIST_KEY,
+            JSON.stringify(completedDocuments)
+        );
+
+    } catch (error) {
+
+        alert("Checklist progress could not be saved.");
+
+    }
+
+    updateBankingChecklistProgress();
+
+}
+
+
+// RESTORE SAVED CHECKLIST
+
+function loadBankingChecklist() {
+
+    const savedDocuments = getSavedBankingChecklist();
+
+    bankingDocumentCheckboxes.forEach(function (checkbox) {
+
+        checkbox.checked =
+            savedDocuments.includes(checkbox.value);
+
+    });
+
+    updateBankingChecklistProgress();
+
+}
+
+
+// CHECKBOX EVENT LISTENERS
+
+bankingDocumentCheckboxes.forEach(function (checkbox) {
+
+    checkbox.addEventListener(
+        "change",
+        saveBankingChecklist
+    );
+
+});
+
+
+// RESET CHECKLIST
+
+document.getElementById(
+    "resetBankingChecklist"
+).addEventListener("click", function () {
+
+    const confirmed = confirm(
+        "Are you sure you want to reset your document checklist?"
+    );
+
+    if (!confirmed) {
+        return;
+    }
+
+    bankingDocumentCheckboxes.forEach(function (checkbox) {
+
+        checkbox.checked = false;
+
+    });
+
+    saveBankingChecklist();
+
+});
+
+
+// INITIALIZE CHECKLIST
+
+loadBankingChecklist();
+
+/* END OF BANKING DOCUMENT CHECKLIST */
