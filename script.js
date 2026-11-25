@@ -8102,3 +8102,272 @@ const universityRules = [
     }
 
 ];
+
+
+// =========================================
+// HOSTEL AND UNIVERSITY RULES FUNCTIONALITY
+// =========================================
+
+const rulesGrid =
+    document.getElementById("rulesGrid");
+
+const rulesSearchInput =
+    document.getElementById("rulesSearchInput");
+
+const rulesSearchForm =
+    document.getElementById("rulesSearchForm");
+
+const rulesEmptyState =
+    document.getElementById("rulesEmptyState");
+
+let rulesActiveCategory = "all";
+
+
+// =========================================
+// DISPLAY RULE CARDS
+// =========================================
+
+function displayUniversityRules(rules) {
+
+    rulesGrid.innerHTML = "";
+
+    document.getElementById(
+        "rulesResultCount"
+    ).textContent = rules.length +
+        (rules.length === 1
+            ? " category found"
+            : " categories found");
+
+    rulesEmptyState.hidden = rules.length !== 0;
+
+    rules.forEach(function (rule) {
+
+        const card = document.createElement("details");
+
+        card.className = "rules-card";
+
+        card.dataset.id = rule.id;
+
+        const guidelinesHTML = rule.guidelines.map(
+            function (guideline) {
+
+                return `<li>${guideline}</li>`;
+
+            }
+        ).join("");
+
+        const isExternal =
+            rule.link.startsWith("https://");
+
+        card.innerHTML = `
+
+            <summary class="rules-card-header">
+
+                <div class="rules-card-icon">
+
+                    <i class="fa-solid ${rule.icon}"></i>
+
+                </div>
+
+                <div class="rules-card-info">
+
+                    <span class="rules-card-category">
+
+                        ${rule.categoryName}
+
+                    </span>
+
+                    <h3>${rule.title}</h3>
+
+                    <p>${rule.description}</p>
+
+                </div>
+
+                <i class="fa-solid fa-chevron-down
+                    rules-card-chevron"
+                    aria-hidden="true"></i>
+
+            </summary>
+
+            <div class="rules-card-content">
+
+                <h4>Important Guidelines</h4>
+
+                <ul class="rules-guidelines-list">
+
+                    ${guidelinesHTML}
+
+                </ul>
+
+                <div class="rules-card-tip">
+
+                    <i class="fa-solid fa-lightbulb"></i>
+
+                    <p>
+
+                        <strong>Useful Tip:</strong>
+
+                        ${rule.tip}
+
+                    </p>
+
+                </div>
+
+                <a href="${rule.link}"
+                    class="rules-related-link"
+                    ${isExternal
+                        ? 'target="_blank" rel="noopener noreferrer"'
+                        : ""}>
+
+                    ${rule.linkText}
+
+                    <i class="fa-solid
+                        ${isExternal
+                            ? "fa-arrow-up-right-from-square"
+                            : "fa-arrow-right"}"
+                        aria-hidden="true"></i>
+
+                </a>
+
+            </div>
+
+        `;
+
+        rulesGrid.appendChild(card);
+
+    });
+
+}
+
+
+// =========================================
+// SEARCH AND FILTER RULES
+// =========================================
+
+function filterUniversityRules() {
+
+    const query = rulesSearchInput.value
+        .toLowerCase()
+        .trim();
+
+    const filteredRules = universityRules.filter(
+        function (rule) {
+
+            const matchesCategory =
+
+                rulesActiveCategory === "all" ||
+
+                rule.category === rulesActiveCategory;
+
+            const searchableText = (
+
+                rule.title + " " +
+
+                rule.categoryName + " " +
+
+                rule.description + " " +
+
+                rule.keywords + " " +
+
+                rule.guidelines.join(" ") + " " +
+
+                rule.tip
+
+            ).toLowerCase();
+
+            const matchesSearch =
+                searchableText.includes(query);
+
+            return matchesCategory && matchesSearch;
+
+        }
+    );
+
+    displayUniversityRules(filteredRules);
+
+}
+
+
+// LIVE SEARCH
+
+rulesSearchInput.addEventListener(
+    "input",
+    filterUniversityRules
+);
+
+
+// SEARCH FORM SUBMISSION
+
+rulesSearchForm.addEventListener(
+    "submit",
+    function (event) {
+
+        event.preventDefault();
+
+        filterUniversityRules();
+
+    }
+);
+
+
+// =========================================
+// CATEGORY FILTERS
+// =========================================
+
+function setUniversityRulesCategory(category) {
+
+    rulesActiveCategory = category;
+
+    document.querySelectorAll(
+        ".rules-filter"
+    ).forEach(function (button) {
+
+        const isActive =
+            button.dataset.category === category;
+
+        button.classList.toggle("active", isActive);
+
+        button.setAttribute("aria-pressed", isActive);
+
+    });
+
+    filterUniversityRules();
+
+}
+
+
+// CATEGORY BUTTON EVENTS
+
+document.querySelectorAll(
+    ".rules-filter"
+).forEach(function (button) {
+
+    button.addEventListener("click", function () {
+
+        setUniversityRulesCategory(
+            button.dataset.category
+        );
+
+    });
+
+});
+
+
+// =========================================
+// RESET SEARCH AND FILTERS
+// =========================================
+
+document.getElementById(
+    "resetRulesFilters"
+).addEventListener("click", function () {
+
+    rulesSearchInput.value = "";
+
+    setUniversityRulesCategory("all");
+
+});
+
+
+// INITIALIZE UNIVERSITY RULES
+
+displayUniversityRules(universityRules);
