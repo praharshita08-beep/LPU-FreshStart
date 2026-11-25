@@ -2606,10 +2606,567 @@
             <p>Track your onboarding journey.</p>
         </section>
 
-        <section id="support" class="page-section" hidden>
-            <h1>Student Support</h1>
-            <p>Find the assistance you need.</p>
-        </section>
+        
+<!-- STUDENT SUPPORT SECTION -->
+
+<section id="support" class="page-section" hidden>
+
+    <div class="support-heading">
+
+        <h1>Student Support</h1>
+
+        <p>Find the right assistance whenever you need it.</p>
+
+    </div>
+
+    <!-- WELCOME BANNER -->
+
+    <div class="support-banner">
+
+        <div>
+
+            <h2>Student Support Centre</h2>
+
+            <p>
+                Find guidance for academic, technical,
+                accommodation, healthcare and everyday
+                university concerns.
+            </p>
+
+        </div>
+
+        <i class="fa-solid fa-headset support-banner-icon"></i>
+
+    </div>
+
+    <!-- EMERGENCY ASSISTANCE -->
+
+    <div class="support-emergency">
+
+        <div class="support-emergency-heading">
+
+            <i class="fa-solid fa-phone-volume"></i>
+
+            <div>
+
+                <h2>Emergency Assistance</h2>
+
+                <p>
+                    For immediate medical or safety emergencies.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="support-emergency-contact">
+
+            <div>
+
+                <h3>National Emergency Helpline</h3>
+
+                <p>Police, fire and medical emergencies in India.</p>
+
+            </div>
+
+            <a href="tel:112"
+                class="support-emergency-button">
+
+                <i class="fa-solid fa-phone"></i>
+
+                Call 112
+
+            </a>
+
+        </div>
+
+        <p class="support-emergency-note">
+
+            For immediate campus assistance, also approach
+            nearby university security personnel or staff.
+
+        </p>
+
+    </div>
+
+    <!-- SUPPORT SEARCH -->
+
+    <form id="supportSearchForm"
+        class="support-search-form">
+
+        <div class="support-search-input">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input type="search"
+                id="supportSearchInput"
+                placeholder="What do you need help with?"
+                aria-label="Search student support services"
+                autocomplete="off">
+
+        </div>
+
+        <button type="submit" class="primary-button">
+
+            Search
+
+        </button>
+
+    </form>
+
+    <!-- SUPPORT SERVICES HEADING -->
+
+    <div class="support-section-heading">
+
+        <h2>Support Services</h2>
+
+        <p>Select the appropriate service for your concern.</p>
+
+    </div>
+
+    <!-- CATEGORY FILTERS -->
+
+    <div class="support-filters">
+
+        <button type="button"
+            class="support-filter active"
+            data-category="all"
+            aria-pressed="true">
+
+            All Services
+
+        </button>
+
+        <button type="button"
+            class="support-filter"
+            data-category="academic"
+            aria-pressed="false">
+
+            Academic
+
+        </button>
+
+        <button type="button"
+            class="support-filter"
+            data-category="technical"
+            aria-pressed="false">
+
+            Technical
+
+        </button>
+
+        <button type="button"
+            class="support-filter"
+            data-category="campus"
+            aria-pressed="false">
+
+            Campus Life
+
+        </button>
+
+        <button type="button"
+            class="support-filter"
+            data-category="health"
+            aria-pressed="false">
+
+            Health and Wellness
+
+        </button>
+
+        <button type="button"
+            class="support-filter"
+            data-category="safety"
+            aria-pressed="false">
+
+            Safety
+
+        </button>
+
+        <button type="button"
+            class="support-filter"
+            data-category="administrative"
+            aria-pressed="false">
+
+            Administrative
+
+        </button>
+
+        <button type="button"
+            class="support-filter"
+            data-category="international"
+            aria-pressed="false">
+
+            International
+
+        </button>
+
+    </div>
+
+    <!-- SUPPORT SERVICE CARDS -->
+
+    <div class="support-results-heading">
+
+        <p id="supportResultCount">0 services</p>
+
+    </div>
+
+    <div id="supportServicesGrid"
+        class="support-services-grid">
+
+        <!-- Support cards will be generated using JavaScript -->
+
+    </div>
+
+    <!-- EMPTY STATE -->
+
+    <div id="supportEmptyState"
+        class="support-empty-state"
+        hidden>
+
+        <i class="fa-solid fa-magnifying-glass"></i>
+
+        <h3>No matching support services found</h3>
+
+        <p>
+            Try another search term or select
+            a different category.
+        </p>
+
+        <button type="button"
+            id="resetSupportFilters"
+            class="primary-button">
+
+            View All Services
+
+        </button>
+
+    </div>
+
+    <!-- SELECTED SUPPORT SERVICE -->
+
+    <div id="supportServiceDetails"
+        class="support-details-card"
+        hidden>
+
+        <div class="support-details-header">
+
+            <div>
+
+                <span id="supportDetailCategory"
+                    class="support-detail-category">
+
+                </span>
+
+                <h2 id="supportDetailTitle"></h2>
+
+            </div>
+
+            <button type="button"
+                id="closeSupportDetails"
+                class="support-close-button"
+                aria-label="Close support details">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+        <p id="supportDetailDescription"></p>
+
+        <!-- TYPES OF ASSISTANCE -->
+
+        <h3>What can this service help with?</h3>
+
+        <ul id="supportDetailIssues"></ul>
+
+        <!-- ASSISTANCE INSTRUCTIONS -->
+
+        <h3>How to get assistance</h3>
+
+        <ol id="supportDetailSteps"></ol>
+
+        <!-- CONTACT INFORMATION -->
+
+        <div class="support-contact-info">
+
+            <h3>
+
+                <i class="fa-solid fa-address-card"></i>
+
+                Contact Information
+
+            </h3>
+
+            <div class="support-contact-row">
+
+                <i class="fa-solid fa-building"></i>
+
+                <div>
+
+                    <strong>Department or Service</strong>
+
+                    <p id="supportDetailDepartment"></p>
+
+                </div>
+
+            </div>
+
+            <div class="support-contact-row">
+
+                <i class="fa-solid fa-location-dot"></i>
+
+                <div>
+
+                    <strong>Location</strong>
+
+                    <p id="supportDetailLocation"></p>
+
+                </div>
+
+            </div>
+
+            <div class="support-contact-row">
+
+                <i class="fa-solid fa-phone"></i>
+
+                <div>
+
+                    <strong>Contact Details</strong>
+
+                    <p id="supportDetailContact"></p>
+
+                </div>
+
+            </div>
+
+            <div class="support-contact-row">
+
+                <i class="fa-solid fa-clock"></i>
+
+                <div>
+
+                    <strong>Availability</strong>
+
+                    <p id="supportDetailHours"></p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- IMPORTANT GUIDANCE -->
+
+        <div class="support-tip">
+
+            <i class="fa-solid fa-lightbulb"></i>
+
+            <p id="supportDetailTip"></p>
+
+        </div>
+
+        <!-- RELATED LINKS -->
+
+        <div class="support-detail-actions">
+
+            <a id="supportRelatedLink"
+                href="#dashboard"
+                class="primary-button">
+
+                <span id="supportRelatedLinkText">
+
+                    Related Services
+
+                </span>
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </a>
+
+            <a href="https://www.lpu.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="support-official-link">
+
+                Official University Website
+
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- FREQUENTLY ASKED QUESTIONS -->
+
+    <div class="support-faq-section">
+
+        <h2>
+
+            <i class="fa-solid fa-circle-question"></i>
+
+            Frequently Asked Questions
+
+        </h2>
+
+        <details class="support-faq">
+
+            <summary>
+                Who should I contact for academic concerns?
+            </summary>
+
+            <p>
+                Approach your faculty member, academic mentor
+                or the relevant academic department.
+            </p>
+
+        </details>
+
+        <details class="support-faq">
+
+            <summary>
+                What should I do if I lose my student ID card?
+            </summary>
+
+            <p>
+                Inform the appropriate university administrative
+                office or campus security and follow the official
+                replacement procedure.
+            </p>
+
+        </details>
+
+        <details class="support-faq">
+
+            <summary>
+                How can I report a hostel maintenance issue?
+            </summary>
+
+            <p>
+                Contact your hostel warden or residential
+                services department and follow the official
+                maintenance request procedure.
+            </p>
+
+        </details>
+
+        <details class="support-faq">
+
+            <summary>
+                What should I do if I experience ragging?
+            </summary>
+
+            <p>
+                Move to a safe place and inform a trusted adult,
+                university staff member, campus security or the
+                official anti-ragging support service.
+                Call 112 if you are in immediate danger.
+            </p>
+
+        </details>
+
+        <details class="support-faq">
+
+            <summary>
+                Where can I get help with UMS or Wi-Fi?
+            </summary>
+
+            <p>
+                Contact the university's technical support
+                service. You can also visit the UMS Help
+                section for general troubleshooting guidance.
+            </p>
+
+        </details>
+
+        <details class="support-faq">
+
+            <summary>
+                Can I get help if I feel homesick or overwhelmed?
+            </summary>
+
+            <p>
+                Yes. Speak with a trusted friend, family member,
+                faculty mentor or university counselling service.
+                You can seek support while adjusting to campus life.
+            </p>
+
+        </details>
+
+        <details class="support-faq">
+
+            <summary>
+                Where can international students get assistance?
+            </summary>
+
+            <p>
+                Contact the university's international student
+                support services or visit the International
+                Students Help Desk in LPU FreshStart.
+            </p>
+
+        </details>
+
+    </div>
+
+    <!-- INTERNATIONAL SUPPORT CONNECTION -->
+
+    <div class="support-international-banner">
+
+        <i class="fa-solid fa-earth-asia"></i>
+
+        <div>
+
+            <h2>Are you an international student?</h2>
+
+            <p>
+                Find language assistance, cultural guidance
+                and international student resources.
+            </p>
+
+        </div>
+
+        <a href="#international" class="primary-button">
+
+            International Help Desk
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+        </a>
+
+    </div>
+
+    <!-- IMPORTANT INFORMATION -->
+
+    <div class="support-notice">
+
+        <i class="fa-solid fa-circle-info"></i>
+
+        <div>
+
+            <h3>Important Information</h3>
+
+            <p>
+                LPU FreshStart is an independent student-led
+                onboarding project. It provides general guidance
+                and does not directly submit complaints,
+                requests or emergency reports to the university.
+            </p>
+
+            <p>
+                Confirm department locations, contact details
+                and availability through official university
+                sources before visiting.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
 
         <section id="international" class="page-section" hidden>
             <h1>International Students Help Desk</h1>
