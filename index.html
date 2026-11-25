@@ -2313,10 +2313,293 @@
 </section>
 
 
-        <section id="ums" class="page-section" hidden>
-            <h1>UMS Help</h1>
-            <p>Learn how to use UMS effectively.</p>
-        </section>
+        
+<!-- UMS HELP SECTION -->
+
+<section id="ums" class="page-section" hidden>
+
+    <div class="ums-heading">
+
+        <h1>UMS Help</h1>
+
+        <p>Learn how to navigate the University Management System.</p>
+
+    </div>
+
+    <!-- UMS WELCOME BANNER -->
+
+    <div class="ums-banner">
+
+        <div class="ums-banner-content">
+
+            <h2>UMS Help Centre</h2>
+
+            <p>
+                Access academic information, manage university
+                activities and understand essential UMS features.
+            </p>
+
+            <a href="https://ums.lpu.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="ums-portal-button">
+
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+                Open Official UMS
+
+            </a>
+
+        </div>
+
+        <i class="fa-solid fa-laptop ums-banner-icon"></i>
+
+    </div>
+
+    <!-- UMS SEARCH -->
+
+    <form id="umsSearchForm" class="ums-search-form">
+
+        <div class="ums-search-input">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input type="search"
+                id="umsSearchInput"
+                placeholder="Search UMS help topics..."
+                aria-label="Search UMS help topics"
+                autocomplete="off">
+
+        </div>
+
+        <button type="submit" class="primary-button">
+
+            Search
+
+        </button>
+
+    </form>
+
+    <!-- HELP TOPICS -->
+
+    <div class="ums-section-heading">
+
+        <h2>What do you need help with?</h2>
+
+        <p>Select a topic to learn more.</p>
+
+    </div>
+
+    <div id="umsTopicsGrid" class="ums-topics-grid">
+
+        <!-- Topics will be generated using JavaScript -->
+
+    </div>
+
+    <p id="umsSearchMessage"
+        class="ums-search-message"
+        role="status"
+        hidden>
+
+        No matching help topics found.
+
+    </p>
+
+    <!-- SELECTED HELP TOPIC -->
+
+    <div id="umsTopicDetails"
+        class="ums-details-card"
+        hidden>
+
+        <div class="ums-details-header">
+
+            <h2 id="umsDetailTitle"></h2>
+
+            <button type="button"
+                id="closeUmsDetails"
+                class="ums-close-button"
+                aria-label="Close help topic">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+        <p id="umsDetailDescription"></p>
+
+        <h3>How to get started</h3>
+
+        <ol id="umsDetailSteps"></ol>
+
+        <div class="ums-tip">
+
+            <i class="fa-solid fa-lightbulb"></i>
+
+            <p id="umsDetailTip"></p>
+
+        </div>
+
+        <a href="https://ums.lpu.in/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="primary-button">
+
+            Open UMS
+
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+        </a>
+
+    </div>
+
+    <!-- FREQUENTLY ASKED QUESTIONS -->
+
+    <div class="ums-faq-section">
+
+        <h2>
+
+            <i class="fa-solid fa-circle-question"></i>
+
+            Frequently Asked Questions
+
+        </h2>
+
+        <details class="ums-faq">
+
+            <summary>How do I log in to UMS?</summary>
+
+            <p>
+                Open the official UMS portal and use the
+                university-issued login credentials.
+                Contact university support if you have not
+                received your credentials.
+            </p>
+
+        </details>
+
+        <details class="ums-faq">
+
+            <summary>What if I forget my password?</summary>
+
+            <p>
+                Use the official password recovery option,
+                if available, or contact university technical
+                support for assistance.
+            </p>
+
+        </details>
+
+        <details class="ums-faq">
+
+            <summary>Where can I check my attendance?</summary>
+
+            <p>
+                Log in to UMS and look for attendance
+                information in the academic services.
+            </p>
+
+        </details>
+
+        <details class="ums-faq">
+
+            <summary>How can I check my class timetable?</summary>
+
+            <p>
+                Log in to UMS and locate your academic
+                timetable. Check it regularly for updates.
+            </p>
+
+        </details>
+
+        <details class="ums-faq">
+
+            <summary>What if my academic information is incorrect?</summary>
+
+            <p>
+                Contact the relevant university department
+                or raise a request through the official
+                university support channels.
+            </p>
+
+        </details>
+
+        <details class="ums-faq">
+
+            <summary>Can I access UMS on my mobile phone?</summary>
+
+            <p>
+                You can try accessing the official UMS
+                portal through your mobile browser.
+                Follow university guidance for supported
+                mobile applications.
+            </p>
+
+        </details>
+
+        <details class="ums-faq">
+
+            <summary>What should I do if UMS is not loading?</summary>
+
+            <p>
+                Check your internet connection, refresh
+                the page and try another browser.
+                Contact technical support if the issue continues.
+            </p>
+
+        </details>
+
+    </div>
+
+    <!-- ADDITIONAL SUPPORT -->
+
+    <div class="ums-support-banner">
+
+        <i class="fa-solid fa-headset"></i>
+
+        <div>
+
+            <h2>Still need assistance?</h2>
+
+            <p>
+                Find the appropriate student support
+                services for additional help.
+            </p>
+
+        </div>
+
+        <a href="#support" class="primary-button">
+
+            Student Support
+
+        </a>
+
+    </div>
+
+    <!-- SECURITY NOTICE -->
+
+    <div class="ums-security-notice">
+
+        <i class="fa-solid fa-shield-halved"></i>
+
+        <div>
+
+            <h3>Keep your account secure</h3>
+
+            <p>
+                Never share your UMS password or OTP.
+                LPU FreshStart does not collect UMS login
+                credentials or access academic records.
+                Always verify that you are using the
+                official university portal.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
 
         <section id="onboarding" class="page-section" hidden>
             <h1>First 15 Days</h1>
