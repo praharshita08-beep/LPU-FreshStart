@@ -11571,3 +11571,581 @@ document.getElementById(
 loadBankingChecklist();
 
 /* END OF BANKING DOCUMENT CHECKLIST */
+
+// FOOD & DINING DATABASE
+
+const foodOutlets = [
+
+    {
+        id: "hostel-mess",
+        name: "Hostel Mess",
+        category: "mess",
+        icon: "fa-bowl-food",
+        description: "Explore regular hostel meal services.",
+        location: "Confirm with your hostel",
+        hours: "Check the mess schedule",
+        diet: ["vegetarian", "nonvegetarian"],
+        budget: "affordable",
+        menu: ["Breakfast", "Lunch", "Dinner"],
+        keywords: "hostel mess meals breakfast lunch dinner",
+        mapQuery: "hostel mess"
+    },
+
+    {
+        id: "campus-canteens",
+        name: "Campus Canteens",
+        category: "canteen",
+        icon: "fa-store",
+        description: "Explore convenient campus meal options.",
+        location: "Search campus canteens",
+        hours: "Confirm with the outlet",
+        diet: ["vegetarian", "nonvegetarian"],
+        budget: "affordable",
+        menu: ["Meals", "Snacks", "Refreshments"],
+        keywords: "canteen affordable snacks meals",
+        mapQuery: "canteens"
+    },
+
+    {
+        id: "campus-cafes",
+        name: "Campus Cafes",
+        category: "cafe",
+        icon: "fa-mug-hot",
+        description: "Discover cafes and refreshments.",
+        location: "Search campus cafes",
+        hours: "Confirm with the outlet",
+        diet: ["vegetarian", "nonvegetarian"],
+        budget: "variable",
+        menu: ["Beverages", "Snacks", "Light meals"],
+        keywords: "coffee tea cafe beverages",
+        mapQuery: "cafes"
+    },
+
+    {
+        id: "vegetarian-dining",
+        name: "Vegetarian Dining",
+        category: "restaurant",
+        icon: "fa-leaf",
+        description: "Search for vegetarian meal options.",
+        location: "Search nearby vegetarian restaurants",
+        hours: "Confirm with the outlet",
+        diet: ["vegetarian"],
+        budget: "variable",
+        menu: ["Vegetarian meals", "Vegetarian snacks"],
+        keywords: "veg vegetarian indian food",
+        mapQuery: "vegetarian restaurants"
+    },
+
+    {
+        id: "nonvegetarian-dining",
+        name: "Non-Vegetarian Dining",
+        category: "restaurant",
+        icon: "fa-utensils",
+        description: "Search for non-vegetarian meal options.",
+        location: "Search nearby restaurants",
+        hours: "Confirm with the outlet",
+        diet: ["nonvegetarian"],
+        budget: "variable",
+        menu: ["Non-vegetarian meals"],
+        keywords: "non veg chicken eggs restaurants",
+        mapQuery: "non vegetarian restaurants"
+    },
+
+    {
+        id: "international-cuisine",
+        name: "International Cuisine",
+        category: "international",
+        icon: "fa-earth-asia",
+        description: "Discover different international cuisines.",
+        location: "Search nearby dining facilities",
+        hours: "Confirm with the outlet",
+        diet: ["vegetarian", "nonvegetarian"],
+        budget: "variable",
+        menu: ["International meal options"],
+        keywords: "international continental asian cuisine",
+        mapQuery: "international restaurants"
+    },
+
+    {
+        id: "food-courts",
+        name: "Food Courts",
+        category: "restaurant",
+        icon: "fa-utensils",
+        description: "Explore multiple dining choices.",
+        location: "Search nearby food courts",
+        hours: "Confirm with the outlet",
+        diet: ["vegetarian", "nonvegetarian"],
+        budget: "variable",
+        menu: ["Meals", "Snacks", "Beverages"],
+        keywords: "food court restaurants multiple cuisines",
+        mapQuery: "food courts"
+    },
+
+    {
+        id: "snack-outlets",
+        name: "Snack Outlets",
+        category: "canteen",
+        icon: "fa-cookie",
+        description: "Explore snacks and refreshments.",
+        location: "Search nearby snack outlets",
+        hours: "Confirm with the outlet",
+        diet: ["vegetarian", "nonvegetarian"],
+        budget: "affordable",
+        menu: ["Snacks", "Refreshments"],
+        keywords: "snacks bakery refreshments affordable",
+        mapQuery: "snack shops"
+    }
+
+];
+
+/* END OF FOOD & DINING DATABASE */
+
+// FOOD DIRECTORY FUNCTIONALITY
+
+const foodOutletsGrid =
+    document.getElementById("foodOutletsGrid");
+
+const foodSearchInput =
+    document.getElementById("foodSearchInput");
+
+const foodCategoryNames = {
+    mess: "Mess",
+    canteen: "Canteen",
+    cafe: "Cafe",
+    restaurant: "Restaurant",
+    international: "International"
+};
+
+let foodActiveCategory = "all";
+let foodActiveView = "all";
+let foodFavourites = [];
+
+
+// DISPLAY DINING CARDS
+
+function displayFoodOutlets(outlets) {
+
+    foodOutletsGrid.innerHTML = "";
+
+    document.getElementById("foodResultCount")
+        .textContent = outlets.length + " dining options found";
+
+    document.getElementById("foodEmptyState")
+        .hidden = outlets.length !== 0;
+
+    outlets.forEach(function (outlet) {
+
+        const card = document.createElement("article");
+
+        card.className = "food-outlet-card";
+
+        card.innerHTML = `
+            <i class="fa-solid ${outlet.icon} food-outlet-icon"></i>
+
+            <span class="food-outlet-category">
+                ${foodCategoryNames[outlet.category]}
+            </span>
+
+            <h3>${outlet.name}</h3>
+
+            <p>${outlet.description}</p>
+
+            <p>
+                <i class="fa-solid fa-location-dot"></i>
+                ${outlet.location}
+            </p>
+
+            <button type="button"
+                class="food-outlet-button"
+                data-id="${outlet.id}">
+                View Details
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        `;
+
+        foodOutletsGrid.appendChild(card);
+
+    });
+
+}
+
+
+// SEARCH AND FILTER
+
+function filterFoodOutlets() {
+
+    const query = foodSearchInput.value.trim().toLowerCase();
+
+    const diet = document.getElementById("foodDietFilter").value;
+
+    const budget = document.getElementById("foodBudgetFilter").value;
+
+    const results = foodOutlets.filter(function (outlet) {
+
+        const text = (
+            outlet.name + " " +
+            outlet.description + " " +
+            outlet.location + " " +
+            outlet.keywords + " " +
+            outlet.menu.join(" ")
+        ).toLowerCase();
+
+        return text.includes(query) &&
+            (foodActiveCategory === "all" ||
+                outlet.category === foodActiveCategory) &&
+            (diet === "all" || outlet.diet.includes(diet)) &&
+            (budget === "all" || outlet.budget === budget) &&
+            (foodActiveView === "all" ||
+                foodFavourites.includes(outlet.id));
+
+    });
+
+    document.getElementById("foodOutletDetails").hidden = true;
+
+    displayFoodOutlets(results);
+
+}
+
+
+// SEARCH EVENTS
+
+foodSearchInput.addEventListener("input", filterFoodOutlets);
+
+document.getElementById("foodSearchForm")
+    .addEventListener("submit", function (event) {
+
+        event.preventDefault();
+        filterFoodOutlets();
+
+    });
+
+document.getElementById("foodDietFilter")
+    .addEventListener("change", filterFoodOutlets);
+
+document.getElementById("foodBudgetFilter")
+    .addEventListener("change", filterFoodOutlets);
+
+
+// CATEGORY FILTERS
+
+function setFoodCategory(category) {
+
+    foodActiveCategory = category;
+
+    document.querySelectorAll(".food-filter")
+        .forEach(function (button) {
+
+            const active = button.dataset.category === category;
+
+            button.classList.toggle("active", active);
+            button.setAttribute("aria-pressed", active);
+
+        });
+
+    filterFoodOutlets();
+
+}
+
+document.querySelectorAll(".food-filter")
+    .forEach(function (button) {
+
+        button.addEventListener("click", function () {
+
+            setFoodCategory(button.dataset.category);
+
+        });
+
+    });
+
+
+// INITIAL DISPLAY
+
+displayFoodOutlets(foodOutlets);
+
+/* END OF FOOD FUNCTIONALITY PART 1 */
+// FOOD OUTLET DETAILS
+
+let selectedFoodOutlet = null;
+
+function showFoodOutletDetails(outlet) {
+
+    selectedFoodOutlet = outlet;
+
+    document.getElementById("foodDetailName")
+        .textContent = outlet.name;
+
+    document.getElementById("foodDetailCategory")
+        .textContent = foodCategoryNames[outlet.category];
+
+    document.getElementById("foodDetailDescription")
+        .textContent = outlet.description;
+
+    document.getElementById("foodDetailLocation")
+        .textContent = outlet.location;
+
+    document.getElementById("foodDetailHours")
+        .textContent = outlet.hours;
+
+    document.getElementById("foodDetailDiet")
+        .textContent = "Potential options: " +
+        outlet.diet.join(", ") + ". Confirm availability.";
+
+    document.getElementById("foodDetailBudget")
+        .textContent = "Confirm current prices with the provider.";
+
+    const menu = document.getElementById("foodDetailMenu");
+
+    menu.innerHTML = "";
+
+    outlet.menu.forEach(function (item) {
+
+        const li = document.createElement("li");
+
+        li.textContent = item + " (check availability)";
+
+        menu.appendChild(li);
+
+    });
+
+    document.getElementById("foodDetailMap").href =
+        "https://www.google.com/maps/search/" +
+        encodeURIComponent(
+            outlet.mapQuery + " near Lovely Professional University"
+        );
+
+    const details = document.getElementById("foodOutletDetails");
+
+    details.hidden = false;
+
+    details.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+
+}
+
+
+// OPEN AND CLOSE DETAILS
+
+foodOutletsGrid.addEventListener("click", function (event) {
+
+    const button = event.target.closest(".food-outlet-button");
+
+    if (!button) return;
+
+    const outlet = foodOutlets.find(function (item) {
+
+        return item.id === button.dataset.id;
+
+    });
+
+    if (outlet) {
+        showFoodOutletDetails(outlet);
+    }
+
+});
+
+document.getElementById("closeFoodDetails")
+    .addEventListener("click", function () {
+
+        document.getElementById("foodOutletDetails").hidden = true;
+
+        selectedFoodOutlet = null;
+
+    });
+
+
+// RESET FILTERS
+
+document.getElementById("resetFoodFilters")
+    .addEventListener("click", function () {
+
+        foodSearchInput.value = "";
+
+        document.getElementById("foodDietFilter").value = "all";
+
+        document.getElementById("foodBudgetFilter").value = "all";
+
+        foodActiveView = "all";
+
+        document.querySelectorAll(".food-view-tab")
+            .forEach(function (button) {
+
+                const active = button.dataset.view === "all";
+
+                button.classList.toggle("active", active);
+
+                button.setAttribute("aria-pressed", active);
+
+            });
+
+        setFoodCategory("all");
+
+    });
+
+
+// QUICK ACCESS NAVIGATION
+
+document.querySelectorAll('.food-quick-card[href^="#"]')
+    .forEach(function (link) {
+
+        link.addEventListener("click", function (event) {
+
+            event.preventDefault();
+
+            const target = document.querySelector(
+                link.getAttribute("href")
+            );
+
+            if (target) {
+
+                target.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+
+            }
+
+        });
+
+    });
+
+/* END OF FOOD FUNCTIONALITY PART 2 */
+// FOOD FAVOURITES AND LOCAL STORAGE
+
+const FOOD_FAVOURITES_KEY = "freshstart_food_favourites";
+
+const foodFavouriteButton =
+    document.getElementById("foodFavouriteButton");
+
+
+// LOAD SAVED FAVOURITES
+
+function loadFoodFavourites() {
+    try {
+        const saved = JSON.parse(
+            localStorage.getItem(FOOD_FAVOURITES_KEY)
+        );
+
+        foodFavourites = Array.isArray(saved) ? saved : [];
+
+    } catch (error) {
+        foodFavourites = [];
+    }
+}
+
+
+// UPDATE FAVOURITE BUTTON
+
+function updateFoodFavouriteButton() {
+
+    if (!selectedFoodOutlet) return;
+
+    const saved = foodFavourites.includes(selectedFoodOutlet.id);
+
+    foodFavouriteButton.classList.toggle("saved", saved);
+
+    foodFavouriteButton.setAttribute("aria-pressed", saved);
+
+    foodFavouriteButton.innerHTML = saved
+        ? '<i class="fa-solid fa-heart"></i> Remove from Favourites'
+        : '<i class="fa-regular fa-heart"></i> Add to Favourites';
+
+}
+
+
+// UPDATE FAVOURITE COUNT
+
+function updateFoodFavouriteCount() {
+
+    document.getElementById("foodFavouriteCount")
+        .textContent = foodFavourites.length;
+
+}
+
+
+// SAVE OR REMOVE FAVOURITES
+
+foodFavouriteButton.addEventListener("click", function () {
+
+    if (!selectedFoodOutlet) return;
+
+    const id = selectedFoodOutlet.id;
+
+    const updated = foodFavourites.includes(id)
+        ? foodFavourites.filter(function (item) {
+            return item !== id;
+        })
+        : [...foodFavourites, id];
+
+    try {
+
+        localStorage.setItem(
+            FOOD_FAVOURITES_KEY,
+            JSON.stringify(updated)
+        );
+
+        foodFavourites = updated;
+
+    } catch (error) {
+
+        alert("Favourites could not be saved.");
+        return;
+
+    }
+
+    updateFoodFavouriteCount();
+    updateFoodFavouriteButton();
+
+    if (foodActiveView === "favourites") {
+        filterFoodOutlets();
+    }
+
+});
+
+
+// FAVOURITES VIEW
+
+document.querySelectorAll(".food-view-tab")
+    .forEach(function (button) {
+
+        button.addEventListener("click", function () {
+
+            foodActiveView = button.dataset.view;
+
+            document.querySelectorAll(".food-view-tab")
+                .forEach(function (tab) {
+
+                    const active =
+                        tab.dataset.view === foodActiveView;
+
+                    tab.classList.toggle("active", active);
+                    tab.setAttribute("aria-pressed", active);
+
+                });
+
+            filterFoodOutlets();
+
+        });
+
+    });
+
+
+// UPDATE BUTTON WHEN DETAILS OPEN
+
+foodOutletsGrid.addEventListener("click", function (event) {
+
+    if (event.target.closest(".food-outlet-button")) {
+        updateFoodFavouriteButton();
+    }
+
+});
+
+
+// INITIALIZE FAVOURITES
+
+loadFoodFavourites();
+updateFoodFavouriteCount();
+filterFoodOutlets();
+
+/* END OF FOOD FAVOURITES FUNCTIONALITY */
