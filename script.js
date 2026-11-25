@@ -5657,3 +5657,329 @@ const supportServices = [
     }
 
 ];
+
+
+// =========================================
+// STUDENT SUPPORT FUNCTIONALITY
+// =========================================
+
+const supportServicesGrid = document.getElementById(
+    "supportServicesGrid"
+);
+
+const supportSearchInput = document.getElementById(
+    "supportSearchInput"
+);
+
+const supportSearchForm = document.getElementById(
+    "supportSearchForm"
+);
+
+const supportServiceDetails = document.getElementById(
+    "supportServiceDetails"
+);
+
+let supportActiveCategory = "all";
+
+// DISPLAY SUPPORT SERVICE CARDS
+
+function displaySupportServices(services) {
+
+    supportServicesGrid.innerHTML = "";
+
+    document.getElementById(
+        "supportResultCount"
+    ).textContent = services.length +
+        (services.length === 1 ? " service" : " services");
+
+    document.getElementById(
+        "supportEmptyState"
+    ).hidden = services.length !== 0;
+
+    services.forEach(function(service) {
+
+        const card = document.createElement("article");
+
+        card.className = "support-service-card";
+
+        card.innerHTML = `
+
+            <div class="support-service-icon">
+
+                <i class="fa-solid ${service.icon}"></i>
+
+            </div>
+
+            <h3>${service.title}</h3>
+
+            <p>${service.description}</p>
+
+            <button type="button"
+                class="support-service-button"
+                data-id="${service.id}">
+
+                Get Assistance
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </button>
+
+        `;
+
+        supportServicesGrid.appendChild(card);
+
+    });
+
+}
+
+// SEARCH AND FILTER SUPPORT SERVICES
+
+function filterSupportServices() {
+
+    const query = supportSearchInput.value
+        .trim()
+        .toLowerCase();
+
+    const filteredServices = supportServices.filter(
+        function(service) {
+
+            const matchesCategory =
+                supportActiveCategory === "all" ||
+                service.category === supportActiveCategory;
+
+            const searchableText = [
+
+                service.title,
+                service.description,
+                service.categoryName,
+                service.keywords,
+                service.department,
+                service.issues.join(" ")
+
+            ].join(" ").toLowerCase();
+
+            const matchesSearch =
+                searchableText.includes(query);
+
+            return matchesCategory && matchesSearch;
+
+        }
+    );
+
+    supportServiceDetails.hidden = true;
+
+    displaySupportServices(filteredServices);
+
+}
+
+// SEARCH INPUT
+
+supportSearchInput.addEventListener(
+    "input",
+    filterSupportServices
+);
+
+// SEARCH FORM
+
+supportSearchForm.addEventListener(
+    "submit",
+    function(event) {
+
+        event.preventDefault();
+
+        filterSupportServices();
+
+    }
+);
+
+// CATEGORY FILTER BUTTONS
+
+function setSupportCategory(category) {
+
+    supportActiveCategory = category;
+
+    document.querySelectorAll(".support-filter")
+        .forEach(function(button) {
+
+            const active =
+                button.dataset.category === category;
+
+            button.classList.toggle("active", active);
+
+            button.setAttribute(
+                "aria-pressed", active
+            );
+
+        });
+
+    filterSupportServices();
+
+}
+
+document.querySelectorAll(".support-filter")
+    .forEach(function(button) {
+
+        button.addEventListener("click", function() {
+
+            setSupportCategory(
+                button.dataset.category
+            );
+
+        });
+
+    });
+
+// RESET SEARCH AND FILTERS
+
+document.getElementById("resetSupportFilters")
+    .addEventListener("click", function() {
+
+        supportSearchInput.value = "";
+
+        setSupportCategory("all");
+
+    });
+
+// DISPLAY SUPPORT SERVICE DETAILS
+
+function showSupportServiceDetails(service) {
+
+    document.getElementById(
+        "supportDetailCategory"
+    ).textContent = service.categoryName;
+
+    document.getElementById(
+        "supportDetailTitle"
+    ).textContent = service.title;
+
+    document.getElementById(
+        "supportDetailDescription"
+    ).textContent = service.description;
+
+    // DISPLAY COMMON ISSUES
+
+    const issuesList = document.getElementById(
+        "supportDetailIssues"
+    );
+
+    issuesList.innerHTML = "";
+
+    service.issues.forEach(function(issue) {
+
+        const item = document.createElement("li");
+
+        item.textContent = issue;
+
+        issuesList.appendChild(item);
+
+    });
+
+    // DISPLAY ASSISTANCE STEPS
+
+    const stepsList = document.getElementById(
+        "supportDetailSteps"
+    );
+
+    stepsList.innerHTML = "";
+
+    service.steps.forEach(function(step) {
+
+        const item = document.createElement("li");
+
+        item.textContent = step;
+
+        stepsList.appendChild(item);
+
+    });
+
+    // DISPLAY CONTACT INFORMATION
+
+    document.getElementById(
+        "supportDetailDepartment"
+    ).textContent = service.department;
+
+    document.getElementById(
+        "supportDetailLocation"
+    ).textContent = service.location;
+
+    document.getElementById(
+        "supportDetailContact"
+    ).textContent = service.contact;
+
+    document.getElementById(
+        "supportDetailHours"
+    ).textContent = service.hours;
+
+    // DISPLAY IMPORTANT GUIDANCE
+
+    document.getElementById(
+        "supportDetailTip"
+    ).textContent = service.tip;
+
+    // UPDATE RELATED SECTION LINK
+
+    document.getElementById(
+        "supportRelatedLink"
+    ).setAttribute("href", service.link);
+
+    document.getElementById(
+        "supportRelatedLinkText"
+    ).textContent = service.linkText;
+
+    // SHOW DETAILS PANEL
+
+    supportServiceDetails.hidden = false;
+
+    supportServiceDetails.scrollIntoView({
+
+        block: "start"
+
+    });
+
+}
+
+// GET ASSISTANCE BUTTONS
+
+supportServicesGrid.addEventListener(
+    "click",
+    function(event) {
+
+        const button = event.target.closest(
+            ".support-service-button"
+        );
+
+        if (!button) {
+
+            return;
+
+        }
+
+        const service = supportServices.find(
+            function(item) {
+
+                return item.id === button.dataset.id;
+
+            }
+        );
+
+        if (service) {
+
+            showSupportServiceDetails(service);
+
+        }
+
+    }
+);
+
+// CLOSE SUPPORT DETAILS
+
+document.getElementById("closeSupportDetails")
+    .addEventListener("click", function() {
+
+        supportServiceDetails.hidden = true;
+
+    });
+
+// INITIALIZE STUDENT SUPPORT
+
+displaySupportServices(supportServices);
