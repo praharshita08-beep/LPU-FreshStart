@@ -4563,3 +4563,237 @@ document.getElementById("umsSearchForm")
 // INITIALIZE UMS HELP
 
 displayUmsTopics(umsTopics);
+
+
+// =========================================
+// FIRST 15 DAYS ONBOARDING DATABASE
+// =========================================
+
+const onboardingDays = [
+
+    {
+        day: 1,
+        title: "Arrival and Registration",
+        icon: "fa-id-card",
+        description: "Begin your university journey by completing the essential arrival formalities.",
+        tasks: [
+            "Locate the university reporting centre.",
+            "Complete the required arrival formalities.",
+            "Confirm your admission and registration details.",
+            "Save important university support contacts."
+        ],
+        link: "#support",
+        linkText: "Student Support"
+    },
+
+    {
+        day: 2,
+        title: "Document Verification and Student ID",
+        icon: "fa-file-circle-check",
+        description: "Organize your documents and complete identification formalities.",
+        tasks: [
+            "Prepare the required academic documents.",
+            "Complete document verification as instructed.",
+            "Check the status of your student ID card.",
+            "Complete your FreshStart student profile."
+        ],
+        link: "#profile",
+        linkText: "My Profile"
+    },
+
+    {
+        day: 3,
+        title: "Accommodation and Essential Facilities",
+        icon: "fa-bed",
+        description: "Become familiar with your accommodation and everyday facilities.",
+        tasks: [
+            "Complete accommodation formalities if applicable.",
+            "Locate nearby essential facilities.",
+            "Understand accommodation rules and procedures.",
+            "Identify the appropriate accommodation support contact."
+        ],
+        link: "#rules",
+        linkText: "Hostel and University Rules"
+    },
+
+    {
+        day: 4,
+        title: "Campus Exploration",
+        icon: "fa-map-location-dot",
+        description: "Become familiar with important locations across the university.",
+        tasks: [
+            "Locate your academic block.",
+            "Locate the Central Library.",
+            "Explore important campus facilities.",
+            "Identify student support offices."
+        ],
+        link: "#explore",
+        linkText: "Explore Campus"
+    },
+
+    {
+        day: 5,
+        title: "UMS and Digital Services",
+        icon: "fa-laptop",
+        description: "Learn to access the university's essential digital services.",
+        tasks: [
+            "Access the official UMS portal.",
+            "Understand how to check attendance.",
+            "Locate academic announcements and timetable information.",
+            "Review account security and login assistance."
+        ],
+        link: "#ums",
+        linkText: "UMS Help"
+    },
+
+    {
+        day: 6,
+        title: "Department and Faculty Introduction",
+        icon: "fa-chalkboard-user",
+        description: "Get familiar with your academic department and faculty members.",
+        tasks: [
+            "Identify your academic department.",
+            "Attend the scheduled departmental introduction.",
+            "Identify your assigned mentor or academic advisor.",
+            "Understand the basic structure of your programme."
+        ],
+        link: "#map",
+        linkText: "University Map"
+    },
+
+    {
+        day: 7,
+        title: "Classroom and Timetable Familiarization",
+        icon: "fa-calendar-days",
+        description: "Prepare for regular classes by understanding your schedule and classroom locations.",
+        tasks: [
+            "Check your official academic timetable.",
+            "Identify your assigned classrooms.",
+            "Become familiar with your academic building.",
+            "Review upcoming orientation activities."
+        ],
+        link: "#classroom",
+        linkText: "Find My Classroom"
+    },
+
+    {
+        day: 8,
+        title: "Library and Learning Resources",
+        icon: "fa-book-open",
+        description: "Discover the academic resources available to support your studies.",
+        tasks: [
+            "Locate or visit the Central Library.",
+            "Understand library access procedures.",
+            "Learn about available digital learning resources.",
+            "Identify useful study spaces."
+        ],
+        link: "#explore",
+        linkText: "Explore Campus"
+    },
+
+    {
+        day: 9,
+        title: "Banking and Financial Services",
+        icon: "fa-building-columns",
+        description: "Become familiar with banking facilities and safe financial practices.",
+        tasks: [
+            "Locate nearby authorized banks and ATMs.",
+            "Review available student banking assistance.",
+            "Understand official university payment procedures.",
+            "Learn how to recognize and report financial scams."
+        ],
+        link: "#banking",
+        linkText: "Banking Assistance"
+    },
+
+    {
+        day: 10,
+        title: "Food and Dining Facilities",
+        icon: "fa-utensils",
+        description: "Discover convenient and suitable dining options around campus.",
+        tasks: [
+            "Locate nearby dining facilities.",
+            "Check applicable mess timings and procedures.",
+            "Identify suitable food options for your dietary needs.",
+            "Learn where to report food-related concerns."
+        ],
+        link: "#food",
+        linkText: "Food and Dining"
+    },
+
+    {
+        day: 11,
+        title: "University Rules and Safety",
+        icon: "fa-shield-halved",
+        description: "Understand important university policies and safety procedures.",
+        tasks: [
+            "Review university conduct guidelines.",
+            "Understand applicable entry and exit procedures.",
+            "Read the university's anti-ragging guidelines.",
+            "Identify emergency and security support channels."
+        ],
+        link: "#rules",
+        linkText: "Hostel and University Rules"
+    },
+
+    {
+        day: 12,
+        title: "Clubs and Extracurricular Activities",
+        icon: "fa-people-group",
+        description: "Discover opportunities to participate in university life beyond academics.",
+        tasks: [
+            "Explore available student clubs.",
+            "Identify extracurricular activities of interest.",
+            "Learn about sports and cultural facilities.",
+            "Check upcoming student activities and events."
+        ],
+        link: "#explore",
+        linkText: "Explore Campus"
+    },
+
+    {
+        day: 13,
+        title: "Student Support and Wellness",
+        icon: "fa-hand-holding-heart",
+        description: "Learn about the support services available throughout your university journey.",
+        tasks: [
+            "Identify academic and administrative support services.",
+            "Locate campus healthcare facilities.",
+            "Learn about counselling and wellness support.",
+            "Review international student assistance resources."
+        ],
+        link: "#support",
+        linkText: "Student Support"
+    },
+
+    {
+        day: 14,
+        title: "Academic Preparation",
+        icon: "fa-graduation-cap",
+        description: "Organize your academic responsibilities before continuing regular classes.",
+        tasks: [
+            "Review your course subjects and requirements.",
+            "Organize your learning materials.",
+            "Check upcoming assignments and deadlines.",
+            "Prepare a manageable personal study schedule."
+        ],
+        link: "#ums",
+        linkText: "UMS Help"
+    },
+
+    {
+        day: 15,
+        title: "Final Onboarding Review",
+        icon: "fa-flag-checkered",
+        description: "Review your onboarding journey and identify any remaining concerns.",
+        tasks: [
+            "Review your completed onboarding activities.",
+            "Identify any remaining formalities.",
+            "Seek assistance for unresolved concerns.",
+            "Review your upcoming academic schedule."
+        ],
+        link: "#timetable",
+        linkText: "View Timetable"
+    }
+
+];
