@@ -5983,3 +5983,376 @@ document.getElementById("closeSupportDetails")
 // INITIALIZE STUDENT SUPPORT
 
 displaySupportServices(supportServices);
+
+
+// =========================================
+// INTERNATIONAL MULTILINGUAL PHRASE DATABASE
+// =========================================
+
+const internationalPhrases = [
+
+    // GREETINGS
+
+    {
+        id: 1,
+        category: "greetings",
+        en: "Hello",
+        hi: "नमस्ते",
+        pa: "ਸਤ ਸ੍ਰੀ ਅਕਾਲ",
+        hiPronunciation: "Namaste",
+        paPronunciation: "Sat Sri Akaal"
+    },
+
+    {
+        id: 2,
+        category: "greetings",
+        en: "Thank you",
+        hi: "धन्यवाद",
+        pa: "ਧੰਨਵਾਦ",
+        hiPronunciation: "Dhanyavaad",
+        paPronunciation: "Dhanvaad"
+    },
+
+    {
+        id: 3,
+        category: "greetings",
+        en: "How are you?",
+        hi: "आप कैसे हैं?",
+        pa: "ਤੁਸੀਂ ਕਿਵੇਂ ਹੋ?",
+        hiPronunciation: "Aap kaise hain?",
+        paPronunciation: "Tusi kiven ho?"
+    },
+
+    {
+        id: 4,
+        category: "greetings",
+        en: "Sorry",
+        hi: "माफ़ कीजिए",
+        pa: "ਮਾਫ਼ ਕਰਨਾ",
+        hiPronunciation: "Maaf kijiye",
+        paPronunciation: "Maaf karna"
+    },
+
+    {
+        id: 5,
+        category: "greetings",
+        en: "I do not understand",
+        hi: "मुझे समझ नहीं आया",
+        pa: "ਮੈਨੂੰ ਸਮਝ ਨਹੀਂ ਆਈ",
+        hiPronunciation: "Mujhe samajh nahi aaya",
+        paPronunciation: "Mainu samajh nahi aayi"
+    },
+
+    // DIRECTIONS
+
+    {
+        id: 6,
+        category: "directions",
+        en: "Where is the library?",
+        hi: "पुस्तकालय कहाँ है?",
+        pa: "ਲਾਇਬ੍ਰੇਰੀ ਕਿੱਥੇ ਹੈ?",
+        hiPronunciation: "Pustakalaya kahaan hai?",
+        paPronunciation: "Library kithe hai?"
+    },
+
+    {
+        id: 7,
+        category: "directions",
+        en: "Where is my classroom?",
+        hi: "मेरी कक्षा कहाँ है?",
+        pa: "ਮੇਰੀ ਕਲਾਸ ਕਿੱਥੇ ਹੈ?",
+        hiPronunciation: "Meri kaksha kahaan hai?",
+        paPronunciation: "Meri class kithe hai?"
+    },
+
+    {
+        id: 8,
+        category: "directions",
+        en: "Where is the hostel?",
+        hi: "छात्रावास कहाँ है?",
+        pa: "ਹੋਸਟਲ ਕਿੱਥੇ ਹੈ?",
+        hiPronunciation: "Chhatraavaas kahaan hai?",
+        paPronunciation: "Hostel kithe hai?"
+    },
+
+    {
+        id: 9,
+        category: "directions",
+        en: "Where is the main gate?",
+        hi: "मुख्य द्वार कहाँ है?",
+        pa: "ਮੁੱਖ ਗੇਟ ਕਿੱਥੇ ਹੈ?",
+        hiPronunciation: "Mukhya dvaar kahaan hai?",
+        paPronunciation: "Mukh gate kithe hai?"
+    },
+
+    {
+        id: 10,
+        category: "directions",
+        en: "Where is the washroom?",
+        hi: "शौचालय कहाँ है?",
+        pa: "ਵਾਸ਼ਰੂਮ ਕਿੱਥੇ ਹੈ?",
+        hiPronunciation: "Shauchalaya kahaan hai?",
+        paPronunciation: "Washroom kithe hai?"
+    },
+
+    // ACADEMIC
+
+    {
+        id: 11,
+        category: "academic",
+        en: "When does the class start?",
+        hi: "कक्षा कब शुरू होती है?",
+        pa: "ਕਲਾਸ ਕਦੋਂ ਸ਼ੁਰੂ ਹੁੰਦੀ ਹੈ?",
+        hiPronunciation: "Kaksha kab shuru hoti hai?",
+        paPronunciation: "Class kadon shuru hundi hai?"
+    },
+
+    {
+        id: 12,
+        category: "academic",
+        en: "Where is the department office?",
+        hi: "विभाग का कार्यालय कहाँ है?",
+        pa: "ਵਿਭਾਗ ਦਾ ਦਫ਼ਤਰ ਕਿੱਥੇ ਹੈ?",
+        hiPronunciation: "Vibhaag ka karyalaya kahaan hai?",
+        paPronunciation: "Vibhaag da daftar kithe hai?"
+    },
+
+    {
+        id: 13,
+        category: "academic",
+        en: "Please explain again",
+        hi: "कृपया फिर से समझाइए",
+        pa: "ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਸਮਝਾਓ",
+        hiPronunciation: "Kripaya phir se samjhaiye",
+        paPronunciation: "Kirpa karke dubara samjhao"
+    },
+
+    {
+        id: 14,
+        category: "academic",
+        en: "Can you speak English?",
+        hi: "क्या आप अंग्रेज़ी बोल सकते हैं?",
+        pa: "ਕੀ ਤੁਸੀਂ ਅੰਗਰੇਜ਼ੀ ਬੋਲ ਸਕਦੇ ਹੋ?",
+        hiPronunciation: "Kya aap Angrezi bol sakte hain?",
+        paPronunciation: "Ki tusi Angrezi bol sakde ho?"
+    },
+
+    {
+        id: 15,
+        category: "academic",
+        en: "I need help with my timetable",
+        hi: "मुझे अपनी समय-सारणी समझने में मदद चाहिए",
+        pa: "ਮੈਨੂੰ ਆਪਣਾ ਟਾਈਮਟੇਬਲ ਸਮਝਣ ਲਈ ਮਦਦ ਚਾਹੀਦੀ ਹੈ",
+        hiPronunciation: "Mujhe apni samay-saarani samajhne mein madad chahiye",
+        paPronunciation: "Mainu apna timetable samajhan layi madad chahidi hai"
+    },
+
+    // FOOD
+
+    {
+        id: 16,
+        category: "food",
+        en: "I need drinking water",
+        hi: "मुझे पीने का पानी चाहिए",
+        pa: "ਮੈਨੂੰ ਪੀਣ ਵਾਲਾ ਪਾਣੀ ਚਾਹੀਦਾ ਹੈ",
+        hiPronunciation: "Mujhe peene ka paani chahiye",
+        paPronunciation: "Mainu peen wala paani chahida hai"
+    },
+
+    {
+        id: 17,
+        category: "food",
+        en: "Is this vegetarian?",
+        hi: "क्या यह शाकाहारी है?",
+        pa: "ਕੀ ਇਹ ਸ਼ਾਕਾਹਾਰੀ ਹੈ?",
+        hiPronunciation: "Kya yeh shakahari hai?",
+        paPronunciation: "Ki eh shakahari hai?"
+    },
+
+    {
+        id: 18,
+        category: "food",
+        en: "Please make it less spicy",
+        hi: "कृपया कम मिर्च डालिए",
+        pa: "ਕਿਰਪਾ ਕਰਕੇ ਘੱਟ ਮਿਰਚ ਪਾਓ",
+        hiPronunciation: "Kripaya kam mirch daaliye",
+        paPronunciation: "Kirpa karke ghatt mirch pao"
+    },
+
+    {
+        id: 19,
+        category: "food",
+        en: "I have a food allergy",
+        hi: "मुझे खाने की कुछ चीज़ों से एलर्जी है",
+        pa: "ਮੈਨੂੰ ਖਾਣ ਦੀਆਂ ਕੁਝ ਚੀਜ਼ਾਂ ਤੋਂ ਐਲਰਜੀ ਹੈ",
+        hiPronunciation: "Mujhe khaane ki kuch cheezon se allergy hai",
+        paPronunciation: "Mainu khaan diyan kujh cheezan ton allergy hai"
+    },
+
+    {
+        id: 20,
+        category: "food",
+        en: "Where is the canteen?",
+        hi: "कैंटीन कहाँ है?",
+        pa: "ਕੰਟੀਨ ਕਿੱਥੇ ਹੈ?",
+        hiPronunciation: "Canteen kahaan hai?",
+        paPronunciation: "Canteen kithe hai?"
+    },
+
+    // SHOPPING
+
+    {
+        id: 21,
+        category: "shopping",
+        en: "How much does this cost?",
+        hi: "इसकी कीमत कितनी है?",
+        pa: "ਇਸ ਦੀ ਕੀਮਤ ਕਿੰਨੀ ਹੈ?",
+        hiPronunciation: "Iski keemat kitni hai?",
+        paPronunciation: "Is di keemat kinni hai?"
+    },
+
+    {
+        id: 22,
+        category: "shopping",
+        en: "Can I pay by card?",
+        hi: "क्या मैं कार्ड से भुगतान कर सकता हूँ?",
+        pa: "ਕੀ ਮੈਂ ਕਾਰਡ ਨਾਲ ਭੁਗਤਾਨ ਕਰ ਸਕਦਾ ਹਾਂ?",
+        hiPronunciation: "Kya main card se bhugtaan kar sakta hoon?",
+        paPronunciation: "Ki main card naal bhugtaan kar sakda haan?"
+    },
+
+    {
+        id: 23,
+        category: "shopping",
+        en: "Please give me a receipt",
+        hi: "कृपया मुझे रसीद दीजिए",
+        pa: "ਕਿਰਪਾ ਕਰਕੇ ਮੈਨੂੰ ਰਸੀਦ ਦਿਓ",
+        hiPronunciation: "Kripaya mujhe raseed dijiye",
+        paPronunciation: "Kirpa karke mainu raseed deo"
+    },
+
+    {
+        id: 24,
+        category: "shopping",
+        en: "Where is the nearest ATM?",
+        hi: "सबसे नज़दीकी एटीएम कहाँ है?",
+        pa: "ਸਭ ਤੋਂ ਨੇੜੇ ਏਟੀਐਮ ਕਿੱਥੇ ਹੈ?",
+        hiPronunciation: "Sabse nazdeeki ATM kahaan hai?",
+        paPronunciation: "Sabh ton nere ATM kithe hai?"
+    },
+
+    {
+        id: 25,
+        category: "shopping",
+        en: "I do not need this",
+        hi: "मुझे इसकी ज़रूरत नहीं है",
+        pa: "ਮੈਨੂੰ ਇਸ ਦੀ ਲੋੜ ਨਹੀਂ ਹੈ",
+        hiPronunciation: "Mujhe iski zaroorat nahi hai",
+        paPronunciation: "Mainu is di lor nahi hai"
+    },
+
+    // TRANSPORT
+
+    {
+        id: 26,
+        category: "transport",
+        en: "Where is the bus stop?",
+        hi: "बस स्टॉप कहाँ है?",
+        pa: "ਬੱਸ ਸਟਾਪ ਕਿੱਥੇ ਹੈ?",
+        hiPronunciation: "Bus stop kahaan hai?",
+        paPronunciation: "Bus stop kithe hai?"
+    },
+
+    {
+        id: 27,
+        category: "transport",
+        en: "How far is it?",
+        hi: "यह कितनी दूर है?",
+        pa: "ਇਹ ਕਿੰਨੀ ਦੂਰ ਹੈ?",
+        hiPronunciation: "Yeh kitni door hai?",
+        paPronunciation: "Eh kinni door hai?"
+    },
+
+    {
+        id: 28,
+        category: "transport",
+        en: "What is the fare?",
+        hi: "किराया कितना है?",
+        pa: "ਕਿਰਾਇਆ ਕਿੰਨਾ ਹੈ?",
+        hiPronunciation: "Kiraaya kitna hai?",
+        paPronunciation: "Kiraaya kinna hai?"
+    },
+
+    {
+        id: 29,
+        category: "transport",
+        en: "Please stop here",
+        hi: "कृपया यहाँ रोकिए",
+        pa: "ਕਿਰਪਾ ਕਰਕੇ ਇੱਥੇ ਰੋਕੋ",
+        hiPronunciation: "Kripaya yahaan rokiye",
+        paPronunciation: "Kirpa karke ithe roko"
+    },
+
+    {
+        id: 30,
+        category: "transport",
+        en: "Where is the railway station?",
+        hi: "रेलवे स्टेशन कहाँ है?",
+        pa: "ਰੇਲਵੇ ਸਟੇਸ਼ਨ ਕਿੱਥੇ ਹੈ?",
+        hiPronunciation: "Railway station kahaan hai?",
+        paPronunciation: "Railway station kithe hai?"
+    },
+
+    // EMERGENCY
+
+    {
+        id: 31,
+        category: "emergency",
+        en: "Please help me",
+        hi: "कृपया मेरी मदद करें",
+        pa: "ਕਿਰਪਾ ਕਰਕੇ ਮੇਰੀ ਮਦਦ ਕਰੋ",
+        hiPronunciation: "Kripaya meri madad karein",
+        paPronunciation: "Kirpa karke meri madad karo"
+    },
+
+    {
+        id: 32,
+        category: "emergency",
+        en: "I am lost",
+        hi: "मुझे रास्ता नहीं मिल रहा है",
+        pa: "ਮੈਨੂੰ ਰਸਤਾ ਨਹੀਂ ਲੱਭ ਰਿਹਾ",
+        hiPronunciation: "Mujhe raasta nahi mil raha hai",
+        paPronunciation: "Mainu rasta nahi labh reha"
+    },
+
+    {
+        id: 33,
+        category: "emergency",
+        en: "I need a doctor",
+        hi: "मुझे डॉक्टर की ज़रूरत है",
+        pa: "ਮੈਨੂੰ ਡਾਕਟਰ ਦੀ ਲੋੜ ਹੈ",
+        hiPronunciation: "Mujhe doctor ki zaroorat hai",
+        paPronunciation: "Mainu doctor di lor hai"
+    },
+
+    {
+        id: 34,
+        category: "emergency",
+        en: "Please call campus security",
+        hi: "कृपया कैंपस सुरक्षा कर्मियों को बुलाइए",
+        pa: "ਕਿਰਪਾ ਕਰਕੇ ਕੈਂਪਸ ਸੁਰੱਖਿਆ ਕਰਮਚਾਰੀਆਂ ਨੂੰ ਬੁਲਾਓ",
+        hiPronunciation: "Kripaya campus suraksha karmiyon ko bulaiye",
+        paPronunciation: "Kirpa karke campus surakhya karamchariyan nu bulao"
+    },
+
+    {
+        id: 35,
+        category: "emergency",
+        en: "Please call an ambulance",
+        hi: "कृपया एम्बुलेंस बुलाइए",
+        pa: "ਕਿਰਪਾ ਕਰਕੇ ਐਂਬੂਲੈਂਸ ਬੁਲਾਓ",
+        hiPronunciation: "Kripaya ambulance bulaiye",
+        paPronunciation: "Kirpa karke ambulance bulao"
+    }
+
+];
