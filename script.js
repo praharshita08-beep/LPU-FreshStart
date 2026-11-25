@@ -10713,3 +10713,338 @@ document.getElementById(
 // =========================================
 
 displayTimetableReminders();
+
+
+// =========================================
+// BANKING ASSISTANCE DATABASE
+// =========================================
+
+const bankingServices = [
+
+    {
+        id: "find-banks",
+        title: "Find Banks",
+        category: "banking",
+        categoryName: "Banks & ATMs",
+        icon: "fa-building-columns",
+        description: "Find banking facilities around LPU.",
+        keywords: "bank branch location nearby office",
+        information: [
+            "Use official bank branch locators.",
+            "Banking services may vary between branches.",
+            "Confirm opening hours before visiting."
+        ],
+        steps: [
+            "Open the bank location search.",
+            "Identify a suitable authorized bank.",
+            "Confirm its location and available services."
+        ],
+        tip: "Verify branch information through the bank's official website.",
+        links: [
+            {
+                text: "Find Banks on Maps",
+                url: "https://www.google.com/maps/search/banks+near+Lovely+Professional+University/"
+            }
+        ]
+    },
+
+    {
+        id: "find-atms",
+        title: "Find ATMs",
+        category: "banking",
+        categoryName: "Banks & ATMs",
+        icon: "fa-money-bill-wave",
+        description: "Locate ATM facilities around the university.",
+        keywords: "atm cash withdrawal machine location",
+        information: [
+            "ATM availability may change.",
+            "Transaction charges may depend on your bank.",
+            "Use authorized and secure ATM facilities."
+        ],
+        steps: [
+            "Open the ATM location search.",
+            "Check the location and availability.",
+            "Contact your bank if you experience a problem."
+        ],
+        tip: "Never disclose your ATM PIN to another person.",
+        links: [
+            {
+                text: "Find ATMs on Maps",
+                url: "https://www.google.com/maps/search/ATMs+near+Lovely+Professional+University/"
+            }
+        ]
+    },
+
+    {
+        id: "bank-account",
+        title: "Bank Account Assistance",
+        category: "accounts",
+        categoryName: "Bank Accounts",
+        icon: "fa-wallet",
+        description: "Understand student banking options and eligibility.",
+        keywords: "account opening savings student minor guardian",
+        information: [
+            "Eligibility depends on the bank and account type.",
+            "Students under 18 should consult their parent or guardian.",
+            "Minimum balance and service charges may vary."
+        ],
+        steps: [
+            "Discuss suitable account options with an authorized bank.",
+            "Confirm eligibility and document requirements.",
+            "Review applicable charges and account conditions."
+        ],
+        tip: "Do not submit personal banking documents through this website.",
+        links: [
+            {
+                text: "Official RBI Website",
+                url: "https://www.rbi.org.in/"
+            }
+        ]
+    },
+
+    {
+        id: "bank-documents",
+        title: "Banking Documents",
+        category: "accounts",
+        categoryName: "Bank Accounts",
+        icon: "fa-file-lines",
+        description: "Understand common banking documentation requirements.",
+        keywords: "documents kyc identity address pan photograph",
+        information: [
+            "Accepted identity and address documents may be required.",
+            "Additional documents may depend on residency and age.",
+            "Requirements must be confirmed with the bank."
+        ],
+        steps: [
+            "Ask your bank for its official document list.",
+            "Review the preparation checklist on this page.",
+            "Keep your personal documents secure."
+        ],
+        tip: "The checklist is general guidance, not an official eligibility assessment.",
+        links: [
+            {
+                text: "RBI Guidance",
+                url: "https://www.rbi.org.in/"
+            }
+        ]
+    },
+
+    {
+        id: "upi-payments",
+        title: "UPI and Digital Payments",
+        category: "payments",
+        categoryName: "Digital Payments",
+        icon: "fa-mobile-screen-button",
+        description: "Understand digital payment services and safety.",
+        keywords: "upi qr code online payment mobile digital",
+        information: [
+            "Payment eligibility depends on your bank and account.",
+            "Use authorized payment applications.",
+            "A UPI PIN is not required to receive money."
+        ],
+        steps: [
+            "Confirm available payment services with your bank.",
+            "Review official payment safety guidance.",
+            "Contact authorized support for payment concerns."
+        ],
+        tip: "Always verify the recipient and payment amount.",
+        links: [
+            {
+                text: "NPCI Official Website",
+                url: "https://www.npci.org.in/"
+            }
+        ]
+    },
+
+    {
+        id: "failed-payment",
+        title: "Failed Transactions",
+        category: "payments",
+        categoryName: "Digital Payments",
+        icon: "fa-receipt",
+        description: "Get guidance for failed or pending payments.",
+        keywords: "failed payment refund pending deducted transaction",
+        information: [
+            "A failed transaction may require bank assistance.",
+            "Refund timelines depend on the transaction type.",
+            "Keep transaction references securely."
+        ],
+        steps: [
+            "Check the transaction status.",
+            "Avoid repeating a payment until its status is confirmed.",
+            "Contact your bank or authorized payment provider."
+        ],
+        tip: "Never share your OTP or PIN to receive a refund.",
+        links: [
+            {
+                text: "NPCI Information",
+                url: "https://www.npci.org.in/"
+            }
+        ]
+    },
+
+    {
+        id: "international-banking",
+        title: "International Student Banking",
+        category: "international",
+        categoryName: "International",
+        icon: "fa-earth-asia",
+        description: "Banking guidance for students from other countries.",
+        keywords: "international foreign student passport visa residency",
+        information: [
+            "Account eligibility depends on residency and applicable regulations.",
+            "Additional documentation may be required.",
+            "University international support can provide guidance."
+        ],
+        steps: [
+            "Contact the international student support team.",
+            "Consult an authorized bank.",
+            "Confirm applicable documentation and eligibility."
+        ],
+        tip: "Do not assume that all account types are available to international students.",
+        links: [
+            {
+                text: "International Help Desk",
+                url: "#international"
+            }
+        ]
+    },
+
+    {
+        id: "currency-exchange",
+        title: "Currency Exchange",
+        category: "international",
+        categoryName: "International",
+        icon: "fa-money-bill-transfer",
+        description: "Understand authorized foreign currency services.",
+        keywords: "currency exchange forex foreign money rupees",
+        information: [
+            "Use authorized foreign exchange providers.",
+            "Exchange rates and service charges may vary.",
+            "Identification requirements may apply."
+        ],
+        steps: [
+            "Consult an authorized bank or exchange provider.",
+            "Confirm applicable requirements and charges.",
+            "Keep official transaction receipts securely."
+        ],
+        tip: "Avoid unauthorized currency exchange offers.",
+        links: [
+            {
+                text: "RBI Official Website",
+                url: "https://www.rbi.org.in/"
+            }
+        ]
+    },
+
+    {
+        id: "banking-safety",
+        title: "Banking Safety",
+        category: "safety",
+        categoryName: "Safety & Support",
+        icon: "fa-shield-halved",
+        description: "Protect your money and financial information.",
+        keywords: "security safety otp pin password scam phishing",
+        information: [
+            "Never share banking passwords or PINs.",
+            "Avoid suspicious links and unknown applications.",
+            "Use official banking support channels."
+        ],
+        steps: [
+            "Review your account alerts regularly.",
+            "Avoid suspicious payment requests.",
+            "Report unfamiliar transactions to your bank."
+        ],
+        tip: "Do not trust callers asking for confidential banking information.",
+        links: [
+            {
+                text: "RBI Awareness",
+                url: "https://www.rbi.org.in/"
+            }
+        ]
+    },
+
+    {
+        id: "lost-card",
+        title: "Lost or Stolen Bank Card",
+        category: "safety",
+        categoryName: "Safety & Support",
+        icon: "fa-credit-card",
+        description: "Understand what to do if your bank card is missing.",
+        keywords: "lost stolen debit credit card block",
+        information: [
+            "Contact your bank promptly.",
+            "Use verified official support channels.",
+            "Review recent transactions for unfamiliar activity."
+        ],
+        steps: [
+            "Inform your bank about the missing card.",
+            "Request assistance with securing the card.",
+            "Follow the bank's official replacement procedure."
+        ],
+        tip: "Do not use customer support numbers from suspicious messages.",
+        links: [
+            {
+                text: "Student Support",
+                url: "#support"
+            }
+        ]
+    },
+
+    {
+        id: "financial-fraud",
+        title: "Financial Fraud Assistance",
+        category: "safety",
+        categoryName: "Safety & Support",
+        icon: "fa-triangle-exclamation",
+        description: "Find official assistance for suspected financial fraud.",
+        keywords: "fraud scam cybercrime unauthorized transaction 1930",
+        information: [
+            "Report suspected fraud promptly.",
+            "Preserve relevant transaction references.",
+            "Use official reporting channels."
+        ],
+        steps: [
+            "Contact your bank immediately.",
+            "Report suspected financial cybercrime.",
+            "Follow instructions from authorized officials."
+        ],
+        tip: "Never pay an unknown person who promises to recover lost money.",
+        links: [
+            {
+                text: "Report Cybercrime",
+                url: "https://cybercrime.gov.in/"
+            }
+        ]
+    },
+
+    {
+        id: "banking-complaints",
+        title: "Banking Complaints",
+        category: "safety",
+        categoryName: "Safety & Support",
+        icon: "fa-headset",
+        description: "Find assistance for unresolved banking concerns.",
+        keywords: "complaint customer care grievance rbi support",
+        information: [
+            "Contact your bank through its official complaint channels.",
+            "Keep complaint reference numbers.",
+            "Further complaint options depend on eligibility."
+        ],
+        steps: [
+            "Submit your concern to the bank.",
+            "Keep a record of its response.",
+            "Review applicable RBI complaint procedures if unresolved."
+        ],
+        tip: "Use official complaint portals rather than unauthorized intermediaries.",
+        links: [
+            {
+                text: "RBI Complaint Management",
+                url: "https://cms.rbi.org.in/"
+            }
+        ]
+    }
+
+];
+
+/* END OF BANKING ASSISTANCE DATABASE */
