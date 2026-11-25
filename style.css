@@ -7186,3 +7186,954 @@ body.sidebar-collapsed .main-content {
 
 }
 
+
+/* =========================================
+   FIRST 15 DAYS TIMETABLE
+========================================= */
+
+.timetable-heading {
+    margin-bottom: 24px;
+}
+
+/* WELCOME BANNER */
+
+.timetable-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    background: linear-gradient(135deg, #14243b, #203650);
+    padding: 32px;
+    border-radius: 14px;
+    margin-bottom: 24px;
+}
+
+.timetable-banner-label {
+    display: inline-block;
+    color: #e97826;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.timetable-banner h2 {
+    color: #ffffff;
+    font-size: 28px;
+    margin-bottom: 12px;
+}
+
+.timetable-banner p {
+    color: #d1dbe8;
+    line-height: 1.7;
+    max-width: 650px;
+}
+
+.timetable-banner-icon {
+    color: #e97826;
+    font-size: 80px;
+}
+
+/* INFORMATION NOTICES */
+
+.timetable-notice,
+.timetable-storage-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 20px;
+    background: #fff5eb;
+    border-left: 4px solid #e97826;
+    border-radius: 9px;
+    margin-bottom: 24px;
+}
+
+.timetable-notice > i,
+.timetable-storage-notice > i {
+    color: #c65d16;
+    font-size: 22px;
+    margin-top: 3px;
+}
+
+.timetable-notice h3 {
+    color: #14243b;
+    margin-bottom: 8px;
+}
+
+.timetable-notice p,
+.timetable-storage-notice p {
+    line-height: 1.7;
+}
+
+.timetable-notice a {
+    display: inline-block;
+    color: #c65d16;
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: 12px;
+}
+
+.timetable-notice a:hover {
+    text-decoration: underline;
+}
+
+/* COMMON SECTION STYLING */
+
+.timetable-date-card,
+.timetable-day-section,
+.timetable-search-section,
+.timetable-schedule-section,
+.timetable-event-form-panel,
+.timetable-reminders-section,
+.timetable-resources-section {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.timetable-section-heading {
+    margin-bottom: 20px;
+}
+
+.timetable-section-heading h2,
+.timetable-resources-section h2 {
+    color: #14243b;
+    font-size: 23px;
+    margin-bottom: 10px;
+}
+
+.timetable-section-heading h2 i {
+    color: #e97826;
+    margin-right: 8px;
+}
+
+.timetable-section-heading p {
+    line-height: 1.6;
+}
+
+/* JOINING DATE FORM */
+
+.timetable-date-form {
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.timetable-date-form .timetable-form-group {
+    flex: 1;
+    min-width: 180px;
+    max-width: 350px;
+}
+
+.timetable-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+}
+
+.timetable-form-group label {
+    color: #14243b;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.timetable-form-group input,
+.timetable-form-group select,
+.timetable-form-group textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: #f5f7fb;
+    color: #14243b;
+    font: inherit;
+}
+
+.timetable-form-group input:focus,
+.timetable-form-group select:focus,
+.timetable-form-group textarea:focus {
+    outline: 2px solid rgba(233, 120, 38, 0.2);
+    border-color: #e97826;
+}
+
+.timetable-form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.timetable-secondary-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 18px;
+    border: 1px solid #e2e8f0;
+    border-radius: 9px;
+    background: #ffffff;
+    color: #14243b;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.timetable-secondary-button:hover {
+    border-color: #e97826;
+    color: #c65d16;
+}
+
+.timetable-secondary-button:disabled,
+#timetable button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.timetable-date-summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px 30px;
+    padding: 16px;
+    margin-top: 20px;
+    background: #eef3f9;
+    border-radius: 8px;
+}
+
+.timetable-date-summary p {
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.timetable-date-summary strong {
+    color: #14243b;
+}
+
+/* SUCCESS AND ERROR MESSAGES */
+
+.timetable-message {
+    padding: 12px 15px;
+    margin-top: 15px;
+    background: #eef3f9;
+    border-radius: 7px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.timetable-message.success {
+    background: #ecfdf5;
+    color: #047857;
+}
+
+.timetable-message.error {
+    background: #fef2f2;
+    color: #b91c1c;
+}
+
+/* STATISTICS */
+
+.timetable-stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.timetable-stat-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.timetable-stat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
+    background: #fff1e7;
+    color: #e97826;
+    border-radius: 10px;
+    font-size: 21px;
+}
+
+.timetable-stat-card h3 {
+    color: #14243b;
+    font-size: 25px;
+    margin-bottom: 5px;
+}
+
+.timetable-stat-card p {
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* DAY NAVIGATION */
+
+.timetable-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.timetable-day-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.timetable-day-button {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 75px;
+    padding: 12px 8px;
+    background: #f5f7fb;
+    border: 1px solid #e2e8f0;
+    border-radius: 9px;
+    color: #14243b;
+    font: inherit;
+    cursor: pointer;
+}
+
+.timetable-day-button:hover {
+    border-color: #e97826;
+}
+
+.timetable-day-button strong {
+    font-size: 15px;
+}
+
+.timetable-day-button span {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.timetable-day-button.active {
+    background: #14243b;
+    border-color: #14243b;
+    color: #ffffff;
+}
+
+.timetable-day-button.active span {
+    color: #d1dbe8;
+}
+
+.timetable-day-button.today {
+    border: 2px solid #e97826;
+}
+
+.timetable-today-label {
+    color: #c65d16 !important;
+    font-size: 10px !important;
+    font-weight: 600;
+}
+
+.timetable-day-button.active .timetable-today-label {
+    color: #ffb780 !important;
+}
+
+/* EVENT SEARCH */
+
+.timetable-search-form {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.timetable-search-input {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 0;
+    padding: 13px 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 9px;
+    background: #f5f7fb;
+}
+
+.timetable-search-input i {
+    color: #64748b;
+}
+
+.timetable-search-input input {
+    width: 100%;
+    min-width: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #14243b;
+    font: inherit;
+}
+
+.timetable-search-input:focus-within {
+    border-color: #e97826;
+    outline: 2px solid rgba(233, 120, 38, 0.2);
+}
+
+/* CATEGORY FILTERS */
+
+.timetable-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.timetable-filter {
+    padding: 10px 16px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    color: #64748b;
+    font: inherit;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.timetable-filter:hover {
+    border-color: #e97826;
+    color: #c65d16;
+}
+
+.timetable-filter.active {
+    background: #14243b;
+    color: #ffffff;
+    border-color: #14243b;
+}
+
+/* DAILY SCHEDULE */
+
+.timetable-schedule-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.timetable-day-label {
+    display: inline-block;
+    padding: 6px 12px;
+    background: #fff1e7;
+    color: #c65d16;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.timetable-schedule-heading h2 {
+    color: #14243b;
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.timetable-schedule-heading p {
+    font-size: 14px;
+}
+
+.timetable-result-count {
+    font-size: 14px;
+    margin-bottom: 18px;
+}
+
+.timetable-events-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* EVENT CARDS */
+
+.timetable-event-card {
+    display: flex;
+    align-items: stretch;
+    gap: 16px;
+    padding: 18px;
+    border: 1px solid #e2e8f0;
+    border-radius: 11px;
+    background: #ffffff;
+}
+
+.timetable-event-card:hover {
+    border-color: #e97826;
+}
+
+.timetable-event-time {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 115px;
+    flex-shrink: 0;
+    padding: 15px 10px;
+    border-radius: 8px;
+    background: #fff1e7;
+    color: #c65d16;
+    text-align: center;
+}
+
+.timetable-event-time strong {
+    font-size: 14px;
+}
+
+.timetable-event-time span {
+    font-size: 12px;
+}
+
+.timetable-event-content {
+    flex: 1;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.timetable-event-category {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 5px;
+    background: #eef3f9;
+    color: #14243b;
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.timetable-personal-label {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 5px;
+    background: #ecfdf5;
+    color: #047857;
+    font-size: 11px;
+    font-weight: 600;
+    margin-left: 6px;
+}
+
+.timetable-event-content h3 {
+    color: #14243b;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.timetable-event-venue,
+.timetable-event-description {
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 10px;
+}
+
+.timetable-event-venue i {
+    color: #e97826;
+    margin-right: 5px;
+}
+
+.timetable-event-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.timetable-action-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #14243b;
+    font: inherit;
+    font-size: 13px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.timetable-action-button:hover {
+    border-color: #e97826;
+    color: #c65d16;
+}
+
+.timetable-action-button.saved {
+    background: #fff1e7;
+    border-color: #e97826;
+    color: #c65d16;
+}
+
+.timetable-action-button.delete {
+    color: #b91c1c;
+}
+
+.timetable-action-button.delete:hover {
+    background: #fef2f2;
+    border-color: #b91c1c;
+}
+
+/* EMPTY STATES */
+
+.timetable-empty-state,
+.timetable-reminders-empty {
+    padding: 35px 20px;
+    text-align: center;
+    background: #f5f7fb;
+    border: 1px solid #e2e8f0;
+    border-radius: 9px;
+}
+
+.timetable-empty-state > i,
+.timetable-reminders-empty > i {
+    font-size: 34px;
+    color: #64748b;
+    margin-bottom: 15px;
+}
+
+.timetable-empty-state h3,
+.timetable-reminders-empty h3 {
+    color: #14243b;
+    margin-bottom: 10px;
+}
+
+.timetable-empty-state p,
+.timetable-reminders-empty p {
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+/* PERSONAL EVENT FORM */
+
+.timetable-panel-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 12px;
+}
+
+.timetable-panel-heading h2 {
+    color: #14243b;
+    font-size: 23px;
+}
+
+.timetable-icon-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #64748b;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.timetable-icon-button:hover {
+    color: #c65d16;
+    border-color: #e97826;
+}
+
+.timetable-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    margin-top: 24px;
+    margin-bottom: 20px;
+}
+
+.timetable-full-width {
+    grid-column: 1 / -1;
+}
+
+.timetable-reminder-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+    background: #fff5eb;
+    border-radius: 8px;
+    color: #14243b;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.timetable-reminder-checkbox input {
+    width: 18px;
+    height: 18px;
+    accent-color: #e97826;
+}
+
+.timetable-form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+/* SAVED REMINDERS */
+
+.timetable-reminders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.timetable-reminder-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px;
+    background: #f5f7fb;
+    border: 1px solid #e2e8f0;
+    border-radius: 9px;
+}
+
+.timetable-reminder-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    background: #fff1e7;
+    color: #e97826;
+    border-radius: 8px;
+}
+
+.timetable-reminder-info {
+    flex: 1;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.timetable-reminder-info h3 {
+    color: #14243b;
+    font-size: 16px;
+    margin-bottom: 7px;
+}
+
+.timetable-reminder-info p {
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.timetable-reminder-note {
+    font-size: 13px;
+    line-height: 1.7;
+    margin-top: 18px;
+}
+
+/* USEFUL RESOURCES */
+
+.timetable-resources-section h2 {
+    margin-bottom: 20px;
+}
+
+.timetable-resources-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.timetable-resource-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px;
+    background: #f5f7fb;
+    border: 1px solid #e2e8f0;
+    border-radius: 9px;
+    text-decoration: none;
+}
+
+.timetable-resource-card:hover {
+    border-color: #e97826;
+}
+
+.timetable-resource-card > i:first-child {
+    color: #e97826;
+    font-size: 24px;
+}
+
+.timetable-resource-card > div {
+    flex: 1;
+    min-width: 0;
+}
+
+.timetable-resource-card h3 {
+    color: #14243b;
+    font-size: 16px;
+    margin-bottom: 6px;
+}
+
+.timetable-resource-card p {
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.timetable-resource-card > i:last-child {
+    color: #c65d16;
+}
+
+.timetable-storage-notice {
+    background: #eef3f9;
+    border-left-color: #14243b;
+}
+
+.timetable-storage-notice > i {
+    color: #14243b;
+}
+
+/* RESPONSIVE DESIGN */
+
+@media (max-width: 1200px) {
+
+    .timetable-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .timetable-banner {
+        padding: 22px;
+    }
+
+    .timetable-banner h2 {
+        font-size: 23px;
+    }
+
+    .timetable-banner-icon {
+        display: none;
+    }
+
+    .timetable-date-card,
+    .timetable-day-section,
+    .timetable-search-section,
+    .timetable-schedule-section,
+    .timetable-event-form-panel,
+    .timetable-reminders-section,
+    .timetable-resources-section {
+        padding: 18px;
+    }
+
+    .timetable-date-form {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .timetable-date-form .timetable-form-group {
+        max-width: none;
+        min-width: 0;
+    }
+
+    .timetable-date-form > button {
+        justify-content: center;
+    }
+
+    .timetable-stat-card {
+        padding: 14px;
+        gap: 10px;
+    }
+
+    .timetable-stat-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+    }
+
+    .timetable-stat-card h3 {
+        font-size: 21px;
+    }
+
+    .timetable-stat-card p {
+        font-size: 11px;
+    }
+
+    .timetable-day-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .timetable-navigation {
+        gap: 6px;
+    }
+
+    .timetable-navigation button {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .timetable-search-form {
+        flex-direction: column;
+    }
+
+    .timetable-search-form button {
+        justify-content: center;
+    }
+
+    .timetable-filter {
+        padding: 9px 12px;
+        font-size: 13px;
+    }
+
+    .timetable-event-card {
+        flex-direction: column;
+        padding: 15px;
+    }
+
+    .timetable-event-time {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 12px;
+    }
+
+    .timetable-form-grid,
+    .timetable-resources-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .timetable-reminder-card {
+        flex-wrap: wrap;
+    }
+
+    .timetable-schedule-heading h2 {
+        font-size: 21px;
+    }
+
+    .timetable-notice,
+    .timetable-storage-notice {
+        padding: 16px;
+    }
+
+}
+
+@media (max-width: 380px) {
+
+    .timetable-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .timetable-navigation {
+        justify-content: center;
+    }
+
+}
