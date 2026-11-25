@@ -3497,6 +3497,41 @@ loadCampusImageMarkers();
 
 // DISPLAY EXPLORE CAMPUS FACILITIES
 
+
+// EXPLORE CAMPUS FACILITIES DATABASE
+
+const exploreFacilities = campusLocations.map(function(location) {
+
+    let category = location.category;
+
+    if (location.id === "central-library") {
+        category = "library";
+    }
+
+    if (location.id === "uni-auditorium") {
+        category = "events";
+    }
+
+    return {
+
+        id: location.id,
+        name: location.name,
+        category: category,
+        categoryName: location.categoryName,
+        icon: location.icon,
+        description: location.description,
+        location: "Block " + location.block,
+        hours: "Confirm with the university",
+        image: "",
+        mapId: location.id,
+        keywords: location.keywords,
+        amenities: []
+
+    };
+
+});
+
+
 function displayExploreFacilities(facilities) {
 
     const grid = document.getElementById(
