@@ -3581,3 +3581,149 @@ function displayExploreFacilities(facilities) {
 }
 
 displayExploreFacilities(exploreFacilities);
+
+
+// EXPLORE CAMPUS SEARCH AND FILTERS
+
+let exploreActiveCategory = "all";
+
+const exploreSearchInput = document.getElementById(
+    "exploreSearchInput"
+);
+
+const exploreSearchForm = document.getElementById(
+    "exploreSearchForm"
+);
+
+const exploreFilterButtons = document.querySelectorAll(
+    ".explore-filter"
+);
+
+// FILTER CAMPUS FACILITIES
+
+function filterExploreFacilities() {
+
+    const query = exploreSearchInput.value
+        .trim()
+        .toLowerCase();
+
+    const filteredFacilities = exploreFacilities.filter(
+        function(facility) {
+
+            const matchesCategory =
+
+                exploreActiveCategory === "all" ||
+
+                facility.category === exploreActiveCategory;
+
+            const searchableText = (
+
+                facility.name + " " +
+
+                facility.description + " " +
+
+                facility.location + " " +
+
+                facility.categoryName + " " +
+
+                facility.keywords
+
+            ).toLowerCase();
+
+            const matchesSearch =
+                searchableText.includes(query);
+
+            return matchesCategory && matchesSearch;
+
+        }
+    );
+
+    displayExploreFacilities(filteredFacilities);
+
+}
+
+// SEARCH INPUT
+
+exploreSearchInput.addEventListener(
+    "input",
+    filterExploreFacilities
+);
+
+exploreSearchForm.addEventListener(
+    "submit",
+    function(event) {
+
+        event.preventDefault();
+
+        filterExploreFacilities();
+
+    }
+);
+
+// CATEGORY FILTER BUTTONS
+
+exploreFilterButtons.forEach(function(button) {
+
+    button.addEventListener("click", function() {
+
+        exploreActiveCategory = button.dataset.category;
+
+        exploreFilterButtons.forEach(function(item) {
+
+            item.classList.remove("active");
+
+            item.setAttribute("aria-pressed", "false");
+
+        });
+
+        button.classList.add("active");
+
+        button.setAttribute("aria-pressed", "true");
+
+        filterExploreFacilities();
+
+    });
+
+});
+
+// RESET FILTERS
+
+document.getElementById("resetExploreFilters")
+    .addEventListener("click", function() {
+
+        exploreSearchInput.value = "";
+
+        exploreActiveCategory = "all";
+
+        exploreFilterButtons.forEach(function(button) {
+
+            const isActive =
+                button.dataset.category === "all";
+
+            button.classList.toggle("active", isActive);
+
+            button.setAttribute("aria-pressed", isActive);
+
+        });
+
+        filterExploreFacilities();
+
+    });
+
+// START EXPLORING BUTTON
+
+document.getElementById("startExploring")
+    .addEventListener("click", function(event) {
+
+        event.preventDefault();
+
+        document.getElementById("campusFacilities")
+            .scrollIntoView({
+
+                behavior: "smooth",
+
+                block: "start"
+
+            });
+
+    });
