@@ -3467,10 +3467,651 @@
 </section>
 
 
-        <section id="international" class="page-section" hidden>
-            <h1>International Students Help Desk</h1>
-            <p>Language, cultural and international student assistance.</p>
-        </section>
+      
+<!-- INTERNATIONAL STUDENTS HELP DESK -->
+
+<section id="international" class="page-section" hidden>
+
+    <div class="international-heading">
+
+        <h1>International Students Help Desk</h1>
+
+        <p>
+            Your guide to language, culture and university life in India.
+        </p>
+
+    </div>
+
+    <!-- WELCOME BANNER -->
+
+    <div class="international-banner">
+
+        <div>
+
+            <span class="international-welcome">
+                Welcome to LPU!
+            </span>
+
+            <h2>Different Countries. One Campus.</h2>
+
+            <p>
+                Overcome language barriers, discover local
+                culture and find essential assistance
+                throughout your university journey.
+            </p>
+
+        </div>
+
+        <i class="fa-solid fa-earth-asia international-banner-icon"></i>
+
+    </div>
+
+    <!-- LANGUAGE TRANSLATOR -->
+
+    <div class="international-translator">
+
+        <div class="international-section-heading">
+
+            <h2>
+
+                <i class="fa-solid fa-language"></i>
+
+                Language Translator
+
+            </h2>
+
+            <p>
+                Translate common phrases between English,
+                Hindi and Punjabi.
+            </p>
+
+        </div>
+
+        <form id="internationalTranslatorForm">
+
+            <div class="international-language-selectors">
+
+                <div class="international-language-field">
+
+                    <label for="translationSource">
+                        Translate From
+                    </label>
+
+                    <select id="translationSource">
+
+                        <option value="en">English</option>
+
+                        <option value="hi">Hindi</option>
+
+                        <option value="pa">Punjabi</option>
+
+                    </select>
+
+                </div>
+
+                <button type="button"
+                    id="swapTranslationLanguages"
+                    class="international-swap-button"
+                    aria-label="Swap languages">
+
+                    <i class="fa-solid fa-right-left"></i>
+
+                </button>
+
+                <div class="international-language-field">
+
+                    <label for="translationTarget">
+                        Translate To
+                    </label>
+
+                    <select id="translationTarget">
+
+                        <option value="en">English</option>
+
+                        <option value="hi" selected>Hindi</option>
+
+                        <option value="pa">Punjabi</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <div class="international-translation-input">
+
+                <label for="translationInput">
+                    Enter text
+                </label>
+
+                <textarea id="translationInput"
+                    rows="5"
+                    maxlength="500"
+                    placeholder="Enter a word or common phrase..."
+                    required></textarea>
+
+                <p id="translationCharacterCount">
+                    0 / 500 characters
+                </p>
+
+            </div>
+
+            <div class="international-translator-actions">
+
+                <button type="submit" class="primary-button">
+
+                    <i class="fa-solid fa-language"></i>
+
+                    Translate
+
+                </button>
+
+                <button type="button"
+                    id="clearTranslation"
+                    class="international-secondary-button">
+
+                    <i class="fa-solid fa-eraser"></i>
+
+                    Clear
+
+                </button>
+
+            </div>
+
+        </form>
+
+        <!-- TRANSLATION RESULT -->
+
+        <div id="translationResultPanel"
+            class="international-translation-result"
+            hidden>
+
+            <h3>Translation</h3>
+
+            <p id="translationOutput"></p>
+
+            <p id="translationPronunciation"
+                class="international-pronunciation"></p>
+
+            <div class="international-result-actions">
+
+                <button type="button"
+                    id="speakTranslation"
+                    class="international-secondary-button">
+
+                    <i class="fa-solid fa-volume-high"></i>
+
+                    Listen
+
+                </button>
+
+                <button type="button"
+                    id="copyTranslation"
+                    class="international-secondary-button">
+
+                    <i class="fa-solid fa-copy"></i>
+
+                    Copy
+
+                </button>
+
+            </div>
+
+        </div>
+
+        <p id="translationMessage"
+            class="international-message"
+            role="status"
+            hidden></p>
+
+        <!-- EXTERNAL TRANSLATOR -->
+
+        <div class="international-external-translator">
+
+            <i class="fa-solid fa-circle-info"></i>
+
+            <div>
+
+                <h3>Need a more detailed translation?</h3>
+
+                <p>
+                    The built-in translator supports common
+                    phrases. For other text and languages,
+                    use an external translation service.
+                    Avoid entering confidential information.
+                </p>
+
+                <a href="https://translate.google.com/"
+                    id="externalTranslatorLink"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    Open Google Translate
+
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- COMMON PHRASES -->
+
+    <div class="international-phrases-section">
+
+        <div class="international-section-heading">
+
+            <h2>
+
+                <i class="fa-solid fa-comments"></i>
+
+                Common Phrases
+
+            </h2>
+
+            <p>
+                Learn useful English, Hindi and Punjabi
+                phrases for everyday communication.
+            </p>
+
+        </div>
+
+        <!-- PHRASE SEARCH -->
+
+        <div class="international-phrase-search">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input type="search"
+                id="internationalPhraseSearch"
+                placeholder="Search common phrases..."
+                aria-label="Search common phrases"
+                autocomplete="off">
+
+        </div>
+
+        <!-- PHRASE CATEGORIES -->
+
+        <div class="international-phrase-filters">
+
+            <button type="button"
+                class="international-phrase-filter active"
+                data-category="all"
+                aria-pressed="true">
+
+                All Phrases
+
+            </button>
+
+            <button type="button"
+                class="international-phrase-filter"
+                data-category="greetings"
+                aria-pressed="false">
+
+                Greetings
+
+            </button>
+
+            <button type="button"
+                class="international-phrase-filter"
+                data-category="directions"
+                aria-pressed="false">
+
+                Directions
+
+            </button>
+
+            <button type="button"
+                class="international-phrase-filter"
+                data-category="academic"
+                aria-pressed="false">
+
+                Academic
+
+            </button>
+
+            <button type="button"
+                class="international-phrase-filter"
+                data-category="food"
+                aria-pressed="false">
+
+                Food
+
+            </button>
+
+            <button type="button"
+                class="international-phrase-filter"
+                data-category="shopping"
+                aria-pressed="false">
+
+                Shopping
+
+            </button>
+
+            <button type="button"
+                class="international-phrase-filter"
+                data-category="transport"
+                aria-pressed="false">
+
+                Transport
+
+            </button>
+
+            <button type="button"
+                class="international-phrase-filter"
+                data-category="emergency"
+                aria-pressed="false">
+
+                Emergency
+
+            </button>
+
+        </div>
+
+        <p id="internationalPhraseCount">
+            0 phrases
+        </p>
+
+        <!-- PHRASE CARDS -->
+
+        <div id="internationalPhrasesGrid"
+            class="international-phrases-grid">
+
+            <!-- Phrase cards generated using JavaScript -->
+
+        </div>
+
+        <!-- EMPTY STATE -->
+
+        <div id="internationalPhraseEmpty"
+            class="international-empty-state"
+            hidden>
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <h3>No matching phrases found</h3>
+
+            <p>
+                Try another search term or category.
+            </p>
+
+            <button type="button"
+                id="resetInternationalPhrases"
+                class="primary-button">
+
+                View All Phrases
+
+            </button>
+
+        </div>
+
+        <p id="internationalPhraseMessage"
+            class="international-message"
+            role="status"
+            hidden></p>
+
+    </div>
+
+    <!-- ESSENTIAL INTERNATIONAL STUDENT RESOURCES -->
+
+    <div class="international-resources-section">
+
+        <div class="international-section-heading">
+
+            <h2>
+
+                <i class="fa-solid fa-book-open"></i>
+
+                Essential Student Resources
+
+            </h2>
+
+            <p>
+                Find useful guidance for adjusting to
+                university life in India.
+            </p>
+
+        </div>
+
+        <div id="internationalResourcesGrid"
+            class="international-resources-grid">
+
+            <!-- Resource cards generated using JavaScript -->
+
+        </div>
+
+    </div>
+
+    <!-- RESOURCE DETAILS -->
+
+    <div id="internationalResourceDetails"
+        class="international-resource-details"
+        hidden>
+
+        <div class="international-details-header">
+
+            <h2 id="internationalResourceTitle"></h2>
+
+            <button type="button"
+                id="closeInternationalResource"
+                class="international-close-button"
+                aria-label="Close resource details">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+        <p id="internationalResourceDescription"></p>
+
+        <h3>Things You Should Know</h3>
+
+        <ul id="internationalResourcePoints"></ul>
+
+        <h3>Useful Guidance</h3>
+
+        <ol id="internationalResourceSteps"></ol>
+
+        <div class="international-resource-tip">
+
+            <i class="fa-solid fa-lightbulb"></i>
+
+            <p id="internationalResourceTip"></p>
+
+        </div>
+
+        <div id="internationalResourceLinks"
+            class="international-resource-links">
+
+            <!-- Relevant resource links -->
+
+        </div>
+
+    </div>
+
+    <!-- FREQUENTLY ASKED QUESTIONS -->
+
+    <div class="international-faq-section">
+
+        <h2>
+
+            <i class="fa-solid fa-circle-question"></i>
+
+            Frequently Asked Questions
+
+        </h2>
+
+        <details class="international-faq">
+
+            <summary>
+                Do I need to know Hindi or Punjabi?
+            </summary>
+
+            <p>
+                English can be useful for academic and
+                university communication. Learning basic
+                Hindi and Punjabi phrases may help you
+                communicate in everyday situations.
+            </p>
+
+        </details>
+
+        <details class="international-faq">
+
+            <summary>
+                Where can I get help with visa-related concerns?
+            </summary>
+
+            <p>
+                Contact the university's international
+                student support service and consult official
+                Indian government immigration resources.
+                Requirements depend on your circumstances.
+            </p>
+
+        </details>
+
+        <details class="international-faq">
+
+            <summary>
+                What currency is used in India?
+            </summary>
+
+            <p>
+                India uses the Indian Rupee (INR),
+                represented by the symbol ₹.
+                Visit Banking Assistance for further guidance.
+            </p>
+
+        </details>
+
+        <details class="international-faq">
+
+            <summary>
+                How can I get a local SIM card?
+            </summary>
+
+            <p>
+                Visit an authorized mobile network provider
+                and confirm identification, age eligibility
+                and documentation requirements. Ask your
+                guardian or university support service for
+                assistance where necessary.
+            </p>
+
+        </details>
+
+        <details class="international-faq">
+
+            <summary>
+                How can I find suitable food on campus?
+            </summary>
+
+            <p>
+                Explore the Food and Dining section and
+                ask dining staff about ingredients, dietary
+                requirements and food allergies.
+            </p>
+
+        </details>
+
+        <details class="international-faq">
+
+            <summary>
+                What should I do if I feel homesick?
+            </summary>
+
+            <p>
+                Stay connected with your family, participate
+                in suitable campus activities and speak with
+                a trusted adult, mentor or university
+                counselling professional when needed.
+            </p>
+
+        </details>
+
+        <details class="international-faq">
+
+            <summary>
+                What should I do during an emergency?
+            </summary>
+
+            <p>
+                Call 112 for immediate police, fire or
+                medical emergencies in India. You can also
+                approach nearby university security personnel
+                or a trusted staff member.
+            </p>
+
+        </details>
+
+    </div>
+
+    <!-- STUDENT SUPPORT CONNECTION -->
+
+    <div class="international-support-banner">
+
+        <i class="fa-solid fa-headset"></i>
+
+        <div>
+
+            <h2>Need Additional Assistance?</h2>
+
+            <p>
+                Find academic, administrative, medical
+                and personal support services.
+            </p>
+
+        </div>
+
+        <a href="#support" class="primary-button">
+
+            Student Support
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+        </a>
+
+    </div>
+
+    <!-- IMPORTANT INFORMATION -->
+
+    <div class="international-notice">
+
+        <i class="fa-solid fa-circle-info"></i>
+
+        <div>
+
+            <h3>Important Information</h3>
+
+            <p>
+                LPU FreshStart provides general onboarding
+                guidance and is not an official university
+                or immigration service.
+            </p>
+
+            <p>
+                Confirm visa requirements, documentation
+                procedures and university contact information
+                through official sources.
+            </p>
+
+            <p>
+                Pronunciation availability depends on your
+                browser and installed language voices.
+                Translations may not suit every context.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
 
         <section id="rules" class="page-section" hidden>
             <h1>Hostel & University Rules</h1>
