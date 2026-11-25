@@ -9924,3 +9924,792 @@ updateTimetableDateSummary();
 displayTimetableDayButtons();
 
 filterTimetableEvents();
+
+
+// =========================================
+// TIMETABLE PERSONAL EVENTS AND REMINDERS
+// =========================================
+
+const timetableEventForm =
+    document.getElementById("timetableEventForm");
+
+const timetableEventFormPanel =
+    document.getElementById("timetableEventFormPanel");
+
+const timetableRemindersList =
+    document.getElementById("timetableRemindersList");
+
+
+// =========================================
+// SAVE TIMETABLE DATA
+// =========================================
+
+function saveTimetableData(events, reminders) {
+
+    try {
+
+        localStorage.setItem(
+            TIMETABLE_EVENTS_KEY,
+            JSON.stringify(events)
+        );
+
+        localStorage.setItem(
+            TIMETABLE_REMINDERS_KEY,
+            JSON.stringify(reminders)
+        );
+
+        timetablePersonalEvents = events;
+
+        timetableSavedReminders = reminders;
+
+        return true;
+
+    } catch (error) {
+
+        alert(
+            "Your timetable data could not be saved completely. " +
+            "Please check your browser storage."
+        );
+
+        return false;
+
+    }
+
+}
+
+
+// =========================================
+// OPEN PERSONAL EVENT FORM
+// =========================================
+
+function openTimetableEventForm(eventData) {
+
+    timetableEventForm.reset();
+
+    document.getElementById(
+        "timetableEventMessage"
+    ).hidden = true;
+
+    document.getElementById(
+        "timetableEditingEventId"
+    ).value = "";
+
+    document.getElementById(
+        "timetableEventFormTitle"
+    ).textContent = "Add Personal Event";
+
+    document.getElementById(
+        "timetableEventDay"
+    ).value = timetableActiveDay;
+
+    if (eventData) {
+
+        document.getElementById(
+            "timetableEventFormTitle"
+        ).textContent = "Edit Personal Event";
+
+        document.getElementById(
+            "timetableEditingEventId"
+        ).value = eventData.id;
+
+        document.getElementById(
+            "timetableEventName"
+        ).value = eventData.name;
+
+        document.getElementById(
+            "timetableEventDay"
+        ).value = eventData.day;
+
+        document.getElementById(
+            "timetableEventStart"
+        ).value = eventData.start;
+
+        document.getElementById(
+            "timetableEventEnd"
+        ).value = eventData.end;
+
+        document.getElementById(
+            "timetableEventVenue"
+        ).value = eventData.venue;
+
+        document.getElementById(
+            "timetableEventCategory"
+        ).value = eventData.category;
+
+        document.getElementById(
+            "timetableEventNotes"
+        ).value = eventData.description;
+
+        document.getElementById(
+            "timetableEventReminder"
+        ).checked = timetableSavedReminders.includes(
+            eventData.id
+        );
+
+    }
+
+    timetableEventFormPanel.hidden = false;
+
+    timetableEventFormPanel.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+
+    document.getElementById(
+        "timetableEventName"
+    ).focus({
+        preventScroll: true
+    });
+
+}
+
+
+// =========================================
+// CLOSE PERSONAL EVENT FORM
+// =========================================
+
+function closeTimetableEventForm() {
+
+    timetableEventFormPanel.hidden = true;
+
+    timetableEventForm.reset();
+
+    document.getElementById(
+        "timetableEditingEventId"
+    ).value = "";
+
+    document.getElementById(
+        "timetableEventMessage"
+    ).hidden = true;
+
+}
+
+
+document.getElementById(
+    "addTimetableEvent"
+).addEventListener("click", function () {
+
+    openTimetableEventForm(null);
+
+});
+
+
+document.getElementById(
+    "closeTimetableEventForm"
+).addEventListener(
+    "click",
+    closeTimetableEventForm
+);
+
+
+document.getElementById(
+    "cancelTimetableEvent"
+).addEventListener(
+    "click",
+    closeTimetableEventForm
+);
+
+
+// =========================================
+// ADD AND UPDATE PERSONAL EVENTS
+// =========================================
+
+timetableEventForm.addEventListener(
+    "submit",
+    function (event) {
+
+        event.preventDefault();
+
+        const editingId = document.getElementById(
+            "timetableEditingEventId"
+        ).value;
+
+        const name = document.getElementById(
+            "timetableEventName"
+        ).value.trim();
+
+        const day = Number(
+            document.getElementById(
+                "timetableEventDay"
+            ).value
+        );
+
+        const start = document.getElementById(
+            "timetableEventStart"
+        ).value;
+
+        const end = document.getElementById(
+            "timetableEventEnd"
+        ).value;
+
+        const venue = document.getElementById(
+            "timetableEventVenue"
+        ).value.trim();
+
+        const category = document.getElementById(
+            "timetableEventCategory"
+        ).value;
+
+        const description = document.getElementById(
+            "timetableEventNotes"
+        ).value.trim();
+
+        const saveReminder = document.getElementById(
+            "timetableEventReminder"
+        ).checked;
+
+
+        // VALIDATE REQUIRED FIELDS
+
+        if (!name || !venue || !start || !end) {
+
+            showTimetableMessage(
+                "timetableEventMessage",
+                "Please complete all required fields.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        // VALIDATE SELECTED DAY
+
+        if (!Number.isInteger(day) ||
+            day < 1 || day > 15) {
+
+            showTimetableMessage(
+                "timetableEventMessage",
+                "Please select a valid onboarding day.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        // VALIDATE EVENT TIMINGS
+
+        if (end <= start) {
+
+            showTimetableMessage(
+                "timetableEventMessage",
+                "End time must be later than start time.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        // CREATE PERSONAL EVENT
+
+        const eventId = editingId ||
+
+            "personal-" + Date.now() + "-" +
+            Math.random().toString(36).slice(2, 9);
+
+        const newEvent = {
+
+            id: eventId,
+            day: day,
+            name: name,
+            start: start,
+            end: end,
+            venue: venue,
+            category: category,
+            description: description,
+            link: "",
+            linkText: "",
+            isPersonal: true
+
+        };
+
+
+        // ADD OR UPDATE EVENT
+
+        let updatedEvents;
+
+        if (editingId) {
+
+            updatedEvents = timetablePersonalEvents.map(
+                function (savedEvent) {
+
+                    return savedEvent.id === editingId
+
+                        ? newEvent
+
+                        : savedEvent;
+
+                }
+            );
+
+        } else {
+
+            updatedEvents = timetablePersonalEvents.concat(
+                newEvent
+            );
+
+        }
+
+
+        // UPDATE SAVED REMINDERS
+
+        const updatedReminders =
+            timetableSavedReminders.filter(
+                function (id) {
+
+                    return id !== eventId;
+
+                }
+            );
+
+        if (saveReminder) {
+
+            updatedReminders.push(eventId);
+
+        }
+
+
+        // SAVE CHANGES
+
+        if (!saveTimetableData(
+            updatedEvents,
+            updatedReminders
+        )) {
+
+            return;
+
+        }
+
+        closeTimetableEventForm();
+
+        timetableSearchInput.value = "";
+
+        setTimetableCategory("all");
+
+        selectTimetableDay(day);
+
+        displayTimetableReminders();
+
+        alert(
+
+            editingId
+
+                ? "Personal event updated successfully."
+
+                : "Personal event added successfully."
+
+        );
+
+    }
+);
+
+
+// =========================================
+// DELETE PERSONAL EVENT
+// =========================================
+
+function deleteTimetableEvent(eventId) {
+
+    const selectedEvent = timetablePersonalEvents.find(
+        function (event) {
+
+            return event.id === eventId;
+
+        }
+    );
+
+    if (!selectedEvent) {
+
+        return;
+
+    }
+
+    const confirmed = confirm(
+
+        'Delete "' + selectedEvent.name + '"? ' +
+        "Its saved reminder will also be removed."
+
+    );
+
+    if (!confirmed) {
+
+        return;
+
+    }
+
+    const updatedEvents =
+        timetablePersonalEvents.filter(
+            function (event) {
+
+                return event.id !== eventId;
+
+            }
+        );
+
+    const updatedReminders =
+        timetableSavedReminders.filter(
+            function (id) {
+
+                return id !== eventId;
+
+            }
+        );
+
+    if (!saveTimetableData(
+        updatedEvents,
+        updatedReminders
+    )) {
+
+        return;
+
+    }
+
+    if (document.getElementById(
+        "timetableEditingEventId"
+    ).value === eventId) {
+
+        closeTimetableEventForm();
+
+    }
+
+    filterTimetableEvents();
+
+    displayTimetableReminders();
+
+}
+
+
+// =========================================
+// SAVE OR REMOVE EVENT REMINDER
+// =========================================
+
+function toggleTimetableReminder(eventId) {
+
+    const selectedEvent = getAllTimetableEvents().find(
+        function (event) {
+
+            return event.id === eventId;
+
+        }
+    );
+
+    if (!selectedEvent) {
+
+        return;
+
+    }
+
+    let updatedReminders;
+
+    if (timetableSavedReminders.includes(eventId)) {
+
+        updatedReminders =
+            timetableSavedReminders.filter(
+                function (id) {
+
+                    return id !== eventId;
+
+                }
+            );
+
+    } else {
+
+        updatedReminders =
+            timetableSavedReminders.concat(eventId);
+
+    }
+
+    if (!saveTimetableData(
+        timetablePersonalEvents,
+        updatedReminders
+    )) {
+
+        return;
+
+    }
+
+    filterTimetableEvents();
+
+    displayTimetableReminders();
+
+}
+
+
+// =========================================
+// EVENT CARD BUTTON FUNCTIONALITY
+// =========================================
+
+timetableEventsList.addEventListener(
+    "click",
+    function (event) {
+
+        const button = event.target.closest(
+            "button[data-action]"
+        );
+
+        if (!button) {
+
+            return;
+
+        }
+
+        const eventId = button.dataset.id;
+
+        const action = button.dataset.action;
+
+        if (action === "reminder") {
+
+            toggleTimetableReminder(eventId);
+
+        }
+
+        if (action === "edit") {
+
+            const selectedEvent =
+                timetablePersonalEvents.find(
+                    function (savedEvent) {
+
+                        return savedEvent.id === eventId;
+
+                    }
+                );
+
+            if (selectedEvent) {
+
+                openTimetableEventForm(selectedEvent);
+
+            }
+
+        }
+
+        if (action === "delete") {
+
+            deleteTimetableEvent(eventId);
+
+        }
+
+    }
+);
+
+
+// =========================================
+// DISPLAY SAVED REMINDERS
+// =========================================
+
+function displayTimetableReminders() {
+
+    timetableRemindersList.innerHTML = "";
+
+    const reminderEvents =
+        getAllTimetableEvents().filter(
+            function (event) {
+
+                return timetableSavedReminders.includes(
+                    event.id
+                );
+
+            }
+        );
+
+    reminderEvents.sort(
+        function (first, second) {
+
+            return first.day - second.day ||
+
+                first.start.localeCompare(second.start);
+
+        }
+    );
+
+    document.getElementById(
+        "timetableRemindersEmpty"
+    ).hidden = reminderEvents.length !== 0;
+
+    reminderEvents.forEach(function (event) {
+
+        const reminderCard =
+            document.createElement("article");
+
+        reminderCard.className =
+            "timetable-reminder-card";
+
+        const eventDate = getTimetableDayDate(
+            event.day
+        );
+
+        const dateText = eventDate
+
+            ? formatTimetableDate(eventDate)
+
+            : "Day " + event.day;
+
+        reminderCard.innerHTML = `
+
+            <div class="timetable-reminder-icon">
+
+                <i class="fa-solid fa-bell"></i>
+
+            </div>
+
+            <div class="timetable-reminder-info">
+
+                <h3>
+                    ${escapeTimetableText(event.name)}
+                </h3>
+
+                <p>
+
+                    ${dateText}
+
+                    |
+
+                    ${formatTimetableTime(event.start)}
+
+                </p>
+
+                <p>
+                    ${escapeTimetableText(event.venue)}
+                </p>
+
+                <p>
+                    ${event.isPersonal
+                        ? "Personal Event"
+                        : "Sample Activity"}
+                </p>
+
+            </div>
+
+            <div class="timetable-event-actions">
+
+                <button type="button"
+                    class="timetable-action-button"
+                    data-reminder-action="view"
+                    data-id="${escapeTimetableText(event.id)}">
+
+                    View
+
+                </button>
+
+                <button type="button"
+                    class="timetable-action-button delete"
+                    data-reminder-action="remove"
+                    data-id="${escapeTimetableText(event.id)}">
+
+                    <i class="fa-solid fa-trash"></i>
+
+                    Remove
+
+                </button>
+
+            </div>
+
+        `;
+
+        timetableRemindersList.appendChild(
+            reminderCard
+        );
+
+    });
+
+    updateTimetableStatistics();
+
+}
+
+
+// =========================================
+// REMINDER BUTTON FUNCTIONALITY
+// =========================================
+
+timetableRemindersList.addEventListener(
+    "click",
+    function (event) {
+
+        const button = event.target.closest(
+            "button[data-reminder-action]"
+        );
+
+        if (!button) {
+
+            return;
+
+        }
+
+        const eventId = button.dataset.id;
+
+        const action =
+            button.dataset.reminderAction;
+
+        if (action === "remove") {
+
+            toggleTimetableReminder(eventId);
+
+        }
+
+        if (action === "view") {
+
+            const selectedEvent =
+                getAllTimetableEvents().find(
+                    function (savedEvent) {
+
+                        return savedEvent.id === eventId;
+
+                    }
+                );
+
+            if (!selectedEvent) {
+
+                return;
+
+            }
+
+            timetableSearchInput.value = "";
+
+            setTimetableCategory("all");
+
+            selectTimetableDay(selectedEvent.day);
+
+            document.querySelector(
+                ".timetable-schedule-section"
+            ).scrollIntoView({
+
+                behavior: "smooth",
+                block: "start"
+
+            });
+
+        }
+
+    }
+);
+
+
+// =========================================
+// UPDATE REMINDERS WHEN JOINING DATE CHANGES
+// =========================================
+
+document.getElementById(
+    "timetableDateForm"
+).addEventListener(
+    "submit",
+    displayTimetableReminders
+);
+
+
+document.getElementById(
+    "resetTimetableDate"
+).addEventListener(
+    "click",
+    displayTimetableReminders
+);
+
+
+// =========================================
+// INITIALIZE SAVED REMINDERS
+// =========================================
+
+displayTimetableReminders();
