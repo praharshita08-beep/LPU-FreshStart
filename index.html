@@ -6680,10 +6680,486 @@
 </section>
 
 
-        <section id="food" class="page-section" hidden>
-            <h1>Food & Dining</h1>
-            <p>Discover campus dining facilities.</p>
-        </section>
+        <!-- FOOD & DINING -->
+
+<section id="food" class="page-section" hidden>
+
+    <div class="food-heading">
+        <h1>Food &amp; Dining</h1>
+        <p>Discover dining facilities and food options at LPU.</p>
+    </div>
+
+    <div class="food-banner">
+        <div>
+            <span class="food-banner-label">Campus Dining Guide</span>
+            <h2>Explore. Eat. Enjoy.</h2>
+            <p>Discover campus dining facilities, mess services and suitable food options.</p>
+        </div>
+        <i class="fa-solid fa-utensils food-banner-icon"></i>
+    </div>
+
+    <div class="food-quick-section">
+        <h2>Quick Access</h2>
+
+        <div class="food-quick-grid">
+
+            <a href="#foodMessInformation" class="food-quick-card">
+                <i class="fa-solid fa-bowl-food"></i>
+                <h3>Mess Information</h3>
+                <p>Explore meal schedules and mess facilities.</p>
+            </a>
+
+            <a href="#foodDirectory" class="food-quick-card">
+                <i class="fa-solid fa-store"></i>
+                <h3>Food Directory</h3>
+                <p>Discover dining options.</p>
+            </a>
+
+            <a href="https://www.google.com/maps/search/food+near+Lovely+Professional+University/"
+                target="_blank" rel="noopener noreferrer"
+                class="food-quick-card">
+                <i class="fa-solid fa-location-dot"></i>
+                <h3>Find Food Outlets</h3>
+                <p>Explore nearby dining locations.</p>
+            </a>
+
+            <a href="#foodDietaryInformation" class="food-quick-card">
+                <i class="fa-solid fa-shield-halved"></i>
+                <h3>Dietary Assistance</h3>
+                <p>Food preferences and allergy guidance.</p>
+            </a>
+
+        </div>
+    </div>
+
+    <!-- END OF FOOD HTML PART 1 -->
+    <!-- MESS INFORMATION -->
+
+<div id="foodMessInformation" class="food-mess-section">
+    <h2>Mess Information</h2>
+    <p>Understand university mess facilities and meal services.</p>
+
+    <div class="food-mess-grid">
+
+        <article class="food-mess-card">
+            <i class="fa-solid fa-mug-hot"></i>
+            <h3>Breakfast</h3>
+            <p>Confirm timings and menu with your mess.</p>
+        </article>
+
+        <article class="food-mess-card">
+            <i class="fa-solid fa-bowl-food"></i>
+            <h3>Lunch</h3>
+            <p>Check the current lunch schedule and menu.</p>
+        </article>
+
+        <article class="food-mess-card">
+            <i class="fa-solid fa-cookie"></i>
+            <h3>Evening Snacks</h3>
+            <p>Check availability with your mess provider.</p>
+        </article>
+
+        <article class="food-mess-card">
+            <i class="fa-solid fa-utensils"></i>
+            <h3>Dinner</h3>
+            <p>Confirm the current dinner schedule.</p>
+        </article>
+
+    </div>
+
+    <div class="food-mess-notice">
+        <i class="fa-solid fa-circle-info"></i>
+        <p>Mess menus and timings may vary. Check UMS or your mess notice board for current information.</p>
+    </div>
+
+    <a href="https://ums.lpu.in/"
+        target="_blank" rel="noopener noreferrer"
+        class="primary-button">
+        Open UMS
+    </a>
+</div>
+
+
+<!-- FOOD DIRECTORY -->
+
+<div id="foodDirectory" class="food-directory-section">
+
+    <h2>Explore Food Outlets</h2>
+    <p>Discover dining options according to your preferences.</p>
+
+    <form id="foodSearchForm" class="food-search-form">
+        <div class="food-search-input">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="search"
+                id="foodSearchInput"
+                placeholder="Search food outlets..."
+                aria-label="Search food outlets"
+                autocomplete="off">
+        </div>
+
+        <button type="submit" class="primary-button">
+            Search
+        </button>
+    </form>
+
+    <div class="food-filters">
+
+        <button type="button" class="food-filter active"
+            data-category="all" aria-pressed="true">
+            All Options
+        </button>
+
+        <button type="button" class="food-filter"
+            data-category="mess" aria-pressed="false">
+            Mess
+        </button>
+
+        <button type="button" class="food-filter"
+            data-category="canteen" aria-pressed="false">
+            Canteens
+        </button>
+
+        <button type="button" class="food-filter"
+            data-category="cafe" aria-pressed="false">
+            Cafes
+        </button>
+
+        <button type="button" class="food-filter"
+            data-category="restaurant" aria-pressed="false">
+            Restaurants
+        </button>
+
+        <button type="button" class="food-filter"
+            data-category="international" aria-pressed="false">
+            International
+        </button>
+
+    </div>
+
+    <div class="food-preference-filters">
+
+        <label for="foodDietFilter">Food Preference</label>
+
+        <select id="foodDietFilter">
+            <option value="all">All Preferences</option>
+            <option value="vegetarian">Vegetarian</option>
+            <option value="nonvegetarian">Non-Vegetarian</option>
+        </select>
+
+        <label for="foodBudgetFilter">Budget Preference</label>
+
+        <select id="foodBudgetFilter">
+            <option value="all">All Options</option>
+            <option value="affordable">Affordable Options</option>
+        </select>
+
+    </div>
+
+    <div class="food-view-tabs">
+
+        <button type="button" class="food-view-tab active"
+            data-view="all" aria-pressed="true">
+            All Dining Options
+        </button>
+
+        <button type="button" class="food-view-tab"
+            data-view="favourites" aria-pressed="false">
+            <i class="fa-solid fa-heart"></i>
+            Favourites
+            (<span id="foodFavouriteCount">0</span>)
+        </button>
+
+    </div>
+
+    <p id="foodResultCount" role="status">
+        0 dining options found
+    </p>
+
+    <div id="foodOutletsGrid" class="food-outlets-grid">
+        <!-- Dining cards generated using JavaScript -->
+    </div>
+
+    <div id="foodEmptyState" class="food-empty-state" hidden>
+
+        <i class="fa-solid fa-utensils"></i>
+        <h3 id="foodEmptyTitle">No dining options found</h3>
+        <p id="foodEmptyDescription">
+            Try changing your search or filters.
+        </p>
+
+        <button type="button"
+            id="resetFoodFilters"
+            class="primary-button">
+            View All Options
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- FOOD OUTLET DETAILS -->
+
+<div id="foodOutletDetails"
+    class="food-outlet-details" hidden>
+
+    <div class="food-details-heading">
+
+        <div>
+            <span id="foodDetailCategory"></span>
+            <h2 id="foodDetailName"></h2>
+        </div>
+
+        <button type="button"
+            id="closeFoodDetails"
+            class="food-icon-button"
+            aria-label="Close outlet details">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+    </div>
+
+    <p id="foodDetailDescription"></p>
+
+    <div class="food-detail-grid">
+
+        <div>
+            <h3>Location</h3>
+            <p id="foodDetailLocation"></p>
+        </div>
+
+        <div>
+            <h3>Opening Hours</h3>
+            <p id="foodDetailHours"></p>
+        </div>
+
+        <div>
+            <h3>Food Preferences</h3>
+            <p id="foodDetailDiet"></p>
+        </div>
+
+        <div>
+            <h3>Price Information</h3>
+            <p id="foodDetailBudget"></p>
+        </div>
+
+    </div>
+
+    <div class="food-menu-section">
+        <h3>Menu Information</h3>
+        <ul id="foodDetailMenu"></ul>
+    </div>
+
+    <div class="food-detail-actions">
+
+        <a id="foodDetailMap"
+            class="primary-button"
+            target="_blank"
+            rel="noopener noreferrer">
+            <i class="fa-solid fa-location-dot"></i>
+            Find Location
+        </a>
+
+        <button type="button"
+            id="foodFavouriteButton"
+            class="food-favourite-button">
+            <i class="fa-regular fa-heart"></i>
+            Add to Favourites
+        </button>
+
+    </div>
+
+</div>
+
+<!-- END OF FOOD HTML PART 2 -->
+    <!-- DIETARY ASSISTANCE -->
+
+<div id="foodDietaryInformation" class="food-dietary-section">
+
+    <h2>Dietary Requirements &amp; Allergies</h2>
+    <p>Find guidance for your individual food requirements.</p>
+
+    <div class="food-dietary-grid">
+
+        <article class="food-dietary-card">
+            <i class="fa-solid fa-leaf"></i>
+            <h3>Vegetarian Food</h3>
+            <p>Confirm ingredients and vegetarian options with the food provider.</p>
+        </article>
+
+        <article class="food-dietary-card">
+            <i class="fa-solid fa-utensils"></i>
+            <h3>Non-Vegetarian Food</h3>
+            <p>Check available dishes and preparation practices with the outlet.</p>
+        </article>
+
+        <article class="food-dietary-card">
+            <i class="fa-solid fa-earth-asia"></i>
+            <h3>International Food</h3>
+            <p>Explore different cuisines and ask about familiar meal options.</p>
+        </article>
+
+        <article class="food-dietary-card">
+            <i class="fa-solid fa-shield-halved"></i>
+            <h3>Food Allergies</h3>
+            <p>Inform the food provider about allergies and confirm ingredients and cross-contact risks.</p>
+        </article>
+
+        <article class="food-dietary-card">
+            <i class="fa-solid fa-bowl-food"></i>
+            <h3>Special Dietary Requirements</h3>
+            <p>Discuss medical, cultural or religious dietary requirements with the food provider.</p>
+        </article>
+
+        <article class="food-dietary-card">
+            <i class="fa-solid fa-wallet"></i>
+            <h3>Affordable Meals</h3>
+            <p>Compare current menu prices and look for affordable, satisfying meal options.</p>
+        </article>
+
+    </div>
+
+    <div class="food-allergy-notice">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <div>
+            <h3>Important Allergy Notice</h3>
+            <p>This website cannot guarantee that any meal is allergen-free. Always confirm ingredients and preparation practices directly with the food provider.</p>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- FOOD QUALITY AND COMPLAINTS -->
+
+<div class="food-complaint-section">
+
+    <h2>Food Quality &amp; Complaints</h2>
+    <p>Find assistance for dining-related concerns.</p>
+
+    <div class="food-complaint-grid">
+
+        <article class="food-complaint-card">
+            <i class="fa-solid fa-hand-sparkles"></i>
+            <h3>Food Hygiene</h3>
+            <p>Report cleanliness and food hygiene concerns to the responsible food provider or university authority.</p>
+        </article>
+
+        <article class="food-complaint-card">
+            <i class="fa-solid fa-bowl-food"></i>
+            <h3>Mess-Related Concerns</h3>
+            <p>Contact your mess supervisor regarding meal services, schedules or food quality.</p>
+        </article>
+
+        <article class="food-complaint-card">
+            <i class="fa-solid fa-headset"></i>
+            <h3>Additional Assistance</h3>
+            <p>Contact the appropriate university support department if your concern remains unresolved.</p>
+        </article>
+
+    </div>
+
+    <a href="#support" class="primary-button">
+        <i class="fa-solid fa-headset"></i>
+        Student Support
+    </a>
+
+</div>
+
+
+<!-- FREQUENTLY ASKED QUESTIONS -->
+
+<div class="food-faq-section">
+
+    <h2>Frequently Asked Questions</h2>
+
+    <div class="food-faq-list">
+
+        <details class="food-faq
+                    <details class="food-faq-item">
+            <summary>Where can I check mess timings?</summary>
+            <p>Check your mess notice board, UMS or contact your mess supervisor.</p>
+        </details>
+
+        <details class="food-faq-item">
+            <summary>How can I find food outlets?</summary>
+            <p>Use the Food Directory or Find Food Outlets option.</p>
+        </details>
+
+        <details class="food-faq-item">
+            <summary>Are vegetarian meals available?</summary>
+            <p>Confirm vegetarian meal availability directly with the food provider.</p>
+        </details>
+
+        <details class="food-faq-item">
+            <summary>How can I find affordable meals?</summary>
+            <p>Compare current menu prices and explore mess and canteen options.</p>
+        </details>
+
+        <details class="food-faq-item">
+            <summary>What if I have a food allergy?</summary>
+            <p>Inform the food provider and confirm ingredients and cross-contact risks before ordering.</p>
+        </details>
+
+        <details class="food-faq-item">
+            <summary>How can I report food quality concerns?</summary>
+            <p>Contact the food provider, mess supervisor or appropriate university support department.</p>
+        </details>
+
+    </div>
+</div>
+
+<!-- USEFUL RESOURCES -->
+
+<div class="food-resources-section">
+    <h2>Useful Resources</h2>
+
+    <div class="food-resources-grid">
+
+        <a href="https://ums.lpu.in/"
+            target="_blank" rel="noopener noreferrer"
+            class="food-resource-card">
+            <i class="fa-solid fa-laptop"></i>
+            <h3>University Management System</h3>
+            <p>Check university announcements.</p>
+        </a>
+
+        <a href="#map" class="food-resource-card">
+            <i class="fa-solid fa-map-location-dot"></i>
+            <h3>University Map</h3>
+            <p>Explore campus locations.</p>
+        </a>
+
+        <a href="#international" class="food-resource-card">
+            <i class="fa-solid fa-earth-asia"></i>
+            <h3>International Help Desk</h3>
+            <p>Additional student guidance.</p>
+        </a>
+
+        <a href="#support" class="food-resource-card">
+            <i class="fa-solid fa-headset"></i>
+            <h3>Student Support</h3>
+            <p>Find university assistance.</p>
+        </a>
+
+    </div>
+</div>
+
+<!-- INFORMATION NOTICE -->
+
+<div class="food-notice">
+    <i class="fa-solid fa-circle-info"></i>
+    <p>
+        This section provides general dining guidance.
+        Confirm current menus, prices, locations,
+        opening hours and dietary information directly
+        with the food provider.
+    </p>
+</div>
+
+</section>
+
+<!-- END OF FOOD & DINING HTML -->
 
         <!-- Footer -->
         <footer class="main-footer">
